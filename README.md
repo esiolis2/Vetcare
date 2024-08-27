@@ -11,7 +11,7 @@
 * Ethan Siolis (s3935490)
 * Sruthy Thrikkadikkunnath Ramesh (s3988110)
 * Sukhman Singh (s3945471)
-* Wendy Uyen Vo (s3461279)
+* Wendy Uyen Voo (s3461279)
 
 ## Records
 
