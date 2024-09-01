@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+
+  <title>Welcome to VETCARE</title>
+  <!-- <script src="content-script.js"></script> -->
 </head>
+
 <body>
-$END$
+<div layout:fragment="content">
+  <h1>Welcome to Vet Care!</h1>
+<!--  <h2>[[${message}]]</h2>-->
+  <h2 th:text="${message}"></h2>
+  <h3>Today is <span th:text="${#dates.format(today,'dd MMMM yyyy' )}">09 January 2024</span> </h3>
+</div>
 </body>
+
 </html>
