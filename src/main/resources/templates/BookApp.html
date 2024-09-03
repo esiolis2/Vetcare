@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment with a Veterinarian</title>
+    <link href="/src/main/resources/static/assets/css/BookApp.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light px-2">
+        <a class="navbar-brand" href="#">VetCare</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto"> 
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/resources">Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signup">Signup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<div class="container mt-5">
+    <h2 class="text-center">Book an Appointment with a Vet</h2>
+    <form id="appointmentForm" class="mx-auto form-container">
+
+
+        <div id="step-1" class="form-step">
+            <div class="form-group">
+                <label for="clinic">Available Clinics:</label>
+                <select class="form-control" id="clinic" required>
+                    <option value="">Select a clinic</option>
+                    <option value="clinic1">Clinic 1</option>
+                    <option value="clinic2">Clinic 2</option>
+                    <option value="clinic3">Clinic 3</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="appointment-date">Appointment Date:</label>
+                    <input type="date" class="form-control" id="appointment-date" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="appointment-time">Appointment Time:</label>
+                    <input type="time" class="form-control" id="appointment-time" required>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
+        </div>
+
+        <div id="step-2" class="form-step" style="display: none;">
+            <div class="form-group">
+                <label for="ownerName">Your Full Name:</label>
+                <input type="text" class="form-control" id="ownerName" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="previousStep(1)">Previous</button>
+            <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next</button>
+        </div>
+
+        <div id="step-3" class="form-step" style="display: none;">
+            <div class="form-group">
+                <label for="newOrExisting">Is this a new pet or an existing pet?</label>
+                <select class="form-control" id="newOrExisting" required>
+                    <option value="">Select an option</option>
+                    <option value="new">New Pet</option>
+                    <option value="existing">Existing Pet</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="petName">Pet Name:</label>
+                <input type="text" class="form-control" id="petName" placeholder="Enter your pet's name" required>
+            </div>
+            <div class="form-group">
+                <label for="petType">Pet Type:</label>
+                <input type="text" class="form-control" id="petType" placeholder="Enter type of pet (e.g., Dog, Cat)" required>
+            </div>
+            <div class="form-group">
+                <label for="petAge">Pet Age:</label>
+                <input type="number" class="form-control" id="petAge" placeholder="Enter your pet's age" required>
+            </div>
+            <div class="form-group">
+                <label for="petQuery">Reason for Appointment:</label>
+                <select class="form-control" id="petQuery" required>
+                    <option value="">Select a reason</option>
+                    <option value="general">General Checkup</option>
+                    <option value="vaccination">Vaccination Checkup</option>
+                    <option value="emergency">Emergency Appointment</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="previousStep(2)">Previous</button>
+            <button type="button" class="btn btn-primary" onclick="bookAppointment()">Submit</button>
+        </div>
+    </form>
+
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Appointment Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Your appointment has been successfully booked!</p>
+                    <p><strong>Appointment Details:</strong></p>
+                    <ul>
+                        <li>Pet Name: <span id="confirmPetName"></span></li>
+                        <li>Pet Type: <span id="confirmPetType"></span></li>
+                        <li>Pet Age: <span id="confirmPetAge"></span></li>
+                        <li>Owner Name: <span id="confirmOwnerName"></span></li>
+                        <li>Email: <span id="confirmEmail"></span></li>
+                        <li>Phone Number: <span id="confirmPhone"></span></li>
+                        <li>Appointment Date: <span id="confirmDate"></span></li>
+                        <li>Appointment Time: <span id="confirmTime"></span></li>
+                        <li>Clinic: <span id="confirmClinic"></span></li>
+                        <li>Reason: <span id="confirmReason"></span></li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/src/main/resources/scripts/BookApp.js"></script>
+</body>
+<footer class="container-fluid text-center py-3">
+    <p>Footer Text</p>
+</footer>
+</html>
