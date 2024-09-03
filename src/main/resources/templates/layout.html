@@ -3,22 +3,57 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>Layout page</title>
     <!-- Layout -->
     <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet" />
 <!--    <link th:href="@{/css/app.css}" rel="stylesheet" />-->
     <link th:href="@{/assets/css/main.css}" rel="stylesheet">
     <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>
-<!--    <script th:src="@{/js/app.js}" defer></script>-->
+    <!-- Optional: Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+
+    <!--    <script th:src="@{/js/app.js}" defer></script>-->
     <!-- / Layout -->
 </head>
 
 <body>
-<!--<main class="container">-->
-    <div layout:fragment="content">
-<!--        Page content goes here-->
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-2">
+    <a class="navbar-brand" href="#">VetCare</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto"> <!-- Use ms-auto class here for right alignment -->
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/resources">Resources</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/signup">Signup</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+            </li>
+        </ul>
     </div>
-<!--</main>-->
+</nav>
+
+<!--Page Content-->
+    <div layout:fragment="content">
+        Page content goes here
+    </div>
+
+<!-- Footer -->
+<footer class="container-fluid text-center py-3">
+    <p>Footer Text</p>
+</footer>
 </body>
 
 </html>
