@@ -13,7 +13,27 @@ public class HomeController {
         model.addAttribute("message", "Welcome to Vet Care!");
         model.addAttribute("today", new Date()); // not a good approach for testing. More later.
         return "HomePage.html";
+    }
 
+    @GetMapping("/resources")
+    public String Resources(Model model) {
+        model.addAttribute("message", "Welcome to Vet Care!");
+        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
+        return "Resources.html";
+    }
+
+    @GetMapping("/signup")
+    public String SignUp(Model model) {
+        model.addAttribute("message", "Welcome to Vet Care!");
+        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
+        return "SignUp.html";
+    }
+
+    @GetMapping("/login")
+    public String Login(Model model) {
+        model.addAttribute("message", "Welcome to Vet Care!");
+        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
+        return "Login.html";
     }
 
 }
