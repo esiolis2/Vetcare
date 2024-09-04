@@ -22,6 +22,13 @@ public class  HomeController {
         return "Resources.html";
     }
 
+    @GetMapping("/view-treatment-plan")
+    public String  ViewTreatmentPlan(Model model) {
+        model.addAttribute("message", "Welcome to Vet Care!");
+        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
+        return "ViewTreatmentPlan.html";
+    }
+
     @GetMapping("/signup")
     public String SignUp(Model model) {
         model.addAttribute("message", "Welcome to Vet Care!");
