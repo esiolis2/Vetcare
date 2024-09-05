@@ -21,6 +21,20 @@ h1 {
     min-height:200px;
 }
 
+/*TABLES*/
+.table-container {
+    margin: 20px 50px 20px 50px;
+}
+.table{
+    width: 60%;
+}
+table th, table td {
+    padding: 15px;
+    line-height: 3;
+    word-wrap: break-word;
+    vertical-align: middle;
+}
+
 /* FOOTER*/
 footer {
     background-color: #f2f2f2;
