@@ -26,6 +26,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public Appointment createAppointment(Appointment appointment) {
-        return appointment;
+        return appointmentRepository.addAppointment(appointment);
     }
 }

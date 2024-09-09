@@ -36,4 +36,10 @@ public class HomeController {
         return "Login.html";
     }
 
+    @GetMapping("/book")
+    public String BookAppointment(Model model) {
+        model.addAttribute("message", "Welcome to Vet Care!");
+        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
+        return "BookApp.html";
+    }
 }

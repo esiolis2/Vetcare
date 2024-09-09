@@ -21,7 +21,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     private final DataSource dataSource;
 
 
-    public AppointmentRepositoryImpl(DataSource dataSource){
+    public AppointmentRepositoryImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -54,4 +54,37 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
             throw new UncategorizedScriptException("Error in findAll", e);
         }
     }
+
+    // https://www.tutorialspoint.com/jdbc/jdbc-insert-records.htm
+    @Override
+    public Appointment addAppointment(Appointment appointment) {
+        String insertQuery = "INSERT INTO appointment (veterinarianId, petOwnerId, clinic, ownerName, email, phone, petName, petType, petAge, reason, appointmentTime) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = this.dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(insertQuery)) {
+
+            stmt.setLong(1, appointment.getVeterinarianId());
+            stmt.setLong(2, appointment.getPetOwnerId());
+            stmt.setString(3, appointment.getClinic());
+            stmt.setString(4, appointment.getOwnerName());
+            stmt.setString(5, appointment.getEmail());
+            stmt.setString(6, appointment.getPhone());
+            stmt.setString(7, appointment.getPetName());
+            stmt.setString(8, appointment.getPetType());
+            stmt.setInt(9, appointment.getPetAge());
+            stmt.setString(10, appointment.getReason());
+            stmt.setTimestamp(11, Timestamp.valueOf(appointment.getAppointmentTime()));
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Appointment successfully added.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new UncategorizedScriptException("Error inserting appointment", e);
+        }
+
+        return appointment;
+    }
+
 }
