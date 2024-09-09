@@ -8,9 +8,9 @@
 
 <body>
 <div layout:fragment="content">
-    <h1>Our movie selection</h1>
+    <h1> Appointments</h1>
     <ul th:each="appointment : ${appointments}">
-        <li><span th:text="${appointment.id}">Minons</span></li>
+        <li><span th:text="${appointment.ownerName}">Appointments</span></li>
     </ul>
 </div>
 </body>
