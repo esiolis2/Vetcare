@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+
+<head>
+    <title>Appointment List</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <h1>Our movie selection</h1>
+    <ul th:each="appointment : ${appointments}">
+        <li><span th:text="${appointment.id}">Minons</span></li>
+    </ul>
+</div>
+</body>
+
+</html>
