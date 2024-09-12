@@ -71,6 +71,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- Fly way  -->
 		<dependency>
@@ -88,6 +89,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>10.10.0</version> <!-- Use the latest version -->
+				<configuration>
+					<url>jdbc:mysql://localhost:3306/vetcare</url>
+					<user>sukh</user>
+					<password>s3945471</password>
+					<locations>classpath:db/migration</locations> <!-- Location of migration scripts -->
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -9,10 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("/appointments")
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
@@ -22,18 +22,29 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
     }
 
-    @GetMapping()
-    public String listAppointments(Model model) {
-        Collection<Appointment> appointments = appointmentService.getAppointments();
-        model.addAttribute("appointments", appointments);
-        return "appointments/list";
+    @GetMapping("/appointments")
+    public String BookApp() {
+        return "BookApp";
     }
 
     @PostMapping("/add")
-    @ResponseBody
-    public String createNewAppointment(@RequestBody Appointment appointment) {
-         appointmentService.createAppointment(appointment);
-         return "Successfuly added user";
+    public String createAppointment(@ModelAttribute Appointment appointment){
+        appointmentService.createAppointment(appointment);
+        return "redirect:/";
     }
+
+//    @GetMapping()
+//    public String listAppointments(Model model) {
+//        Collection<Appointment> appointments = appointmentService.getAppointments();
+//        model.addAttribute("appointments", appointments);
+//        return "appointments/list";
+//    }
+
+//    @PostMapping("/add")
+//    @ResponseBody
+//    public String createNewAppointment(@RequestBody Appointment appointment, Model model) {
+//         appointmentService.createAppointment(appointment);
+//         return "Successfully added appointment";
+//    }
 
 }

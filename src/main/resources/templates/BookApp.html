@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,13 +35,13 @@
     </nav>
 <div class="container mt-5">
     <h2 class="text-center">Book an Appointment with a Vet</h2>
-    <form id="appointmentForm" class="mx-auto form-container">
+    <form  th:action="@{/add}" method="post" id="appointmentForm" class="mx-auto form-container">
 
 
         <div id="step-1" class="form-step">
             <div class="form-group">
                 <label for="clinic">Available Clinics:</label>
-                <select class="form-control" id="clinic" required>
+                <select class="form-control" id="clinic" required name="clinic">
                     <option value="">Select a clinic</option>
                     <option value="clinic1">Clinic 1</option>
                     <option value="clinic2">Clinic 2</option>
@@ -50,12 +50,16 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="appointment-date">Appointment Date:</label>
-                    <input type="date" class="form-control" id="appointment-date" required>
+                    <label for="appointment-date" >Appointment Date:</label>
+                    <input  name="appointmentDate" type="date" class="form-control" id="appointment-date" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="appointment-time">Appointment Time:</label>
-                    <input type="time" class="form-control" id="appointment-time" required>
+                    <input name="appointmentTime" type="time" class="form-control" id="appointment-time" required>
+                </div>
+                <div class="form-group">
+                    <label for="vetId" >Vet ID:</label>
+                    <input  name="veterinarianId" type="number" class="form-control" id="vetId" placeholder="Enter your Vet ID" required>
                 </div>
             </div>
             <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
@@ -64,15 +68,15 @@
         <div id="step-2" class="form-step" style="display: none;">
             <div class="form-group">
                 <label for="ownerName">Your Full Name:</label>
-                <input type="text" class="form-control" id="ownerName" placeholder="Enter your name" required>
+                <input name="ownerName" type="text" class="form-control" id="ownerName" placeholder="Enter your name" required>
             </div>
             <div class="form-group">
                 <label for="email">Email Address:</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                <input name="email" type="text" class="form-control" id="email" placeholder="Enter your email" required>
             </div>
             <div class="form-group">
                 <label for="phone">Phone Number:</label>
-                <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
+                <input name="phone" type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
             </div>
             <button type="button" class="btn btn-secondary" onclick="previousStep(1)">Previous</button>
             <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next</button>
@@ -89,19 +93,19 @@
             </div>
             <div class="form-group">
                 <label for="petName">Pet Name:</label>
-                <input type="text" class="form-control" id="petName" placeholder="Enter your pet's name" required>
+                <input name="petName" type="text" class="form-control" id="petName" placeholder="Enter your pet's name" required>
             </div>
             <div class="form-group">
                 <label for="petType">Pet Type:</label>
-                <input type="text" class="form-control" id="petType" placeholder="Enter type of pet (e.g., Dog, Cat)" required>
+                <input name="petType" type="text" class="form-control" id="petType" placeholder="Enter type of pet (e.g., Dog, Cat)" required>
             </div>
             <div class="form-group">
                 <label for="petAge">Pet Age:</label>
-                <input type="number" class="form-control" id="petAge" placeholder="Enter your pet's age" required>
+                <input name="petAge" type="number" class="form-control" id="petAge" placeholder="Enter your pet's age" required>
             </div>
             <div class="form-group">
                 <label for="petQuery">Reason for Appointment:</label>
-                <select class="form-control" id="petQuery" required>
+                <select  name="reason" class="form-control" id="petQuery" required>
                     <option value="">Select a reason</option>
                     <option value="general">General Checkup</option>
                     <option value="vaccination">Vaccination Checkup</option>
@@ -109,7 +113,7 @@
                 </select>
             </div>
             <button type="button" class="btn btn-secondary" onclick="previousStep(2)">Previous</button>
-            <button type="button" class="btn btn-primary" onclick="bookAppointment()">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
 
@@ -149,7 +153,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="/src/main/resources/scripts/BookApp.js"></script>
+<script src="/scripts/BookApp.js"></script>
+
+
+
 </body>
 <footer class="container-fluid text-center py-3">
     <p>Footer Text</p>

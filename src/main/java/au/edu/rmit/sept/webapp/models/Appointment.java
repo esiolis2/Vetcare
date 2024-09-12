@@ -1,34 +1,40 @@
 package au.edu.rmit.sept.webapp.models;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 public class Appointment {
 
     Long id;
     Long veterinarianId;
-    Long petOwnerId;
     String clinic;
     String ownerName;
     String email;
     String phone;
-    LocalDateTime appointmentTime;
+    LocalTime appointmentTime;
+    LocalDate appointmentDate;
     String reason;
     String petName;
     String petType;
     Integer petAge;
 
-    public Appointment(Long id, Long veterinarianId, Long petOwnerId, String clinic, String ownerName, String email,
-                       String phone, LocalDateTime appointmentTime, String reason, String petName, String petType, Integer petAge) {
+    public Appointment(Long id, Long veterinarianId, String clinic, String ownerName, String email,
+                       String phone, LocalTime appointmentTime, LocalDate appointmentDate, String reason, String petName, String petType, Integer petAge) {
         this.id = id;
         this.veterinarianId = veterinarianId;
-        this.petOwnerId = petOwnerId;
         this.clinic = clinic;
         this.ownerName = ownerName;
         this.email = email;
         this.phone = phone;
         this.appointmentTime = appointmentTime;
+        this.appointmentDate = appointmentDate;
         this.reason = reason;
         this.petName = petName;
         this.petType = petType;
         this.petAge = petAge;
+    }
+
+    public Appointment() {
+
     }
 
     // Getters and Setters
@@ -47,14 +53,6 @@ public class Appointment {
 
     public void setVeterinarianId(Long veterinarianId) {
         this.veterinarianId = veterinarianId;
-    }
-
-    public Long getPetOwnerId() {
-        return petOwnerId;
-    }
-
-    public void setPetOwnerId(Long petOwnerId) {
-        this.petOwnerId = petOwnerId;
     }
 
     public String getClinic() {
@@ -89,17 +87,23 @@ public class Appointment {
         this.phone = phone;
     }
 
-    public LocalDateTime getAppointmentTime() {
+    public LocalTime getAppointmentTime() {
         return appointmentTime;
     }
 
-    public void setAppointmentTime(LocalDateTime appointmentTime) {
+    public void setAppointmentTime(LocalTime appointmentTime) {
         this.appointmentTime = appointmentTime;
     }
 
-    public String getReason() {
-        return reason;
+    public LocalDate getAppointmentDate() {
+        return appointmentDate;
     }
+
+    public void setAppointmentDate(LocalDate appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
+
+    public String getReason() {return reason;}
 
     public void setReason(String reason) {
         this.reason = reason;

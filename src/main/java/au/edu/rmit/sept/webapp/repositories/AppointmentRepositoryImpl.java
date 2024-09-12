@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,15 +35,20 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
             List<Appointment> appointments = new ArrayList<>();
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
+                Timestamp timestamp = rs.getTimestamp("appointmentTime");
+
+                // Split it into LocalDate and LocalTime
+                LocalDate appointmentDate = timestamp.toLocalDateTime().toLocalDate();
+                LocalTime appointmentTime = timestamp.toLocalDateTime().toLocalTime();
                 Appointment appointment = new Appointment(
                         rs.getLong("id"), // id
                         rs.getLong("veterinarianId"), // vetId
-                        rs.getLong("petOwnerId"), // petOwnerId
                         rs.getString("clinic"), // clinic
                         rs.getString("ownerName"), // ownerName
                         rs.getString("email"), // email
                         rs.getString("phone"), // phone
-                        rs.getTimestamp("appointmentTime").toLocalDateTime(), // appointmentTime
+                        appointmentTime,
+                        appointmentDate,
                         rs.getString("reason"), // reason
                         rs.getString("petName"), // petName
                         rs.getString("petType"), // petType
@@ -58,22 +65,22 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     // https://www.tutorialspoint.com/jdbc/jdbc-insert-records.htm
     @Override
     public Appointment addAppointment(Appointment appointment) {
-        String insertQuery = "INSERT INTO appointment (veterinarianId, petOwnerId, clinic, ownerName, email, phone, petName, petType, petAge, reason, appointmentTime) " +
+        String insertQuery = "INSERT INTO appointment (veterinarianId, clinic, ownerName, email, phone, petName, petType, petAge, reason, appointmentTime, appointmentDate) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = this.dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(insertQuery)) {
 
             stmt.setLong(1, appointment.getVeterinarianId());
-            stmt.setLong(2, appointment.getPetOwnerId());
-            stmt.setString(3, appointment.getClinic());
-            stmt.setString(4, appointment.getOwnerName());
-            stmt.setString(5, appointment.getEmail());
-            stmt.setString(6, appointment.getPhone());
-            stmt.setString(7, appointment.getPetName());
-            stmt.setString(8, appointment.getPetType());
-            stmt.setInt(9, appointment.getPetAge());
-            stmt.setString(10, appointment.getReason());
-            stmt.setTimestamp(11, Timestamp.valueOf(appointment.getAppointmentTime()));
+            stmt.setString(2, appointment.getClinic());
+            stmt.setString(3, appointment.getOwnerName());
+            stmt.setString(4, appointment.getEmail());
+            stmt.setString(5, appointment.getPhone());
+            stmt.setString(6, appointment.getPetName());
+            stmt.setString(7, appointment.getPetType());
+            stmt.setInt(8, appointment.getPetAge());
+            stmt.setString(9, appointment.getReason());
+            stmt.setTime(10, java.sql.Time.valueOf(appointment.getAppointmentTime())); // LocalTime to Time
+            stmt.setDate(11, java.sql.Date.valueOf(appointment.getAppointmentDate())); // LocalDate to Date
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Appointment successfully added.");
