@@ -34,3 +34,35 @@ function bookAppointment() {
 
     $('#confirmationModal').modal('show');
 }
+
+// Filters veterinarians by the clinic selected
+document.getElementById('clinic').addEventListener('change', function() {
+    var selectedClinicId = this.value;
+    var veterinarianSelect = document.getElementById('vetId');
+    var veterinarianOptions = veterinarianSelect.querySelectorAll('option');
+
+    veterinarianOptions.forEach(function(option) {
+        if (option.value === "placeholder" ||option.value === "" || option.getAttribute('data-clinic-id') === selectedClinicId) {
+            option.style.display = 'block';
+        } else {
+            option.style.display = 'none';
+        }
+    });
+
+});
+
+// hides veterinarian form until a clinic has been selected.
+   var clinicSelect = document.getElementById('clinic');
+                var veterinarianForm = document.getElementById('veterinarianForm');
+
+                // Add event listener to clinic select
+                clinicSelect.addEventListener('change', function() {
+                    // Check if a valid clinic is selected
+                    if (clinicSelect.value) {
+                        // Show veterinarian form if a clinic is selected
+                        veterinarianForm.style.display = 'block';
+                    } else {
+                        // Hide veterinarian form if "Select a Clinic" is chosen
+                        veterinarianForm.style.display = 'none';
+                    }
+                });
