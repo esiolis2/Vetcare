@@ -41,11 +41,8 @@
         <div id="step-1" class="form-step">
             <div class="form-group">
                 <label for="clinic">Available Clinics:</label>
-                <select class="form-control" id="clinic" required name="clinic">
-                    <option value="">Select a clinic</option>
-                    <option value="clinic1">Clinic 1</option>
-                    <option value="clinic2">Clinic 2</option>
-                    <option value="clinic3">Clinic 3</option>
+                <select class="form-control" id="clinic"  required name="clinicId">
+                    <option th:each="clinic : ${clinics}" th:value="${clinic.id}" th:text="${clinic.name}">Clinic Name</option>
                 </select>
             </div>
             <div class="form-row">

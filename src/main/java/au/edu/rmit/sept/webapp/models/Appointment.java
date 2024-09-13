@@ -1,27 +1,31 @@
 package au.edu.rmit.sept.webapp.models;
-import java.time.LocalDateTime;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
+
 public class Appointment {
 
-    Long id;
-    Long veterinarianId;
-    String clinic;
-    String ownerName;
-    String email;
-    String phone;
-    LocalTime appointmentTime;
-    LocalDate appointmentDate;
-    String reason;
-    String petName;
-    String petType;
-    Integer petAge;
+    private Long id;
+    private Long veterinarianId;
+    private Long clinicId; // Changed to Clinic object
+    private String ownerName;
+    private String email;
+    private String phone;
+    private LocalTime appointmentTime;
+    private LocalDate appointmentDate;
+    private String reason;
+    private String petName;
+    private String petType;
+    private Integer petAge;
 
-    public Appointment(Long id, Long veterinarianId, String clinic, String ownerName, String email,
-                       String phone, LocalTime appointmentTime, LocalDate appointmentDate, String reason, String petName, String petType, Integer petAge) {
+    // Constructors, getters, and setters...
+
+    public Appointment(Long id, Long veterinarianId, Long clinicId, String ownerName, String email,
+                       String phone, LocalTime appointmentTime, LocalDate appointmentDate, String reason,
+                       String petName, String petType, Integer petAge) {
         this.id = id;
         this.veterinarianId = veterinarianId;
-        this.clinic = clinic;
+        this.clinicId = clinicId;
         this.ownerName = ownerName;
         this.email = email;
         this.phone = phone;
@@ -33,9 +37,7 @@ public class Appointment {
         this.petAge = petAge;
     }
 
-    public Appointment() {
-
-    }
+    public Appointment() {}
 
     // Getters and Setters
 
@@ -55,12 +57,12 @@ public class Appointment {
         this.veterinarianId = veterinarianId;
     }
 
-    public String getClinic() {
-        return clinic;
+    public Long getClinicId() {
+        return clinicId;
     }
 
-    public void setClinic(String clinic) {
-        this.clinic = clinic;
+    public void setClinicId(Long clinicId) {
+        this.clinicId = clinicId;
     }
 
     public String getOwnerName() {
@@ -103,7 +105,9 @@ public class Appointment {
         this.appointmentDate = appointmentDate;
     }
 
-    public String getReason() {return reason;}
+    public String getReason() {
+        return reason;
+    }
 
     public void setReason(String reason) {
         this.reason = reason;
