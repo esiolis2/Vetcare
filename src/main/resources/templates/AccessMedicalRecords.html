@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Access Medical Records</title>
+    <!-- Include Bootstrap CSS for Bootstrap 5.3.3 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <!-- Include jsPDF library for generating PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container mt-4">
+        <h2>Medical Records</h2>
+        <div class="list-group">
+            <!-- Repeatable list item for each medical record -->
+            <div th:each="record : ${records}" class="list-group-item">
+                <h5 th:text="${record.recordName}" data-bs-toggle="modal" th:attr="data-bs-target='#recordModal' + ${record.recordNumber}"></h5>
+                <p th:text="${#dates.format(record.date, 'dd/MM/yyyy')}"></p>
+                <a href="#" class="text-info" data-bs-toggle="modal" th:attr="data-bs-target='#recordModal' + ${record.recordNumber}">Read More</a>
+
+                <!-- Modal -->
+                <div class="modal fade" th:id="'recordModal' + ${record.recordNumber}" tabindex="-1" aria-labelledby="recordModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" th:text="${record.recordName}"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Record Number:</strong> <span th:text="${record.recordNumber}"></span></p>
+                                <p><strong>Pet Details:</strong> <span th:text="${record.petDetails}"></span></p>
+                                <p><strong>Treatment Plan Number:</strong> <span th:text="${record.treatmentPlanNumber}"></span></p>
+                                <p><strong>Vaccination Name:</strong> <span th:text="${record.vaccinationName}"></span></p>
+                                <p><strong>Clinic Name:</strong> <span th:text="${record.clinicName}"></span></p>
+                                <p><strong>Veterinarian Name:</strong> <span th:text="${record.vetName}"></span></p>
+                                <p><strong>Date:</strong> <span th:text="${#dates.format(record.date, 'dd/MM/yyyy')}"></span></p>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- Download PDF Button -->
+                                <button type="button" class="btn btn-primary" onclick="downloadPDF(
+                                    '[[${record.recordNumber}]]',
+                                    '[[${record.recordName}]]',
+                                    '[[${record.petDetails}]]',
+                                    '[[${record.treatmentPlanNumber}]]',
+                                    '[[${record.vaccinationName}]]',
+                                    '[[${record.clinicName}]]',
+                                    '[[${record.vetName}]]',
+                                    '[[${#dates.format(record.date, 'dd/MM/yyyy')}]]'
+                                        )">
+                                    Download PDF
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include Bootstrap 5.3.3 JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Include external JavaScript file for PDF generation -->
+<script src="/scripts/downloadPDF.js"></script>
+</body>
+</html>
