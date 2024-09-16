@@ -29,6 +29,11 @@ public class  HomeController {
         return "ViewTreatmentPlan.html";
     }
 
+    @GetMapping("/view-vaccination-records")
+    public String  ViewVaccinationRecords() {
+        return "ViewVaccinationRecords.html";
+    }
+
     @GetMapping("/signup")
     public String SignUp(Model model) {
         model.addAttribute("message", "Welcome to Vet Care!");
