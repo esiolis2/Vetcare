@@ -6,6 +6,7 @@ import java.util.Collection;
 public interface AppointmentService {
     public Collection<Appointment> getAppointments();
     public Appointment createAppointment (Appointment appointment);
+    public boolean deleteAppointment (Long appointmentId);
 
 
 }

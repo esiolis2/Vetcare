@@ -9,4 +9,7 @@ import java.util.List;
 public interface AppointmentRepository {
     public List<Appointment> findAll();
     public Appointment addAppointment(Appointment appointment);
+    public boolean removeAppointment(Long appointmentId);
+
+
 }

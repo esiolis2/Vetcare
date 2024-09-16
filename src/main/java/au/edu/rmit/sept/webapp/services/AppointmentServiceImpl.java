@@ -2,7 +2,6 @@ package au.edu.rmit.sept.webapp.services;
 
 import au.edu.rmit.sept.webapp.models.Appointment;
 import au.edu.rmit.sept.webapp.repositories.AppointmentRepository;
-import au.edu.rmit.sept.webapp.repositories.AppointmentRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +26,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Appointment createAppointment(Appointment appointment) {
         return appointmentRepository.addAppointment(appointment);
+    }
+
+    @Override
+    public boolean deleteAppointment(Long appointmentId) {
+        return appointmentRepository.removeAppointment(appointmentId);
     }
 }
