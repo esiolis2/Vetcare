@@ -1,16 +1,25 @@
 package au.edu.rmit.sept.webapp.controllers;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import au.edu.rmit.sept.webapp.models.PetInformation;
+import au.edu.rmit.sept.webapp.services.PetInformationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class  HomeController {
+
+
+
+    public HomeController(PetInformationService petInformationService) {
+
+    }
+
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("message", "Welcome to Vet Care!");
@@ -45,20 +54,24 @@ public class  HomeController {
         return"ViewVaccinationRecords.html";
     }
 
-    //Testing Example only
-    @GetMapping("/access-medical-records")
-    public String AccessMedicalRecords(Model model) {
-        // Sample medical records using Map<String, Object> instead of a Record model
-        List<Map<String, Object>> records = Arrays.asList(
-                createRecord("Annual Checkup", 1234, "Dog, Age 3", 5678, "Rabies", "VetCare Clinic", "Dr. Smith", new Date()),
-                createRecord("Vaccination Update", 2345, "Cat, Age 5", 6789, "Feline Leukemia", "Healthy Paws", "Dr. Green", new Date()),
-                createRecord("Dental Cleaning", 3456, "Dog, Age 2", 7890, "N/A", "Pet Health Clinic", "Dr. Brown", new Date()),
-                createRecord("Heartworm Test", 4567, "Dog, Age 4", 8901, "Heartworm", "Healthy Pets Clinic", "Dr. White", new Date())
-        );
 
-        model.addAttribute("records", records);
-        return "AccessMedicalRecords.html";
-    }
+
+
+
+//    //Testing Example only
+//    @GetMapping("/access-medical-records")
+//    public String AccessMedicalRecords(Model model) {
+//        // Sample medical records using Map<String, Object> instead of a Record model
+//        List<Map<String, Object>> records = Arrays.asList(
+//                createRecord("Annual Checkup", 1234, "Dog, Age 3", 5678, "Rabies", "VetCare Clinic", "Dr. Smith", new Date()),
+//                createRecord("Vaccination Update", 2345, "Cat, Age 5", 6789, "Feline Leukemia", "Healthy Paws", "Dr. Green", new Date()),
+//                createRecord("Dental Cleaning", 3456, "Dog, Age 2", 7890, "N/A", "Pet Health Clinic", "Dr. Brown", new Date()),
+//                createRecord("Heartworm Test", 4567, "Dog, Age 4", 8901, "Heartworm", "Healthy Pets Clinic", "Dr. White", new Date())
+//        );
+//
+//        model.addAttribute("records", records);
+//        return "AccessMedicalRecords.html";
+//    }
 
     // Helper method to create a record
     private Map<String, Object> createRecord(String recordName, int recordNumber, String petDetails, int treatmentPlanNumber,
