@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class  HomeController {
 
-
-
     public HomeController(PetInformationService petInformationService) {
-
     }
 
     @GetMapping("/")
@@ -50,7 +47,6 @@ public class  HomeController {
 
     @GetMapping("/view-vaccination-records")
     public String ViewVaccinationRecords(){
-
         return"ViewVaccinationRecords.html";
     }
 
