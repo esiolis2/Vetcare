@@ -7,5 +7,5 @@ import java.util.List;
 public interface MedicalHistoryService {
     List<MedicalHistory> getMedicalHistoryByPetId(Long petId);
     void createMedicalHistory(MedicalHistory medicalHistory);
-    List<MedicalHistory> getAllMedicalHistories();
+   List<MedicalHistory> getAllMedicalHistories();
 }
