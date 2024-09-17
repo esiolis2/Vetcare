@@ -80,7 +80,15 @@
 			<version>8.0.30</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-maven-plugin</artifactId>
+			<version>10.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+		</dependency>
 
 
 	</dependencies>
@@ -88,31 +96,17 @@
 	<build>
 		<plugins>
 
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>3.3.2</version>
-				<configuration>
-					<arguments>
-						<argument>--spring.datasource.url=jdbc:mysql://localhost:3306/vetcare</argument>
-						<argument>--spring.datasource.username=root</argument>
-						<argument>--spring.datasource.password=password</argument>
-						<argument>--spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver</argument>
-					</arguments>
-				</configuration>
-			</plugin>
-
-
 			<!-- added while debugging -->
 			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>10.10.0</version>
 				<configuration>
-					<url>jdbc:mysql://localhost:3306/vetcare</url>
+					<url>jdbc:mysql://localhost:3306/vetcare?allowPublicKeyRetrieval=true&amp;useSSL=false</url>
 					<user>root</user>
 					<password>password</password>
-					<locations>classpath:db/migration</locations>
+					<driver>com.mysql.cj.jdbc.Driver</driver>
+					<schemas>vetcare</schemas>
 				</configuration>
 				<dependencies>
 					<dependency>
