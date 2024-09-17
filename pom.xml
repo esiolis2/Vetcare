@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>au.edu.rmit.sept</groupId>
 	<artifactId>webapp</artifactId>
@@ -26,6 +26,7 @@
 		<tag/>
 		<url/>
 	</scm>
+
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -42,24 +43,14 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.29</version>
-<!--			<scope>runtime</scope>-->
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework</groupId>-->
-<!--			<artifactId>spring-jdbc</artifactId>-->
-<!--			<version>6.1.11</version>-->
-<!--		</dependency>-->
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jdbc -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
 			<version>3.3.3</version>
 		</dependency>
-		<!-- Spring Boot JPA Starter (if needed) -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+
 		<!-- UI -->
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
@@ -71,12 +62,14 @@
 			<artifactId>bootstrap</artifactId>
 			<version>5.3.3</version>
 		</dependency>
+
 		<!-- Testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<!-- Developers tools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -84,6 +77,7 @@
 			<optional>true</optional>
 			<scope>runtime</scope>
 		</dependency>
+
 		<!-- Fly way  -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
@@ -95,6 +89,8 @@
 			<artifactId>flyway-mysql</artifactId>
 		</dependency>
 	</dependencies>
+
+
 	<build>
 		<plugins>
 			<plugin>
