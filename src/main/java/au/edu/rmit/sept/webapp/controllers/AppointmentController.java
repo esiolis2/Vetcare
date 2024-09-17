@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +44,21 @@ public class AppointmentController {
     @PostMapping("/add")
     public String createAppointment(@ModelAttribute Appointment appointment){
         appointmentService.createAppointment(appointment);
+        return "redirect:/";
+    }
+
+    @GetMapping ("/appointments/reschedule")
+    public String ChangeApp(){
+        return "ChangeApp.html";
+    }
+
+    @PostMapping("/reschedule")
+    public String rescheduleAppointment(Model model, LocalDate date, LocalTime time, Long id ){
+        Appointment appointment = appointmentService.findAppointmentById(id);
+        appointment.setAppointmentTime(time);
+        appointment.setAppointmentDate(date);
+        appointmentService.rescheduleAppointment(appointment);
+        System.out.println("Successfully rescheduled appointment");
         return "redirect:/";
     }
 
