@@ -1,69 +1,138 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book an Appointment with a Veterinarian</title>
-    <link href="/src/main/resources/static/assets/css/BookApp.css" rel="stylesheet">
+    <link href="BookApp.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light px-2">
-        <a class="navbar-brand" href="#">VetCare</a>
+<style>
+    /* Styling the select dropdown to limit its height and enable scrolling */
+    #appointment-time {
+        max-height: 200px; /* Limit dropdown height */
+        overflow-y: auto; /* Enable vertical scroll */
+    }
+</style>
+<!-- Navbar from homepage -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="/">VetCare</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto"> 
+            <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link active" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="BookApp.html">Book Appointment</a>
+                    <a class="nav-link" href="/resources">Resources</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="SignUp.html">Signup</a>
+                    <a class="nav-link" href="/signup">Signup</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Login.html">Login</a>
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="ChangeApp.html">Reschedule</a>
+                    <a class="nav-link" href="/changeapp">Change Appointment</a>
                 </li>
             </ul>
         </div>
-    </nav>
+    </div>
+</nav>
+
+<section class="hero-section d-flex align-items-center justify-content-center">
+    <div class="container-fluid py-5">
+        <div class="row g-0">
+            <div class="col-lg-12 d-flex align-items-center justify-content-center hero-text">
+                <div>
+                    <h1>Book an Appointment with a Veterinarian</h1>
+                    <p>Secure a spot for your beloved pet at one of our clinics.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</section>
 <div class="container mt-5">
-    <h2 class="text-center">Book an Appointment with a Vet</h2>
-    <form  th:action="@{/add}" method="post" id="appointmentForm" class="mx-auto form-container">
+    <h2 class="text-center"></h2>
+    <form id="appointmentForm" class="mx-auto form-container">
 
 
         <div id="step-1" class="form-step">
             <div class="form-group">
                 <label for="clinic">Available Clinics:</label>
-                <select class="form-control" id="clinic"  required name="clinicId">
-                    <option>Select a clinic</option>
-                    <option th:each="clinic : ${clinics}" th:value="${clinic.id}" th:text="${clinic.name}">Clinic Name</option>
+                <select class="form-control" id="clinic" required>
+                    <option value="">Select a clinic</option>
+                    <option value="clinic1">Clinic 1</option>
+                    <option value="clinic2">Clinic 2</option>
+                    <option value="clinic3">Clinic 3</option>
                 </select>
             </div>
-            <div class="form-group" id="veterinarianForm" style="display: none">
-                <label for="vetId" >Choose your Veterinarian:</label>
-                <select  name="veterinarianId" class="form-control" id="vetId"  required>
-                    <option value="placeholder" >Select a Veterinarian</option>
-                    <option th:each="veterinarian : ${veterinarians}" th:value="${veterinarian.id}" th:text="${veterinarian.name}" th:attr="data-clinic-id=${veterinarian.clinicId}">Veterinarian Name </option>
-                </select>
-            </div>
-
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="appointment-date" >Appointment Date:</label>
-                    <input  name="appointmentDate" type="date" class="form-control" id="appointment-date" required>
+                    <label for="appointment-date">Appointment Date:</label>
+                    <input type="date" class="form-control" id="appointment-date" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="appointment-time">Appointment Time:</label>
-                    <input name="appointmentTime" type="time" class="form-control" id="appointment-time" required>
+                    <select class="form-control" id="appointment-time" required style="max-height: 200px; overflow-y: scroll;">
+                        <option value="">Select a time</option>
+                        <option value="09:00 AM">9:00 AM</option>
+                        <option value="09:15 AM">9:15 AM</option>
+                        <option value="09:30 AM">9:30 AM</option>
+                        <option value="09:45 AM">9:45 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="10:15 AM">10:15 AM</option>
+                        <option value="10:30 AM">10:30 AM</option>
+                        <option value="10:45 AM">10:45 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="11:15 AM">11:15 AM</option>
+                        <option value="11:30 AM">11:30 AM</option>
+                        <option value="11:45 AM">11:45 AM</option>
+                        <option value="12:00 PM">12:00 PM</option>
+                        <option value="12:15 PM">12:15 PM</option>
+                        <option value="12:30 PM">12:30 PM</option>
+                        <option value="12:45 PM">12:45 PM</option>
+                        <option value="01:00 PM">1:00 PM</option>
+                        <option value="01:15 PM">1:15 PM</option>
+                        <option value="01:30 PM">1:30 PM</option>
+                        <option value="01:45 PM">1:45 PM</option>
+                        <option value="02:00 PM">2:00 PM</option>
+                        <option value="02:15 PM">2:15 PM</option>
+                        <option value="02:30 PM">2:30 PM</option>
+                        <option value="02:45 PM">2:45 PM</option>
+                        <option value="03:00 PM">3:00 PM</option>
+                        <option value="03:15 PM">3:15 PM</option>
+                        <option value="03:30 PM">3:30 PM</option>
+                        <option value="03:45 PM">3:45 PM</option>
+                        <option value="04:00 PM">4:00 PM</option>
+                        <option value="04:15 PM">4:15 PM</option>
+                        <option value="04:30 PM">4:30 PM</option>
+                        <option value="04:45 PM">4:45 PM</option>
+                        <option value="05:00 PM">5:00 PM</option>
+                        <option value="05:15 PM">5:15 PM</option>
+                        <option value="05:30 PM">5:30 PM</option>
+                        <option value="05:45 PM">5:45 PM</option>
+                        <option value="06:00 PM">6:00 PM</option>
+                        <option value="06:15 PM">6:15 PM</option>
+                        <option value="06:30 PM">6:30 PM</option>
+                        <option value="06:45 PM">6:45 PM</option>
+                        <option value="07:00 PM">7:00 PM</option>
+                        <option value="07:15 PM">7:15 PM</option>
+                        <option value="07:30 PM">7:30 PM</option>
+                        <option value="07:45 PM">7:45 PM</option>
+                        <option value="08:00 PM">8:00 PM</option>
+                        <option value="08:15 PM">8:15 PM</option>
+                        <option value="08:30 PM">8:30 PM</option>
+                        <option value="08:45 PM">8:45 PM</option>
+                        <option value="09:00 PM">9:00 PM</option>
+                    </select>
                 </div>
-
             </div>
             <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
         </div>
@@ -71,15 +140,15 @@
         <div id="step-2" class="form-step" style="display: none;">
             <div class="form-group">
                 <label for="ownerName">Your Full Name:</label>
-                <input name="ownerName" type="text" class="form-control" id="ownerName" placeholder="Enter your name" required>
+                <input type="text" class="form-control" id="ownerName" placeholder="Enter your name" required>
             </div>
             <div class="form-group">
                 <label for="email">Email Address:</label>
-                <input name="email" type="text" class="form-control" id="email" placeholder="Enter your email" required>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
             </div>
             <div class="form-group">
                 <label for="phone">Phone Number:</label>
-                <input name="phone" type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
+                <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
             </div>
             <button type="button" class="btn btn-secondary" onclick="previousStep(1)">Previous</button>
             <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next</button>
@@ -96,19 +165,19 @@
             </div>
             <div class="form-group">
                 <label for="petName">Pet Name:</label>
-                <input name="petName" type="text" class="form-control" id="petName" placeholder="Enter your pet's name" required>
+                <input type="text" class="form-control" id="petName" placeholder="Enter your pet's name" required>
             </div>
             <div class="form-group">
                 <label for="petType">Pet Type:</label>
-                <input name="petType" type="text" class="form-control" id="petType" placeholder="Enter type of pet (e.g., Dog, Cat)" required>
+                <input type="text" class="form-control" id="petType" placeholder="Enter type of pet (e.g., Dog, Cat)" required>
             </div>
             <div class="form-group">
                 <label for="petAge">Pet Age:</label>
-                <input name="petAge" type="number" class="form-control" id="petAge" placeholder="Enter your pet's age" required>
+                <input type="number" class="form-control" id="petAge" placeholder="Enter your pet's age" required>
             </div>
             <div class="form-group">
                 <label for="petQuery">Reason for Appointment:</label>
-                <select  name="reason" class="form-control" id="petQuery" required>
+                <select class="form-control" id="petQuery" required>
                     <option value="">Select a reason</option>
                     <option value="general">General Checkup</option>
                     <option value="vaccination">Vaccination Checkup</option>
@@ -116,7 +185,7 @@
                 </select>
             </div>
             <button type="button" class="btn btn-secondary" onclick="previousStep(2)">Previous</button>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-primary" onclick="bookAppointment()">Submit</button>
         </div>
     </form>
 
@@ -153,15 +222,27 @@
     </div>
 </div>
 
+<footer class="container-fluid text-center py-3 mt-5 footer-style">
+    <div class="row">
+        <div class="col-md-4">
+            <p>Contact Us: +123 456 789</p>
+        </div>
+        <div class="col-md-4">
+            <p>© 2024 VetCare. All rights reserved.</p>
+        </div>
+        <div class="col-md-4">
+            <p>Follow Us:
+                <a href="#" class="social-icon">Facebook</a> |
+                <a href="#" class="social-icon">Instagram</a> |
+                <a href="#" class="social-icon">Twitter</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="/scripts/BookApp.js"></script>
-
-
-
+<script src="/static/scripts/BookApp.js"></script>
 </body>
-<footer class="container-fluid text-center py-3">
-    <p>Footer Text</p>
-</footer>
 </html>

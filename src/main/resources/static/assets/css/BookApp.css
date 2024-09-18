@@ -1,20 +1,208 @@
+@font-face {
+    font-family: "Sergio Trendy";
+    src: url("Sergio Trendy.ttf");
+}
 body {
-    background-color: #f8f9fa;
+    color: #388087;
+    background-color: #f9f9f9;
+    font-family: 'Poppins', serif;
+    margin: 0;
+    padding: 0;
 }
 
-h2 {
-    margin-bottom: 30px;
+h1,h2,h3 {
+    color: #222222;
+    font-family: 'Sergio Trendy',serif;
+}
+p {
+    font-size: 1.25rem;
 }
 
-.modal-content {
-    border-radius: 5px;
+.navbar-custom {
+    background-color: #388087;
+    margin-bottom: 0;
+}
+.navbar-brand {
+    font-family: 'Sergio Trendy', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
 }
 
-.modal-header, .modal-footer {
+.navbar-nav .nav-link {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-right: 20px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #badfe7;
+    text-decoration: underline;
+}
+.hero-section {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ebf2eb;
+}
+
+.hero-text {
+    z-index: 1;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-text h1 {
+    font-family: 'Poppins', serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #222222;
+    margin: 0;
+}
+
+.hero-text p {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+
+
+.btn-custom {
+    background-color: #388087;
+    color: white;
     border: none;
 }
 
-.modal-title {
+.btn-custom:hover {
+    background-color: #bccce1;
+}
+
+.hero-image {
+    background-size: cover;
+    height: 100%;
+}
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.card-body {
+    flex-grow: 1;
+    background-color:#ebf2eb ;
+}
+.card img {
+    height: auto;
+    max-height: 250px;
+}
+
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.card-button{
+    background-color: #388087;
+    color: white;
+    border: none;
+}
+
+.card-button:hover{
+    background-color: #bccce1;
+}
+
+.footer-style {
+    background-color: #388087;
+    color: #f9f7f3;
+}
+
+.footer-style p {
+    margin: 0;
+    font-size: 1rem;
+    color: #f9f7f3;
+}
+
+.footer-style a {
+    color: #f9f7f3;
+    text-decoration: none;
+    padding: 0 5px;
+}
+
+.footer-style a:hover {
+    color: #b8c5cd;
+}
+
+.footer-style .social-icon {
     font-weight: bold;
 }
 
+@media(max-width:768px){
+    .hero-text{
+        font-size: 1rem;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .footer-style .row {
+        text-align: center;
+    }
+}
+
+.form-container-wrapper {
+    background-color: #ebf2eb;
+    padding: 20px 0;
+}
+
+.form-control {
+    background-color: #ebf2eb;
+    border: 2px solid #388087;
+    padding: 0px;
+    color: #222222;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.form-control::placeholder {
+    color: #222222;
+    opacity: 0.6;
+}
+
+input[type="date"].form-control {
+    background-color: #f9f9f9;
+    color: #222222;
+    border: 2px solid #388087;
+    padding: 0px;
+    width: 100%;
+}
+
+select.form-control {
+    background-color: #f9f9f9;
+    border: 2px solid #388087;
+    padding: 0px;
+    color: #222222;
+    font-size: 1rem;
+}
+
+.form-control:hover {
+    border-color: #bccce1;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #badfe7;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
