@@ -48,15 +48,18 @@ public class AppointmentController {
     }
 
     @GetMapping ("/appointments/reschedule")
-    public String ChangeApp(){
+    public String ChangeApp(Model model){
+        List<Veterinarian> veterinarians = veterinarianService.getAllVeterinarians();
+        model.addAttribute("veterinarians", veterinarians);
         return "ChangeApp.html";
     }
 
     @PostMapping("/reschedule")
-    public String rescheduleAppointment(Model model, LocalDate date, LocalTime time, Long id ){
+    public String rescheduleAppointment(Model model, LocalDate date, LocalTime time, Long veterinarianId, Long id ){
         Appointment appointment = appointmentService.findAppointmentById(id);
         appointment.setAppointmentTime(time);
         appointment.setAppointmentDate(date);
+        appointment.setVeterinarianId(veterinarianId);
         appointmentService.rescheduleAppointment(appointment);
         System.out.println("Successfully rescheduled appointment");
         return "redirect:/";

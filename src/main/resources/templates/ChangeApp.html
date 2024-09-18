@@ -30,10 +30,18 @@
     <form  th:action="@{/reschedule}" method="post" id="changeAppointmentForm" class="mx-auto form-container">
 
         <div class="form-group">
-            <label for="phone">Apppointment Id:</label>
-            <input   name="id" type="number" class="form-control" id="phone" placeholder="Enter your Appointment ID" required>
+            <label for="id">Apppointment Id:</label>
+            <input  value="id" name="id" type="number" class="form-control" id="id" placeholder="Enter your Appointment ID" required>
+
         </div>
 
+        <div class="form-group" id="veterinarianForm" style="display: none">
+            <label for="vetId" >Choose your Veterinarian:</label>
+            <select  name="veterinarianId" class="form-control" id="vetId"  required>
+                <option>Select a Veterinarian</option>
+                <option th:each="veterinarian : ${veterinarians}" th:value="${veterinarian.id}" th:text="${veterinarian.name}" th:attr="data-clinic-id=${veterinarian.clinicId}">Veterinarian Name </option>
+            </select>
+        </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="appointment-date">New Appointment Date:</label>

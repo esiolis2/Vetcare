@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface VeterinarianService {
     public List<Veterinarian> getAllVeterinarians();
+    public List<Veterinarian> getVeterinarianById(Long clinicId);
+
 }

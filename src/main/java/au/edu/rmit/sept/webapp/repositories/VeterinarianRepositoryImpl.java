@@ -44,4 +44,28 @@ public class VeterinarianRepositoryImpl implements VeterinarianRepository{
         }
     }
 
+    @Override
+    public List<Veterinarian> findAllVeterinariansById(Long clinicId) {
+       try{
+           Connection connection = this.dataSource.getConnection();
+           PreparedStatement stm = connection.prepareStatement("SELECT * FROM VETERINARIAN WHERE ClinicId=?");
+           stm.setLong(1, clinicId);
+           ResultSet rs = stm.executeQuery();
+           List<Veterinarian> veterinarians = new ArrayList<>();
+           while (rs.next()){
+               Veterinarian veterinarian = new Veterinarian(
+                       rs.getLong("id"),
+                       rs.getString("name"),
+                       rs.getString("email"),
+                       rs.getLong("clinicId")
+               );
+               veterinarians.add(veterinarian);
+           }
+           return veterinarians;
+       }
+       catch(SQLException e){
+           throw new IllegalArgumentException("Could not get vet by id", e);
+        }
+    }
+
 }

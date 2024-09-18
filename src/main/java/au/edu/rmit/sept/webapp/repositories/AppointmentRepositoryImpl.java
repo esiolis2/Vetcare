@@ -96,13 +96,14 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
 
     @Override
     public Appointment updateAppointment(Appointment appointment) {
-        String updateQuery = "UPDATE appointment SET appointmentTime = ?, appointmentDate = ? WHERE id = ?";
+        String updateQuery = "UPDATE appointment SET appointmentTime = ?, appointmentDate = ?, veterinarianId = ? WHERE id = ?";
         try(
                 Connection connection = this.dataSource.getConnection();
                 PreparedStatement stm = connection.prepareStatement(updateQuery)){
                 stm.setTime(1, java.sql.Time.valueOf(appointment.getAppointmentTime())); // LocalTime to Time
                 stm.setDate(2, java.sql.Date.valueOf(appointment.getAppointmentDate())); // LocalDate to Date
-                stm.setLong(3, appointment.getId());
+                stm.setLong(3, appointment.getVeterinarianId());
+                stm.setLong(4, appointment.getId());
 
                 int rowsAffected = stm.executeUpdate();
                 if (rowsAffected > 0) {
