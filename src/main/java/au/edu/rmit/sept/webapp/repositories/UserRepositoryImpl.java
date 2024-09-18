@@ -50,14 +50,13 @@ public class UserRepositoryImpl implements UserRepository {
 
 
     @Override
-    public User findByEmail(String email, String password){
+    public User findByEmail(String email){
 
         try(
                 Connection connection = this.source.getConnection();
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE email = ? AND password = ?")){
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE email = ?")){
 
             ps.setString(1, email);
-            ps.setString(2, password);
 
             ResultSet rs = ps.executeQuery();
             if(rs.next()){

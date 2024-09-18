@@ -24,8 +24,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean verifuUser(String email, String password){
-        User u= userR.findByEmail(email, password);
+    public boolean verifyUser(String email, String password){
+        User u= userR.findByEmail(email);
+//        after getting the email checking the password
         return u!=null && u.getPassword().equals(password);
     }
 
