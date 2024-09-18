@@ -49,4 +49,27 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
 
+    @Override
+    public User findByEmail(String email, String password){
+
+        try(
+                Connection connection = this.source.getConnection();
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE email = ? AND password = ?")){
+
+            ps.setString(1, email);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                System.out.println("Logged in successfully!");
+                return  new User(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
+            }
+        }catch(SQLException e){
+            throw new UncategorizedScriptException("Failed to find an user in the database", e);
+        }
+
+        return null;
+    }
+
+
 }

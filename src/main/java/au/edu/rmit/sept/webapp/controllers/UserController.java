@@ -28,4 +28,13 @@ public class UserController {
 
 
 
+    @PostMapping("/login")
+    public String login(@RequestParam String email, @RequestParam String password){
+        if(userS.verifyUser(email, password)){
+            return "redirect:/";
+        }
+        return "redirect:/login";
+    }
+
+
 }

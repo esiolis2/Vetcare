@@ -64,6 +64,7 @@
             loginError.textContent = "Error: Incorrect password.";
             loginError.style.display = 'block';
         } else {
+            localStorage.setItem("vetUserLogged", email);
             alert("Login successful!");
             window.location.href = "/templates/HomePage.html";
         }

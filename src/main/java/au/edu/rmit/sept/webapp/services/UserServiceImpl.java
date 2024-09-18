@@ -23,5 +23,12 @@ public class UserServiceImpl implements UserService{
         return userR.insertUserData(user);
     }
 
+    @Override
+    public boolean verifuUser(String email, String password){
+        User u= userR.findByEmail(email, password);
+        return u!=null && u.getPassword().equals(password);
+    }
+
+
 
 }
