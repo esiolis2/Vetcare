@@ -52,7 +52,7 @@ public class VaccinationRecordRepositoryImpl implements VaccinationRecordReposit
         String query = "INSERT INTO VaccinationRecords (PetID, VaccineName, AdministeredDate, NextDueDate, BoosterRequired) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setLong(1, vaccinationRecord.getPet().getPetID());
+            stmt.setLong(1, vaccinationRecord.getPetID());
             stmt.setString(2, vaccinationRecord.getVaccineName());
             stmt.setDate(3, java.sql.Date.valueOf(vaccinationRecord.getAdministeredDate()));
             stmt.setDate(4, vaccinationRecord.getNextDueDate() != null ? java.sql.Date.valueOf(vaccinationRecord.getNextDueDate()) : null);
@@ -62,6 +62,7 @@ public class VaccinationRecordRepositoryImpl implements VaccinationRecordReposit
             throw new UncategorizedScriptException("Error inserting vaccination record", e);
         }
     }
+
 
     @Override
     public List<VaccinationRecord> findAllVaccinationRecords() {

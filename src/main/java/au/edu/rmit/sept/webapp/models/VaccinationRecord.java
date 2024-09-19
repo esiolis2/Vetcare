@@ -30,6 +30,9 @@ public class VaccinationRecord {
         this.additionalNotes = additionalNotes;
     }
 
+    public VaccinationRecord() {
+    }
+
     public Long getVaccinationID() {
         return vaccinationID;
     }
@@ -116,9 +119,5 @@ public class VaccinationRecord {
 
     public void setAdditionalNotes(String additionalNotes) {
         this.additionalNotes = additionalNotes;
-    }
-
-    public VaccinationRecord getPet() {
-        return null;
     }
 }

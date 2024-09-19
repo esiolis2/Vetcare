@@ -19,7 +19,7 @@ public class VaccinationRecordController {
     private final VaccinationRecordService vaccinationRecordService;
 
     @Autowired
-    public VaccinationRecordController(PetInformationService petInformationService, MedicalHistoryService medicalHistoryService, VaccinationRecordService vaccinationRecordService, TreatmentPlanService treatmentPlanService) {
+    public VaccinationRecordController(PetInformationService petInformationService,VaccinationRecordService vaccinationRecordService) {
         this.petInformationService = petInformationService;
         this.vaccinationRecordService = vaccinationRecordService;
     }
@@ -37,22 +37,6 @@ public class VaccinationRecordController {
     }
 
 
-
-//    @GetMapping("/vaccinationRecord")
-//    public String viewMedicalRecord(@RequestParam("petId") Long petId, Model model) {
-//        PetInformation pet = petInformationService.getPetById(petId);
-//        if (pet != null) {
-//            List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
-//
-//            model.addAttribute("pet", pet);
-//            model.addAttribute("vaccinationRecords", vaccinationRecords);
-//        }
-//
-//        addPetSelectionToModel(model);
-//        return "AccessMedicalRecords";
-//    }
-
-
     @GetMapping("/vaccination")
     public String showVaccinationDetails(@RequestParam("petId") Long petId, Model model) {
         PetInformation pet = petInformationService.getPetById(petId);
@@ -67,3 +51,19 @@ public class VaccinationRecordController {
     }
 
 }
+
+
+
+//    @GetMapping("/vaccinationRecord")
+//    public String viewMedicalRecord(@RequestParam("petId") Long petId, Model model) {
+//        PetInformation pet = petInformationService.getPetById(petId);
+//        if (pet != null) {
+//            List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
+//
+//            model.addAttribute("pet", pet);
+//            model.addAttribute("vaccinationRecords", vaccinationRecords);
+//        }
+//
+//        addPetSelectionToModel(model);
+//        return "AccessMedicalRecords";
+//    }
