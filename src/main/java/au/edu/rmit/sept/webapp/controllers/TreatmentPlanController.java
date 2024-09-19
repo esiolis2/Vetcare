@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,7 +31,7 @@ public class TreatmentPlanController {
     }
 
     @GetMapping("/view-treatment-plan")
-    public String  ViewTreatmentPlan(Model model) {
+    public String ViewTreatmentPlan(Model model) {
         addPetSelectionToModel(model);
         return "ViewTreatmentPlan";
     }
@@ -55,30 +56,4 @@ public class TreatmentPlanController {
     }
 
 
-
-//    @GetMapping("/treatmentPlan")
-//    public String viewTreatmentPlan(@RequestParam("petId") Long petId, Model model) {
-//        PetInformation pet = petInformationService.getPetById(petId);
-//            if (pet != null) {
-//                List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
-//                model.addAttribute("pet", pet);
-//                model.addAttribute("treatmentPlans", treatmentPlans);
-//            }
-//            addPetSelectionToModel(model);
-//            return "ViewTreatmentPlan";
-//        }
-
-    @GetMapping("/viewTreatmentPlan")
-    public String ViewTreatmentPlan(@RequestParam("petId") Long petId, Model model) {
-        PetInformation pet = petInformationService.getPetById(petId);
-        if (pet != null) {
-            List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
-            model.addAttribute("pet", pet);
-            model.addAttribute("treatmentPlans", treatmentPlans);
-        }
-        addPetSelectionToModel(model);
-        return "AccessMedicalRecords";
-    }
 }
-
-

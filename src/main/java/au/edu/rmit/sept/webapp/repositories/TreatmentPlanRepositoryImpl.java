@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 @Repository
 public class TreatmentPlanRepositoryImpl implements TreatmentPlanRepository {
@@ -71,7 +72,6 @@ public class TreatmentPlanRepositoryImpl implements TreatmentPlanRepository {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
 
-            stmt.setLong(1, treatmentPlan.getPetID());
             stmt.setString(2, treatmentPlan.getDiagnosis());
             stmt.setString(3, treatmentPlan.getTreatmentType());
             stmt.setString(4, treatmentPlan.getTreatmentDescription());
@@ -103,13 +103,12 @@ public class TreatmentPlanRepositoryImpl implements TreatmentPlanRepository {
     private TreatmentPlan mapSetToTreatmentPlan(ResultSet rs) throws SQLException {
         return new TreatmentPlan(
                 rs.getLong("TreatmentPlanID"),
-                rs.getLong("PetID"),
                 rs.getString("Diagnosis"),
                 rs.getString("TreatmentType"),
                 rs.getString("TreatmentDescription"),
                 rs.getString("PetCondition"),
                 rs.getBoolean("IsEmergency"),
-                rs.getDate("StartDate").toLocalDate(),
+                rs.getDate("StartDate") != null ? rs.getDate("StartDate").toLocalDate() : null,
                 rs.getDate("EndDate") != null ? rs.getDate("EndDate").toLocalDate() : null,
                 rs.getString("PrescribedMedications"),
                 rs.getString("TreatmentDuration"),
@@ -127,4 +126,5 @@ public class TreatmentPlanRepositoryImpl implements TreatmentPlanRepository {
                 rs.getTimestamp("UpdatedAt").toLocalDateTime().toLocalDate()
         );
     }
+
 }

@@ -6,7 +6,7 @@ public class TreatmentPlan {
     private PetInformation pet;
 
     private Long treatmentPlanID;
-    private Long petID;
+//    private Long petID;
     private String diagnosis;
     private String treatmentType;
     private String treatmentDescription;
@@ -29,17 +29,14 @@ public class TreatmentPlan {
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
-    public TreatmentPlan() {
-    }
-
-    public TreatmentPlan(Long treatmentPlanID, Long petID, String diagnosis, String treatmentType,
+    public TreatmentPlan(Long treatmentPlanID, String diagnosis, String treatmentType,
                          String treatmentDescription, String petCondition, Boolean isEmergency, LocalDate startDate,
                          LocalDate endDate, String prescribedMedications, String treatmentDuration, String nextSteps,
                          String vetName, LocalDate followUpDate, Double costEstimate, String treatmentOutcome,
                          String treatmentNotes, String clinicLocation, Boolean isInsured, String insuranceDetails,
                          String paymentStatus, LocalDate createdAt, LocalDate updatedAt) {
         this.treatmentPlanID = treatmentPlanID;
-        this.petID = petID;
+//        this.petID = petID;
         this.diagnosis = diagnosis;
         this.treatmentType = treatmentType;
         this.treatmentDescription = treatmentDescription;
@@ -76,14 +73,6 @@ public class TreatmentPlan {
 
     public void setTreatmentPlanID(Long treatmentPlanID) {
         this.treatmentPlanID = treatmentPlanID;
-    }
-
-    public Long getPetID() {
-        return petID;
-    }
-
-    public void setPetID(Long petID) {
-        this.petID = petID;
     }
 
     public String getDiagnosis() {
