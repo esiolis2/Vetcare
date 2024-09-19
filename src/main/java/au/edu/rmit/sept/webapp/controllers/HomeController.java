@@ -30,10 +30,6 @@ public class  HomeController {
        return "SignUp.html";
     }
 
-    @GetMapping("/view-vaccination-records")
-    public String ViewVaccinationRecords(){
-        return"ViewVaccinationRecords.html";
-    }
 
 
 }
