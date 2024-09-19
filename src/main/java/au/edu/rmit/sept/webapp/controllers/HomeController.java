@@ -36,4 +36,11 @@ public class  HomeController {
         return "Login.html";
     }
 
+    @GetMapping("/account")
+    public String Account(Model model) {
+        model.addAttribute("message", "Welcome to Vet Care!");
+        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
+        return "Account.html";
+    }
+
 }

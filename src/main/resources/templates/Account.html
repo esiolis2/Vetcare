@@ -1,132 +1,391 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Account</title>
+    <title>Dashboard</title>
     <link href="/Styles/BookApp.css" rel="stylesheet">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-    <div class="container">
-        <a class="navbar-brand" href="/">VetCare</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+<!--<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">-->
+<!--    <div class="container">-->
+<!--        <a class="navbar-brand" href="/">VetCare</a>-->
+<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+<!--        <div class="collapse navbar-collapse" id="navbarNav">-->
+<!--            <ul class="navbar-nav ms-auto">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/">Home</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/resources">Resources</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/signup">Signup</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/login">Login</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" href="/account">Account</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+<div layout:fragment="content">
+    <!--    <div class="container mt-5">-->
+    <!--        <h2>Your Account</h2>-->
+
+    <!--        <div class="account-details mt-4">-->
+    <!--            <h3>Account Information</h3>-->
+    <!--            <div id="account-info-container">-->
+    <!--                <p><strong>Email:</strong> testuser@example.com</p>-->
+    <!--                <p><strong>Phone Number:</strong> +123 456 7890</p>-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+    <!--        <div class="pet-prescriptions mt-4">-->
+    <!--            <h3>Your Pet's Prescriptions</h3>-->
+    <!--            <div id="pet-prescriptions-container">-->
+    <!--                <ul>-->
+    <!--                    <li>Pet: testDog - Prescription: Flea Treatment</li>-->
+    <!--                </ul>-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+    <!--        <div class="pet-details mt-4">-->
+    <!--            <h3>Your Pet Details</h3>-->
+    <!--            <div id="pet-details-container">-->
+    <!--                <ul>-->
+    <!--                    <li><strong>testDog:</strong> Age 3, Dog, Last Appointment: 15/09/2024</li>-->
+    <!--                </ul>-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+    <!--        <div class="add-pet mt-4">-->
+    <!--            <button class="btn btn-primary" id="add-pet-button">Add New Pet</button>-->
+    <!--            <div id="add-pet-form-container" style="display: none;">-->
+    <!--                <form id="add-pet-form" class="mt-3">-->
+    <!--                    <div class="form-group">-->
+    <!--                        <label for="petName">Pet Name:</label>-->
+    <!--                        <input type="text" class="form-control" id="petName" placeholder="Enter pet name" required>-->
+    <!--                    </div>-->
+    <!--                    <div class="form-group">-->
+    <!--                        <label for="petType">Pet Type:</label>-->
+    <!--                        <input type="text" class="form-control" id="petType" placeholder="Enter type of pet (e.g., Dog, Cat)" required>-->
+    <!--                    </div>-->
+    <!--                    <div class="form-group">-->
+    <!--                        <label for="petAge">Pet Age:</label>-->
+    <!--                        <input type="number" class="form-control" id="petAge" placeholder="Enter pet age" required>-->
+    <!--                    </div>-->
+    <!--                    <button type="submit" class="btn btn-primary">Submit</button>-->
+    <!--                </form>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">-->
+    <!--        <div class="modal-dialog">-->
+    <!--            <div class="modal-content">-->
+    <!--                <div class="modal-header">-->
+    <!--                    <h5 class="modal-title" id="confirmationModalLabel">Pet Added</h5>-->
+    <!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+    <!--                        <span aria-hidden="true">&times;</span>-->
+    <!--                    </button>-->
+    <!--                </div>-->
+    <!--                <div class="modal-body">-->
+    <!--                    <p>Your pet has been successfully added!</p>-->
+    <!--                </div>-->
+    <!--                <div class="modal-footer">-->
+    <!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--</div>-->
+
+    <!--<footer class="container-fluid text-center py-3 mt-5 footer-style">-->
+    <!--    <div class="row">-->
+    <!--        <div class="col-md-4">-->
+    <!--            <p>Contact Us: +123 456 789</p>-->
+    <!--        </div>-->
+    <!--        <div class="col-md-4">-->
+    <!--            <p>© 2024 VetCare. All rights reserved.</p>-->
+    <!--        </div>-->
+    <!--        <div class="col-md-4">-->
+    <!--            <p>Follow Us:-->
+    <!--                <a href="#" class="social-icon">Facebook</a> |-->
+    <!--                <a href="#" class="social-icon">Instagram</a> |-->
+    <!--                <a href="#" class="social-icon">Twitter</a>-->
+    <!--            </p>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--</footer>-->
+    <div class="d-flex min-vh-100">
+        <!-- Sidebar -->
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 350px;">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <h1 class="navbar-brand">Vet Care</h1>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto custom-sidebar">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
+                    <a href="#" class="nav-link userDashboard" aria-current="page">
+                        <i class="bi bi-house-door"></i>
+                        User Dashboard
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/resources">Resources</a>
+                <li>
+                    <a href="#" class="nav-link text-white">
+                        <i class="bi bi-calendar-check me-2"></i>
+                        Appointment Management
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/signup">Signup</a>
+                <li>
+                    <a href="#" class="nav-link text-white">
+                        <i class="bi bi-file-earmark-medical me-2"></i>
+                        Prescription Management
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/account">Account</a>
+                <li>
+                    <a href="#" class="nav-link text-white">
+                        <i class="bi bi-heart me-2"></i>
+                        Pet Management
+                    </a>
                 </li>
             </ul>
+            <hr>
+            <div class="dropdown mt-auto">
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                    <strong>mdo</strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
 
-<div class="container mt-5">
-    <h2>Your Account</h2>
+        <!-- Main Content on the right -->
+        <div class="flex-grow-1 dashboard-content">
+            <div class="container mt-5">
+                <h2>Pet name</h2>
+                <div class="account-details mt-4 card p-4">
+                    <h3>Account Information</h3>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Full Name</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">Johnatan Smith</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Email</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">example@example.com</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Phone</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">(097) 234-5678</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Mobile</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">(098) 765-4321</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Address</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                            Pet Details-->
+                        <div class="pet-details mt-4 card p-4">
+                            <h3>Pet Details</h3>
+                            <div id="pet-details-container" class="border rounded p-3">
+                                <!--                                The comment line can be used when adding backend-->
+                                <!--                                <div  class="summary-section" th:if="${pet != null}">-->
+                                <div class="summary-section">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Name</th>
+                                            <!--                                            <td th:text="${pet.name}">-</td>-->
+                                            <td>Fluffy</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Age</th>
+                                            <!--                                            <td th:text="${pet.age}">-</td>-->
+                                            <td>12</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Gender</th>
+                                            <!--                                            <td th:text="${pet.gender}">-</td>-->
+                                            <td>Female</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Weight</th>
+                                            <!--                                            <td th:text="${pet.weight}">-</td>-->
+                                            <td>15kg</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Breed</th>
+                                            <!--                                            <td th:text="${pet.breed}">-</td>-->
+                                            <td>Japanese Spitz</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Birth Date</th>
+                                            <!--                                            <td th:text="${pet.birthDate}">-</td>-->
+                                            <td>12/4/2015</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Owner Name</th>
+                                            <!--                                            <td th:text="${pet.ownerName}">-</td>-->
+                                            <td>Jane</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Owner Contact</th>
+                                            <!--                                            <td th:text="${pet.ownerContact}">-</td>-->
+                                            <td>Jane</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
-    <div class="account-details mt-4">
-        <h3>Account Information</h3>
-        <div id="account-info-container">
-            <p><strong>Email:</strong> testuser@example.com</p>
-            <p><strong>Phone Number:</strong> +123 456 7890</p>
-        </div>
-    </div>
-
-    <div class="pet-prescriptions mt-4">
-        <h3>Your Pet's Prescriptions</h3>
-        <div id="pet-prescriptions-container">
-            <ul>
-                <li>Pet: testDog - Prescription: Flea Treatment</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="pet-details mt-4">
-        <h3>Your Pet Details</h3>
-        <div id="pet-details-container">
-            <ul>
-                <li><strong>testDog:</strong> Age 3, Dog, Last Appointment: 15/09/2024</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="add-pet mt-4">
-        <button class="btn btn-primary" id="add-pet-button">Add New Pet</button>
-        <div id="add-pet-form-container" style="display: none;">
-            <form id="add-pet-form" class="mt-3">
-                <div class="form-group">
-                    <label for="petName">Pet Name:</label>
-                    <input type="text" class="form-control" id="petName" placeholder="Enter pet name" required>
+                        <!--                        Button to add new pet-->
+                        <div class="add-pet mt-4 card p-4">
+                            <button class="btn btn-primary" id="add-pet-button" data-bs-toggle="modal"
+                                    data-bs-target="#addPetModal">Add New Pet
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="petType">Pet Type:</label>
-                    <input type="text" class="form-control" id="petType" placeholder="Enter type of pet (e.g., Dog, Cat)" required>
+                <!-- Modal for Add New Pet -->
+                <div class="modal fade" id="addPetModal" tabindex="-1" aria-labelledby="addPetModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addPetModalLabel">Add New Pet</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="add-pet-form">
+                                    <div class="form-group">
+                                        <label for="petName">Pet Name:</label>
+                                        <input type="text" class="form-control" id="petName"
+                                               placeholder="Enter pet name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petType">Pet Type:</label>
+                                        <input type="text" class="form-control" id="petType"
+                                               placeholder="Enter pet type" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petAge">Pet Age:</label>
+                                        <input type="number" class="form-control" id="petAge"
+                                               placeholder="Enter pet age" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petGender">Pet Gender:</label>
+                                        <select class="form-control" id="petGender" required>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petWeight">Pet Weight:</label>
+                                        <input type="text" class="form-control" id="petWeight"
+                                               placeholder="Enter pet weight" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petBreed">Pet Breed:</label>
+                                        <input type="text" class="form-control" id="petBreed"
+                                               placeholder="Enter pet breed" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petBirthDate">Birth Date:</label>
+                                        <input type="date" class="form-control" id="petBirthDate" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ownerName">Owner Name:</label>
+                                        <input type="text" class="form-control" id="ownerName"
+                                               placeholder="Enter owner name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ownerContact">Owner Contact:</label>
+                                        <input type="text" class="form-control" id="ownerContact"
+                                               placeholder="Enter owner contact" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="petAge">Pet Age:</label>
-                    <input type="number" class="form-control" id="petAge" placeholder="Enter pet age" required>
+                <!-- Modal for Confirmation -->
+                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmationModalLabel">Pet Added</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Your pet has been successfully added!</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Pet Added</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Your pet has been successfully added!</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<footer class="container-fluid text-center py-3 mt-5 footer-style">
-    <div class="row">
-        <div class="col-md-4">
-            <p>Contact Us: +123 456 789</p>
-        </div>
-        <div class="col-md-4">
-            <p>© 2024 VetCare. All rights reserved.</p>
-        </div>
-        <div class="col-md-4">
-            <p>Follow Us:
-                <a href="#" class="social-icon">Facebook</a> |
-                <a href="#" class="social-icon">Instagram</a> |
-                <a href="#" class="social-icon">Twitter</a>
-            </p>
-        </div>
-    </div>
-</footer>
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
