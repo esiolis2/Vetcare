@@ -3,6 +3,7 @@ package au.edu.rmit.sept.webapp.models;
 import java.time.LocalDate;
 
 public class TreatmentPlan {
+    private PetInformation pet;
 
     private Long treatmentPlanID;
     private Long petID;
@@ -62,7 +63,13 @@ public class TreatmentPlan {
         this.updatedAt = updatedAt;
     }
 
-    // Getters and setters for each field
+    public PetInformation getPet() {
+        return pet;
+    }
+
+    public void setPet(PetInformation pet) {
+        this.pet = pet;
+    }
     public Long getTreatmentPlanID() {
         return treatmentPlanID;
     }

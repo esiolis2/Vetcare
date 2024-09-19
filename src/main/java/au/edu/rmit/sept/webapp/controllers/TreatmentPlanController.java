@@ -29,23 +29,56 @@ public class TreatmentPlanController {
         model.addAttribute("pets", pets);
     }
 
-    @GetMapping("/access-medical-records")
-    public String AccessMedicalRecords(Model model) {
+    @GetMapping("/view-treatment-plan")
+    public String  ViewTreatmentPlan(Model model) {
         addPetSelectionToModel(model);
-        return "AccessMedicalRecords";
+        return "ViewTreatmentPlan";
     }
 
     @GetMapping("/treatmentPlan")
-    public String showTreatmentPlanDetails(@RequestParam("petId") Long petId, Model model) {
+    public String viewTreatmentPlan(@RequestParam("petId") Long petId, Model model) {
+        PetInformation pet = petInformationService.getPetById(petId);
+        if (pet != null) {
+            List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
+
+            if (treatmentPlans != null && !treatmentPlans.isEmpty()) {
+                model.addAttribute("pet", pet);
+                model.addAttribute("treatmentPlans", treatmentPlans);
+            } else {
+                model.addAttribute("errorMessage", "No treatment plans found for this pet.");
+            }
+        } else {
+            model.addAttribute("errorMessage", "Pet not found.");
+        }
+        addPetSelectionToModel(model);
+        return "ViewTreatmentPlan";
+    }
+
+
+
+//    @GetMapping("/treatmentPlan")
+//    public String viewTreatmentPlan(@RequestParam("petId") Long petId, Model model) {
+//        PetInformation pet = petInformationService.getPetById(petId);
+//            if (pet != null) {
+//                List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
+//                model.addAttribute("pet", pet);
+//                model.addAttribute("treatmentPlans", treatmentPlans);
+//            }
+//            addPetSelectionToModel(model);
+//            return "ViewTreatmentPlan";
+//        }
+
+    @GetMapping("/viewTreatmentPlan")
+    public String ViewTreatmentPlan(@RequestParam("petId") Long petId, Model model) {
         PetInformation pet = petInformationService.getPetById(petId);
         if (pet != null) {
             List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
             model.addAttribute("pet", pet);
             model.addAttribute("treatmentPlans", treatmentPlans);
-        } else {
-            model.addAttribute("errorMessage", "No pet found with the given ID.");
         }
-        return "ViewTreatmentPlan";
+        addPetSelectionToModel(model);
+        return "AccessMedicalRecords";
     }
 }
+
 

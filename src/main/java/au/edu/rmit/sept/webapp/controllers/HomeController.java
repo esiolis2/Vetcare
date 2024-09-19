@@ -17,10 +17,6 @@ public class  HomeController {
         return "Resources.html";
     }
 
-    @GetMapping("/view-treatment-plan")
-    public String  ViewTreatmentPlan() {
-        return "ViewTreatmentPlan.html";
-    }
 
     @GetMapping("/signup")
     public String SignUp() {
