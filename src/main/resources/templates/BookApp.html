@@ -4,122 +4,172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book an Appointment with a Veterinarian</title>
-    <link href="/src/main/resources/static/assets/css/BookApp.css" rel="stylesheet">
+    <link href="/static/assets/css/BookApp.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light px-2">
-        <a class="navbar-brand" href="#">VetCare</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto"> 
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="BookApp.html">Book Appointment</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="SignUp.html">Signup</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Login.html">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="ChangeApp.html">Reschedule</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-2">
+    <a class="navbar-brand" href="#">VetCare</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="BookApp.html">Book Appointment</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="SignUp.html">Signup</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Login.html">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="ChangeApp.html">Reschedule</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <div class="container mt-5">
     <h2 class="text-center">Book an Appointment with a Vet</h2>
-    <form  th:action="@{/add}" method="post" id="appointmentForm" class="mx-auto form-container">
+    <form id="appointmentForm" class="mx-auto form-container" onsubmit="handleSubmit(event)">
 
-
+        <!-- Step 1: Reason for Appointment and Clinic Pricing -->
         <div id="step-1" class="form-step">
             <div class="form-group">
-                <label for="clinic">Available Clinics:</label>
-                <select class="form-control" id="clinic"  required name="clinicId">
-                    <option>Select a clinic</option>
-                    <option th:each="clinic : ${clinics}" th:value="${clinic.id}" th:text="${clinic.name}">Clinic Name</option>
-                </select>
-            </div>
-            <div class="form-group" id="veterinarianForm" style="display: none">
-                <label for="vetId" >Choose your Veterinarian:</label>
-                <select  name="veterinarianId" class="form-control" id="vetId"  required>
-                    <option value="placeholder" >Select a Veterinarian</option>
-                    <option th:each="veterinarian : ${veterinarians}" th:value="${veterinarian.id}" th:text="${veterinarian.name}" th:attr="data-clinic-id=${veterinarian.clinicId}">Veterinarian Name </option>
-                </select>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="appointment-date" >Appointment Date:</label>
-                    <input  name="appointmentDate" type="date" class="form-control" id="appointment-date" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="appointment-time">Appointment Time:</label>
-                    <input name="appointmentTime" type="time" class="form-control" id="appointment-time" required>
-                </div>
-
-            </div>
-            <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
-        </div>
-
-        <div id="step-2" class="form-step" style="display: none;">
-            <div class="form-group">
-                <label for="ownerName">Your Full Name:</label>
-                <input name="ownerName" type="text" class="form-control" id="ownerName" placeholder="Enter your name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email Address:</label>
-                <input name="email" type="text" class="form-control" id="email" placeholder="Enter your email" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone Number:</label>
-                <input name="phone" type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
-            </div>
-            <button type="button" class="btn btn-secondary" onclick="previousStep(1)">Previous</button>
-            <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next</button>
-        </div>
-
-        <div id="step-3" class="form-step" style="display: none;">
-            <div class="form-group">
-                <label for="newOrExisting">Is this a new pet or an existing pet?</label>
-                <select class="form-control" id="newOrExisting" required>
-                    <option value="">Select an option</option>
-                    <option value="new">New Pet</option>
-                    <option value="existing">Existing Pet</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="petName">Pet Name:</label>
-                <input name="petName" type="text" class="form-control" id="petName" placeholder="Enter your pet's name" required>
-            </div>
-            <div class="form-group">
-                <label for="petType">Pet Type:</label>
-                <input name="petType" type="text" class="form-control" id="petType" placeholder="Enter type of pet (e.g., Dog, Cat)" required>
-            </div>
-            <div class="form-group">
-                <label for="petAge">Pet Age:</label>
-                <input name="petAge" type="number" class="form-control" id="petAge" placeholder="Enter your pet's age" required>
-            </div>
-            <div class="form-group">
                 <label for="petQuery">Reason for Appointment:</label>
-                <select  name="reason" class="form-control" id="petQuery" required>
+                <select name="reason" class="form-control" id="petQuery" required onchange="showPricing()">
                     <option value="">Select a reason</option>
                     <option value="general">General Checkup</option>
                     <option value="vaccination">Vaccination Checkup</option>
                     <option value="emergency">Emergency Appointment</option>
                 </select>
             </div>
+
+            <!-- Pricing Box -->
+            <div class="pricing-box mt-3" id="pricingBox" style="display: none;">
+                <h4>Clinic Pricing</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">Clinic A - $15</li>
+                    <li class="list-group-item">Clinic B - $30</li>
+                    <li class="list-group-item">Clinic C - $45</li>
+                </ul>
+            </div>
+
+            <button type="button" class="btn btn-primary mt-3" onclick="nextStep(2)">Next</button>
+        </div>
+
+        <!-- Step 2: Appointment Date and Time -->
+        <div id="step-2" class="form-step" style="display: none;">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="appointment-date">Appointment Date:</label>
+                    <input name="appointmentDate" type="date" class="form-control" id="appointment-date" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="appointment-time">Appointment Time:</label>
+                    <select class="form-control" id="appointment-time" name="appointmentTime" required style="max-height: 200px; overflow-y: scroll;">
+                        <option value="">Select a time</option>
+                        <option value="09:00 AM">9:00 AM</option>
+                        <option value="09:15 AM">9:15 AM</option>
+                        <option value="09:30 AM">9:30 AM</option>
+                        <!-- Additional times as needed -->
+                        <option value="09:45 AM">9:45 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="10:15 AM">10:15 AM</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-secondary" onclick="previousStep(1)">Previous</button>
+            <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next</button>
+        </div>
+
+        <!-- Step 3: Owner Information -->
+        <div id="step-3" class="form-step" style="display: none;">
+            <div class="form-group">
+                <label for="ownerName">Your Full Name:</label>
+                <input name="ownerName" type="text" class="form-control" id="ownerName" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input name="email" type="email" class="form-control" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input name="phone" type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
+            </div>
             <button type="button" class="btn btn-secondary" onclick="previousStep(2)">Previous</button>
+            <button type="button" class="btn btn-primary" onclick="nextStep(4)">Next</button>
+        </div>
+
+        <!-- Step 4: Pet Information -->
+        <div id="step-4" class="form-step" style="display: none;">
+            <div class="form-group">
+                <label for="newOrExisting">Is this a new pet or an existing pet?</label>
+                <select class="form-control" id="newOrExisting" required onchange="togglePetSelection()">
+                    <option value="">Select an option</option>
+                    <option value="new">New Pet</option>
+                    <option value="existing">Existing Pet</option>
+                </select>
+            </div>
+
+            <div id="existingPetsGrid" style="display: none;">
+                <h5>Choose your existing pet:</h5>
+                <div class="row">
+                    <!-- Placeholder pet grid (2-column, 8 rows) with buttons -->
+                    <div class="col-md-6 mb-2">
+                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 1')">Pet 1</button>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 2')">Pet 2</button>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 3')">Pet 3</button>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 4')">Pet 4</button>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 5')">Pet 5</button>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 6')">Pet 6</button>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 7')">Pet 7</button>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 8')">Pet 8</button>
+                    </div>
+                </div>
+            </div>
+            <!-- New Pet Form (hidden initially) -->
+            <div id="newPetForm" style="display: none;">
+                <div class="form-group">
+                    <label for="petName">Pet Name:</label>
+                    <input name="petName" type="text" class="form-control" id="petName" placeholder="Enter your pet's name" required>
+                </div>
+                <div class="form-group">
+                    <label for="petType">Pet Type:</label>
+                    <input name="petType" type="text" class="form-control" id="petType" placeholder="Enter type of pet (e.g., Dog, Cat)" required>
+                </div>
+                <div class="form-group">
+                    <label for="petAge">Pet Age:</label>
+                    <input name="petAge" type="number" class="form-control" id="petAge" placeholder="Enter your pet's age" required>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-secondary" onclick="previousStep(3)">Previous</button>
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
 
+    <!-- Confirmation Modal -->
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -131,18 +181,11 @@
                 </div>
                 <div class="modal-body">
                     <p>Your appointment has been successfully booked!</p>
-                    <p><strong>Appointment Details:</strong></p>
                     <ul>
-                        <li>Pet Name: <span id="confirmPetName"></span></li>
-                        <li>Pet Type: <span id="confirmPetType"></span></li>
-                        <li>Pet Age: <span id="confirmPetAge"></span></li>
-                        <li>Owner Name: <span id="confirmOwnerName"></span></li>
-                        <li>Email: <span id="confirmEmail"></span></li>
-                        <li>Phone Number: <span id="confirmPhone"></span></li>
+                        <li>Reason: <span id="confirmReason"></span></li>
+                        <li>Clinic: <span id="confirmClinic"></span></li>
                         <li>Appointment Date: <span id="confirmDate"></span></li>
                         <li>Appointment Time: <span id="confirmTime"></span></li>
-                        <li>Clinic: <span id="confirmClinic"></span></li>
-                        <li>Reason: <span id="confirmReason"></span></li>
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -156,9 +199,101 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="/scripts/BookApp.js"></script>
 
+<script>
+    function showPricing() {
+        const reason = document.getElementById('petQuery').value;
+        const pricingBox = document.getElementById('pricingBox');
+        if (reason) {
+            pricingBox.style.display = 'block'; // Show the pricing box
+        } else {
+            pricingBox.style.display = 'none';  // Hide the pricing box if no reason is selected
+        }
+    }
 
+    function nextStep(stepNumber) {
+        document.querySelectorAll('.form-step').forEach(step => step.style.display = 'none');
+        document.getElementById('step-' + stepNumber).style.display = 'block';
+    }
+
+    function previousStep(stepNumber) {
+        nextStep(stepNumber);
+    }
+
+    let selectedPet = null;
+
+    function selectPet(button, petName) {
+        // Reset all button styles
+        document.querySelectorAll('.pet-button').forEach(btn => {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline-primary');
+        });
+
+        // Highlight the selected button
+        button.classList.remove('btn-outline-primary');
+        button.classList.add('btn-primary');
+
+        // Store the selected pet
+        selectedPet = petName;
+        console.log('Selected Pet:', selectedPet);
+    }
+
+    function togglePetSelection() {
+        const selection = document.getElementById('newOrExisting').value;
+        const existingPetsGrid = document.getElementById('existingPetsGrid');
+        const newPetForm = document.getElementById('newPetForm');
+
+        if (selection === 'existing') {
+            existingPetsGrid.style.display = 'block'; // Show existing pets grid
+            newPetForm.style.display = 'none'; // Hide new pet form
+        } else if (selection === 'new') {
+            existingPetsGrid.style.display = 'none'; // Hide existing pets grid
+            newPetForm.style.display = 'block'; // Show new pet form
+        } else {
+            existingPetsGrid.style.display = 'none'; // Hide both if no selection
+            newPetForm.style.display = 'none';
+        }
+    }
+
+    function handleSubmit(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+
+        const selection = document.getElementById('newOrExisting').value;
+
+        if (selection === 'existing' && selectedPet === null) {
+            alert('Please select an existing pet.');
+            return; // Exit if no existing pet is selected
+        }
+
+        if (selection === 'new') {
+            const petName = document.getElementById('petName').value;
+            const petType = document.getElementById('petType').value;
+            const petAge = document.getElementById('petAge').value;
+
+            if (!petName || !petType || !petAge) {
+                alert('Please fill out all new pet details.');
+                return; // Exit if new pet details are incomplete
+            }
+
+            console.log('New Pet Submitted:', { petName, petType, petAge });
+        }
+
+        // Gather other form data
+        const reason = document.getElementById('petQuery').value;
+        const clinic = document.querySelector('.pricing-box ul li').innerText; // Assuming it's Clinic A, B, or C
+        const appointmentDate = document.getElementById('appointment-date').value;
+        const appointmentTime = document.getElementById('appointment-time').value;
+
+        // Populate modal fields
+        document.getElementById('confirmReason').innerText = reason;
+        document.getElementById('confirmClinic').innerText = clinic;
+        document.getElementById('confirmDate').innerText = appointmentDate;
+        document.getElementById('confirmTime').innerText = appointmentTime;
+
+        // Show the confirmation modal
+        $('#confirmationModal').modal('show');
+    }
+</script>
 
 </body>
 <footer class="container-fluid text-center py-3">
