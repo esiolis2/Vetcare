@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS VaccinationRecords (
+    VaccinationID INT AUTO_INCREMENT PRIMARY KEY,
+    PetID INT,
+    VaccineName VARCHAR(100) NOT NULL,
+    AdministeredDate DATE NOT NULL,
+    NextDueDate DATE,
+    BoosterRequired VARCHAR(255),
+    FOREIGN KEY (PetID) REFERENCES PET_INFO(PetID) ON DELETE CASCADE
+);
