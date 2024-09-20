@@ -96,8 +96,8 @@
 				<version>10.10.0</version> <!-- Use the latest version -->
 				<configuration>
 					<url>jdbc:mysql://localhost:3306/vetcare</url>
-					<user>sukh</user>
-					<password>s3945471</password>
+					<user>root</user>
+					<password>ethan1</password>
 					<locations>classpath:db/migration</locations> <!-- Location of migration scripts -->
 				</configuration>
 			</plugin>
