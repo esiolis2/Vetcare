@@ -41,10 +41,20 @@ function selectPet() {
 
 function scrollLeft() {
     const container = document.querySelector('.vaccination-records-row');
-    container.scrollBy({ left: -300, behavior: 'smooth' });
+    const maxScrollLeft = 0;
+    const currentScrollLeft = container.scrollLeft;
+
+    if (currentScrollLeft > maxScrollLeft) {
+        container.scrollBy({ left: -300, behavior: 'smooth' });
+    }
 }
 
 function scrollRight() {
     const container = document.querySelector('.vaccination-records-row');
-    container.scrollBy({ left: 300, behavior: 'smooth' });
+    const maxScrollLeft = container.scrollWidth - container.clientWidth;
+    const currentScrollLeft = container.scrollLeft;
+
+    if (currentScrollLeft < maxScrollLeft) {
+        container.scrollBy({ left: 300, behavior: 'smooth' });
+    }
 }
