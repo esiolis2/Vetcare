@@ -44,6 +44,8 @@ public class VaccinationRecordController {
             List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
             model.addAttribute("pet", pet);
             model.addAttribute("vaccinationRecords", vaccinationRecords);
+        } else {
+            model.addAttribute("errorMessage", "Pet not found.");
         }
 
         addPetSelectionToModel(model);
