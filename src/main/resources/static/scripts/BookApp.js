@@ -51,6 +51,30 @@ document.getElementById('clinic').addEventListener('change', function() {
 
 });
 
+document.getElementById('reason').addEventListener('change', function() {
+    var selectedServiceId = this.value;
+    var prices = document.getElementById('prices');
+    var priceItems = prices.querySelectorAll('li');
+
+    // Show or hide pricing based on the selected service ID
+    priceItems.forEach(function(item) {
+        if (item.getAttribute('data-service-id') === selectedServiceId || selectedServiceId === "") {
+            item.style.display = 'block'; // Show item if it matches or if no reason is selected
+        } else {
+            item.style.display = 'none'; // Hide item otherwise
+        }
+    });
+
+
+});
+
+
+
+
+
+
+
+
 // hides veterinarian form until a clinic has been selected.
    var clinicSelect = document.getElementById('clinic');
                 var veterinarianForm = document.getElementById('veterinarianForm');
@@ -66,3 +90,7 @@ document.getElementById('clinic').addEventListener('change', function() {
                         veterinarianForm.style.display = 'none';
                     }
                 });
+
+
+
+

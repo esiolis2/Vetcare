@@ -1,12 +1,7 @@
 package au.edu.rmit.sept.webapp.controllers;
 
-import au.edu.rmit.sept.webapp.models.Appointment;
-import au.edu.rmit.sept.webapp.models.Clinic;
-import au.edu.rmit.sept.webapp.models.Veterinarian;
-import au.edu.rmit.sept.webapp.services.AppointmentService;
-import au.edu.rmit.sept.webapp.services.AppointmentServiceImpl;
-import au.edu.rmit.sept.webapp.services.ClinicService;
-import au.edu.rmit.sept.webapp.services.VeterinarianService;
+import au.edu.rmit.sept.webapp.models.*;
+import au.edu.rmit.sept.webapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +17,16 @@ public class AppointmentController {
     private final AppointmentService appointmentService;
     private final ClinicService clinicService;
     private final VeterinarianService veterinarianService;
+    private final ClinicServicePricingService clinicServicePricingService;
+    private final ClinicReasonsService clinicReasonsService;
 
     @Autowired
-    public AppointmentController(AppointmentService appointmentService, ClinicService clinicService, VeterinarianService veterinarianService) {
+    public AppointmentController(AppointmentService appointmentService, ClinicService clinicService, VeterinarianService veterinarianService, ClinicServicePricingService clinicServicePricingService, ClinicReasonsService clinicReasonsService) {
         this.appointmentService = appointmentService;
         this.clinicService = clinicService;
         this.veterinarianService = veterinarianService;
+        this.clinicServicePricingService = clinicServicePricingService;
+        this.clinicReasonsService = clinicReasonsService;
     }
 
     @GetMapping("/appointments")
@@ -36,6 +35,10 @@ public class AppointmentController {
         model.addAttribute("clinics", clinics);
         List<Veterinarian> veterinarians = veterinarianService.getAllVeterinarians();
         model.addAttribute("veterinarians", veterinarians);
+        List<ClinicReasons> clinicReasons = clinicReasonsService.getAllClinicReasons();
+        model.addAttribute("clinicReasons", clinicReasons);
+        List<ClinicServicePricing> servicePricings = clinicServicePricingService.getAll();
+        model.addAttribute("servicePricings", servicePricings);
         return "BookApp";
     }
 
