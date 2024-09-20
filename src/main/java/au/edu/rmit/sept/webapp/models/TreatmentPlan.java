@@ -6,7 +6,7 @@ public class TreatmentPlan {
     private PetInformation pet;
 
     private Long treatmentPlanID;
-//    private Long petID;
+//  private Long petID;
     private String diagnosis;
     private String treatmentType;
     private String treatmentDescription;

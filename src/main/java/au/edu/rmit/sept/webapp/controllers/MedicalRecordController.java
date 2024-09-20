@@ -87,7 +87,7 @@ public class MedicalRecordController {
         return "ViewVaccinationRecords";
     }
 
-    @GetMapping("/treatmentPlan")
+    @GetMapping("/vtreatmentPlan")
     public String showTreatmentPlanDetails(@RequestParam("petId") Long petId, Model model) {
         PetInformation pet = petInformationService.getPetById(petId);
         if (pet != null) {
@@ -100,10 +100,10 @@ public class MedicalRecordController {
         return "ViewTreatmentPlan";
     }
 
-    @GetMapping("/medicalHistoryDetails")
-    public String showFullMedicalRecords() {
-        return "FullMedicalRecords";
-    }
+//    @GetMapping("/medicalHistoryDetails")
+//    public String showFullMedicalRecords() {
+//        return "FullMedicalRecords";
+//    }
 
     @GetMapping("/vaccinationDetails")
     public String showVaccinationDetails() {
@@ -111,9 +111,19 @@ public class MedicalRecordController {
     }
 
     @GetMapping("/treatmentPlanDetails")
-    public String showTreatmentPlanDetails() {
+    public String showFullTreatmentPlanDetails() {        //@RequestParam("petId") Long petId, Model model
+//        PetInformation pet = petInformationService.getPetById(petId);
+//        if (pet != null) {
+//            List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
+//            model.addAttribute("pet", pet);
+//            model.addAttribute("treatmentPlans", treatmentPlans);
+//        } else {
+//            model.addAttribute("errorMessage", "No treatment plans found for this pet.");
+//        }
+//        addPetSelectionToModel(model);
         return "ViewTreatmentPlan";
     }
+
 }
 
 

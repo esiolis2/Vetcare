@@ -30,6 +30,7 @@ public class TreatmentPlanController {
         model.addAttribute("pets", pets);
     }
 
+
     @GetMapping("/view-treatment-plan")
     public String ViewTreatmentPlan(Model model) {
         addPetSelectionToModel(model);

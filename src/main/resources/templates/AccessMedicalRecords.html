@@ -100,7 +100,6 @@
             </tr>
             </tbody>
         </table>
-        <a th:href="@{/medicalHistoryDetails}" class="btn-details">View Full Medical History</a>
     </div>
     <div  class="summary-section" th:if="${pet != null}">
         <h3>Vaccination Summary</h3>
@@ -142,7 +141,8 @@
             </tr>
             </tbody>
         </table>
-        <a th:href="@{/treatmentPlanDetails}" class="btn btn-primary">View Full Treatment Plan</a>
+        <a th:href="@{/treatmentPlan}" class="btn btn-primary">View Full Treatment Plan</a>
+
     </div>
 
     <!-- Ddownload and Share -->
