@@ -36,11 +36,26 @@ public class  HomeController {
         return "Login.html";
     }
 
+    //Route for dashboard page and dashboard content
     @GetMapping("/account")
-    public String Account(Model model) {
-        model.addAttribute("message", "Welcome to Vet Care!");
-        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
-        return "Account.html";
+    public String accountDashboard(Model model) {
+        model.addAttribute("message", "Welcome to Vet Care Dashboard!");
+        return "Account"; // This refers to the 'Account.html'
+    }
+
+    // User Dashboard Page
+    @GetMapping("/dashboard/appointment-management")
+    public String appointmentManagement() {
+        return "dashboard/AppointmentManagement"; // Refers to 'UserDashboard.html'
+    }
+    @GetMapping("/dashboard/prescription-management")
+    public String prescriptionManagement() {
+        return "dashboard/PrescriptionManagement"; // This returns 'PrescriptionManagement.html'
+    }
+
+    @GetMapping("/dashboard/pet-management")
+    public String petManagement() {
+        return "dashboard/PetManagement"; // This returns 'PetManagement.html'
     }
 
 }

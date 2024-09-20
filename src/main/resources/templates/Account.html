@@ -3,12 +3,8 @@
       layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="/Styles/BookApp.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"
-          rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -130,32 +126,32 @@
     <!--</footer>-->
     <div class="d-flex min-vh-100">
         <!-- Sidebar -->
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 350px;">
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 380px;">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <h1 class="navbar-brand">Vet Care</h1>
             </a>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto custom-sidebar">
                 <li class="nav-item">
-                    <a href="#" class="nav-link userDashboard" aria-current="page">
+                    <a href="/account" class="nav-link userDashboard" aria-current="page">
                         <i class="bi bi-house-door"></i>
                         User Dashboard
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white">
+                    <a href="/dashboard/appointment-management" class="nav-link text-white">
                         <i class="bi bi-calendar-check me-2"></i>
                         Appointment Management
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white">
+                    <a href="/dashboard/prescription-management" class="nav-link text-white">
                         <i class="bi bi-file-earmark-medical me-2"></i>
                         Prescription Management
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white">
+                    <a href="/dashboard/pet-management" class="nav-link text-white">
                         <i class="bi bi-heart me-2"></i>
                         Pet Management
                     </a>
@@ -268,7 +264,7 @@
                                         <tr>
                                             <th scope="row">Breed</th>
                                             <!--                                            <td th:text="${pet.breed}">-</td>-->
-                                            <td>Japanese Spitz</td>
+                                            <td>British Short Hair</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Birth Date</th>
