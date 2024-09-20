@@ -3,31 +3,390 @@
       layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
-    <title>ViewVaccinationRecords</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccination Records</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/assets/css/vaccinationRecord.css}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #eef2f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Scroll container for vaccination records */
+        .scroll-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .scroll-btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 20px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .scroll-left {
+            left: 0;
+        }
+
+        .scroll-right {
+            right: 0;
+        }
+
+        .scroll-btn:hover {
+            background-color: #1c2e40;
+            transform: scale(1.1);
+        }
+
+        /* Row of vaccination records */
+        .vaccination-records-row {
+            display: flex;
+            overflow-x: scroll;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding: 10px;
+            margin: 0 40px;
+        }
+
+        .vaccination-record {
+            background-color: #fefdf9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+            min-width: 270px;
+            margin: 0 10px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .vaccination-record:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .vaccination-record h5 {
+            color: #2c3e50;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .vaccination-record p {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .vaccination-record strong {
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .vaccination-record {
+                width: 100%;
+            }
+        }
+
+        /* Button styling */
+        .btn-common {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-align: center;
+            margin: 20px 10px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-common:hover {
+            background-color: #1c2e40;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-back {
+            background-color: #2c3e50;
+        }
+
+        .btn-download {
+            background-color: #27ae60;
+        }
+
+        .btn-share {
+            background-color: #e74c3c;
+        }
+
+        .btn-download:hover {
+            background-color: #229954;
+        }
+
+        .btn-share:hover {
+            background-color: #c0392b;
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
-    <h2 class="text-center" th:text="${petName} + ' Vaccination Records'">PetName Vaccination Records</h2>
-    <div class="table-container d-flex justify-content-center">
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th scope="col">Number</th>
-                <th scope="col">Vaccination Name</th>
-                <th scope="col">Purpose</th>
-                <th scope="col">Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="v, stat : ${vaccinations}">
-                <th scope="row" th:text="${stat.index + 1}">1</th>
-                <td th:text="${v.name}">Feline Leukemia Vaccine</td>
-                <td th:text="${v.purpose}">Otto</td>
-                <td th:text="${v.date}">2/7/24</td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="container vaccinationRecordContainer">
+        <div class="text-center mb-4">
+            <h2>Pet Vaccination Records</h2>
+        </div>
+
+        <!-- Pet Selection Dropdown -->
+        <div class="pet-selection mb-4">
+            <form th:action="@{/vaccination}" method="get">
+                <div class="form-group">
+                    <label for="petSelect">Choose the Pet</label>
+                    <select class="form-select" id="petSelect" name="petId" onchange="this.form.submit()">
+                        <option value="" selected>Select a Pet</option>
+                        <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"></option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <!-- Vaccination Records in separate boxes with scrollable navigation -->
+        <div class="scroll-container">
+            <button class="scroll-btn scroll-left" onclick="scrollLeft()">&#9664;</button>
+            <div class="vaccination-records-row">
+                <div class="vaccination-record card" th:each="vaccinationRecord : ${vaccinationRecords}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${vaccinationRecord.vaccineName}">Vaccine Name</h5>
+                        <p class="card-text">
+                            <strong>Administered Date: </strong>
+                            <span th:text="${vaccinationRecord.administeredDate != null ? #temporals.format(vaccinationRecord.administeredDate, 'yyyy-MM-dd') : 'N/A'}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Next Due Date: </strong>
+                            <span th:text="${vaccinationRecord.nextDueDate != null ? #temporals.format(vaccinationRecord.nextDueDate, 'yyyy-MM-dd') : 'N/A'}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Booster Required: </strong>
+                            <span th:text="${vaccinationRecord.boosterRequired != null ? vaccinationRecord.boosterRequired : 'N/A'}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Dosage: </strong>
+                            <span th:text="${vaccinationRecord.dosage != null ? vaccinationRecord.dosage : 'N/A'}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Veterinarian: </strong>
+                            <span th:text="${vaccinationRecord.veterinarianName != null ? vaccinationRecord.veterinarianName : 'N/A'}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Clinic: </strong>
+                            <span th:text="${vaccinationRecord.clinicName != null ? vaccinationRecord.clinicName : 'N/A'}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Status: </strong>
+                            <span th:text="${vaccinationRecord.status != null ? vaccinationRecord.status : 'N/A'}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Additional Notes: </strong>
+                            <span th:text="${vaccinationRecord.additionalNotes != null ? vaccinationRecord.additionalNotes : 'N/A'}"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <button class="scroll-btn scroll-right" onclick="scrollRight()">&#9654;</button>
+        </div>
+
+        <!-- Buttons -->
+        <a href="/home-page" class="btn-common btn-back">Back to Home Page</a>
+
+        <div class="text-center">
+            <a href="#" class="btn-common btn-download" onclick="downloadPDF()">Download PDF</a>
+            <a href="#" class="btn-common btn-share" onclick="shareRecords()">Share</a>
+        </div>
     </div>
+
+    <script>
+        function scrollLeft() {
+            const container = document.querySelector('.vaccination-records-row');
+            container.scrollBy({ left: -300, behavior: 'smooth' });
+        }
+
+        function scrollRight() {
+            const container = document.querySelector('.vaccination-records-row');
+            container.scrollBy({ left: 300, behavior: 'smooth' });
+        }
+    </script>
 </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layout.html}">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Treatment Plan Details</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" th:href="@{/assets/css/vaccinationRecord.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="content">-->
+<!--    <div class="container vaccinationRecordContainer">-->
+<!--        <div class="text-center mb-4">-->
+<!--            <h2>Pet Vaccination Records</h2>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Pet Selection Dropdown &ndash;&gt;-->
+<!--        <div class="pet-selection mb-4">-->
+<!--            <h3>Select a Pet</h3>-->
+<!--            <form th:action="@{/vaccination}" method="get">-->
+<!--                <div class="form-group">-->
+<!--                    <label for="petSelect">Choose the Pet</label>-->
+<!--                    <select class="form-select" id="petSelect" name="petId" onchange="this.form.submit()">-->
+<!--                        <option value="" selected>Select a Pet</option>-->
+<!--                        <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"></option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Vaccination Record Details &ndash;&gt;-->
+<!--        <div class="vaccination-record" th:if="${pet != null}">-->
+<!--            <div class="details-header">-->
+<!--                <h3 th:text="${pet.name} + ' Vaccination Records'"></h3>-->
+<!--            </div>-->
+<!--            <div class="details-container">-->
+<!--                <table class="table table-striped">-->
+<!--                    <tbody>-->
+<!--                    <tr th:each="vaccinationRecord : ${vaccinationRecords}">-->
+<!--                        <td class="label">Vaccine Name</td>-->
+<!--                        <td th:text="${vaccinationRecord != null ? vaccinationRecord.vaccineName : 'N/A'}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr th:each="vaccinationRecord : ${vaccinationRecords}">-->
+<!--                        <td class="label">Administered Date</td>-->
+<!--                        <td th:text="${vaccinationRecord.administeredDate != null ? #temporals.format(vaccinationRecord.administeredDate, 'yyyy-MM-dd') : 'N/A'}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr th:each="vaccinationRecord : ${vaccinationRecords}">-->
+<!--                        <td class="label">Next Due Date</td>-->
+<!--                        <td th:text="${vaccinationRecord.nextDueDate != null ? #temporals.format(vaccinationRecord.nextDueDate, 'yyyy-MM-dd') : 'N/A'}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr th:each="vaccinationRecord : ${vaccinationRecords}">-->
+<!--                        <td class="label">Booster Required</td>-->
+<!--                        <td th:text="${vaccinationRecord != null ? vaccinationRecord.boosterRequired : 'N/A'}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr th:each="vaccinationRecord : ${vaccinationRecords}">-->
+<!--                        <td class="label">Dosage</td>-->
+<!--                        <td th:text="${vaccinationRecord != null ? vaccinationRecord.dosage : 'N/A'}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr th:each="vaccinationRecord : ${vaccinationRecords}">-->
+<!--                        <td class="label">Veterinarian Name</td>-->
+<!--                        <td th:text="${vaccinationRecord != null ? vaccinationRecord.veterinarianName : 'N/A'}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr th:each="vaccinationRecord : ${vaccinationRecords}">-->
+<!--                        <td class="label">Clinic Name</td>-->
+<!--                        <td th:text="${vaccinationRecord != null ? vaccinationRecord.clinicName : 'N/A'}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr th:each="vaccinationRecord : ${vaccinationRecords}">-->
+<!--                        <td class="label">Status</td>-->
+<!--                        <td th:text="${vaccinationRecord != null ? vaccinationRecord.status : 'N/A'}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr th:each="vaccinationRecord : ${vaccinationRecords}">-->
+<!--                        <td class="label">Additional Notes</td>-->
+<!--                        <td th:text="${vaccinationRecord != null ? vaccinationRecord.additionalNotes : 'N/A'}"></td>-->
+<!--                    </tr>-->
+
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+
+
+<!--        </div>-->
+
+<!--        <a href="/home-page" class="btn-common btn-back">Back to Home Page</a>-->
+
+<!--        <div class="text-center">-->
+<!--            <a href="#" class="btn-common btn-download" onclick="downloadPDF()">Download PDF</a>-->
+<!--            <a href="#" class="btn-common btn-share" onclick="shareRecords()">Share</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <script th:src="@{/scripts/vaccinationRecord.js}"></script>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layout.html}">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>ViewVaccinationRecords</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="content">-->
+<!--    <h2 class="text-center" th:text="${petName} + ' Vaccination Records'">PetName Vaccination Records</h2>-->
+<!--    <div class="table-container d-flex justify-content-center">-->
+<!--        <table class="table table-bordered">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th scope="col">Number</th>-->
+<!--                <th scope="col">Vaccination Name</th>-->
+<!--                <th scope="col">Purpose</th>-->
+<!--                <th scope="col">Date</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="v, stat : ${vaccinations}">-->
+<!--                <th scope="row" th:text="${stat.index + 1}">1</th>-->
+<!--                <td th:text="${v.name}">Feline Leukemia Vaccine</td>-->
+<!--                <td th:text="${v.purpose}">Otto</td>-->
+<!--                <td th:text="${v.date}">2/7/24</td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

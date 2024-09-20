@@ -1,5 +1,6 @@
 package au.edu.rmit.sept.webapp.models;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class VaccinationRecord {
@@ -10,13 +11,13 @@ public class VaccinationRecord {
     private LocalDate administeredDate;
     private LocalDate nextDueDate;
     private String boosterRequired;
-    private Double dosage;
+    private BigDecimal  dosage;
     private String veterinarianName;
     private String clinicName;
     private String status;
     private String additionalNotes;
 
-    public VaccinationRecord(Long vaccinationID, Long petID, String vaccineName, LocalDate administeredDate, LocalDate nextDueDate, String boosterRequired, Double dosage, String veterinarianName, String clinicName, String status, String additionalNotes) {
+    public VaccinationRecord(Long vaccinationID, Long petID, String vaccineName, LocalDate administeredDate, LocalDate nextDueDate, String boosterRequired, BigDecimal  dosage, String veterinarianName, String clinicName, String status, String additionalNotes) {
         this.vaccinationID = vaccinationID;
         this.petID = petID;
         this.vaccineName = vaccineName;
@@ -81,11 +82,11 @@ public class VaccinationRecord {
         this.boosterRequired = boosterRequired;
     }
 
-    public Double getDosage() {
+    public BigDecimal getDosage() {
         return dosage;
     }
 
-    public void setDosage(Double dosage) {
+    public void setDosage(BigDecimal dosage) {
         this.dosage = dosage;
     }
 
