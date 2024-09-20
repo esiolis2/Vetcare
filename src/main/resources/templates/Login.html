@@ -1,5 +1,59 @@
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layout.html}">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Login</title>-->
+<!--    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <link href="/Styles/BookApp.css" rel="stylesheet">-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div layout:fragment="content">-->
+<!--    <div class="container mt-5">-->
+<!--        <h2 class="text-center">Login</h2>-->
+<!--        <form th:action="@{/login}" method="post" id="loginForm" class="mx-auto form-container" onsubmit="emailInLocalStorage()">-->
+<!--            <div class="form-group">-->
+<!--                <label for="email">Email address</label>-->
+<!--                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label for="password">Password</label>-->
+<!--                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required minlength="6">-->
+<!--            </div>-->
+<!--            <button type="submit" class="btn btn-primary btn-block">Log In</button>-->
+<!--            <a href="/signup" class="btn btn-link">Don't have an account? Sign up</a>-->
+<!--            <div id="loginError" class="alert alert-danger mt-3" th:if="${error}" th:text="${error}"></div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--    <script>-->
+<!--        function emailInLocalStorage() {-->
+<!--            var email = document.getElementById('email').value;-->
+<!--            localStorage.setItem('vetUserLogged', email);-->
+<!--            alert("Login successful!");-->
+<!--        }-->
+<!--    </script>-->
+<!--</div>-->
+
+
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+
+<!--</body>-->
+<!--<footer class="container-fluid text-center py-3">-->
+<!--    <p>Footer Text</p>-->
+<!--</footer>-->
+<!--</html>-->
+
+
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,69 +62,46 @@
     <link href="/Styles/BookApp.css" rel="stylesheet">
 </head>
 <body onload="loginStatus()">
-<nav class="navbar navbar-expand-lg navbar-light bg-light px-2">
-    <a class="navbar-brand" href="#">VetCare</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/bookapp">Book Appointment</a>
-            </li>
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="/signup" id="signupLink">Signup</a>-->
-<!--            </li>-->
-            <li class="nav-item">
-                <a class="nav-link" href="/login" id="loginLink">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/changeapp">Reschedule</a>
-            </li>
-        </ul>
-    </div>
-</nav>
 
-<div class="container mt-5">
-    <h2 class="text-center">Login</h2>
-    <form th:action="@{/login}" method="post" id="loginForm" class="mx-auto form-container" onsubmit="emailInLocalStorage()">
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required minlength="6">
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Log In</button>
-        <a href="/signup" class="btn btn-link">Don't have an account? Sign up</a>
-        <div id="loginError" class="alert alert-danger mt-3" th:if="${error}" th:text="${error}"></div>
-    </form>
+<div layout:fragment="content">
+    <div class="container mt-5">
+        <h2 class="text-center">Login</h2>
+        <form th:action="@{/login}" method="post" id="loginForm" class="mx-auto form-container" onsubmit="emailInLocalStorage()">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required minlength="6">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Log In</button>
+            <a href="/signup" class="btn btn-link">Don't have an account? Sign up</a>
+            <div id="loginError" class="alert alert-danger mt-3" th:if="${error}" th:text="${error}"></div>
+            <button id="logoutButton" class="btn btn-danger btn-block mt-3" style="display: none;" onclick="logout()">Logout</button>
+        </form>
+    </div>
+    <script>
+        function emailInLocalStorage() {
+            var email = document.getElementById('email').value;
+            localStorage.setItem('vetUserLogged', email);
+            alert("Login successful!");
+        }
+
+        function loginStatus() {
+            var email = localStorage.getItem('vetUserLogged');
+
+        }
+
+        function logout() {
+            localStorage.removeItem('vetUserLogged');
+            alert("Logout successful!");
+            location.reload();
+        }
+    </script>
+
 </div>
 
-<script>
-    function emailInLocalStorage() {
-        var email = document.getElementById('email').value;
-        localStorage.setItem('vetUserLogged', email);
-        alert("Login successful!");
-    }
-
-    function loginStatus() {
-        var email = localStorage.getItem('vetUserLogged');
-        if (email) {
-            document.getElementById('loginLink').textContent = 'Logout';
-            document.getElementById('loginLink').href = '#';
-            document.getElementById('loginLink').onclick = function() {
-                localStorage.removeItem('vetUserLogged');
-                location.reload();
-            };
-            document.getElementById('signupLink').style.display = 'none';
-        }
-    }
-</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

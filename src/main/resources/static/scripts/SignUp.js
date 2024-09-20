@@ -16,21 +16,7 @@ function handleSignup() {
     // Prevent the default form submission
     event.preventDefault();
 
-    // Optionally, you can handle form submission via AJAX here
-    // fetch('/signup', {
-    //     method: 'POST',
-    //     body: new FormData(document.getElementById('signupForm'))
-    // })
-    // .then(response => {
-    //     if (response.ok) {
-    //         $('#confirmationModal').modal('show');
-    //     } else {
-    //         alert('Submission failed!');
-    //     }
-    // })
-    // .catch(error => {
-    //     console.error('Error:', error);
-    // });
+
 }
 
 // Add event listener for form submission
