@@ -2,52 +2,353 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
 <head>
-  <meta charset="UTF-8">
-  <title>View Treatment Plan</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treatment Plan Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/assets/css/treatmentPlan.css}">
 </head>
 <body>
 <div layout:fragment="content">
-  <h2 class="text-center">[Pet name] Treatment Plan</h2>
-  <div class="table-container d-flex justify-content-center">
-  <table class="table table-bordered">
-    <thead>
-    <tr>
-      <th scope="col" style="width: 33%;">Treatment Plan Number</th>
-      <th scope="col" style="width: 67%;">[1]</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th scope="row" style="width: 33%;">Diagnosis/Conditions</th>
-      <td style="width: 67%;">Mark</td>
-    </tr>
-    <tr>
-      <th scope="row" style="width: 33%;">Prescriptions/Vaccinations</th>
-      <td style="width: 67%;">Otto</td>
-    </tr>
-    <tr>
-      <th scope="row" style="width: 33%;">Dose</th>
-      <td style="width: 67%;">@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row" style="width: 33%;">Repeats</th>
-      <td style="width: 67%;">Mark</td>
-    </tr>
-    <tr>
-      <th scope="row" style="width: 33%;">Lengths of treatment</th>
-      <td style="width: 67%;">Otto</td>
-    </tr>
-    <tr>
-      <th scope="row" style="width: 33%;">Notes</th>
-      <td style="width: 67%;">@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row" style="width: 33%;">Date</th>
-      <td style="width: 67%;">05/09/2024</td>
-    </tr>
-    </tbody>
-  </table>
-  </div>
+    <div class="container petTreatmentPlanContainer">
+        <div class="text-center mb-4">
+            <h2>Pet Treatment Plan</h2>
+        </div>
+
+        <!-- Pet Selection Dropdown -->
+        <div class="pet-selection mb-4">
+            <form th:action="@{/treatmentPlan}" method="get">
+                <div class="form-group">
+                    <label for="petSelect">Choose the Pet</label>
+                    <select class="form-select" id="petSelect" name="petId" onchange="this.form.submit()">
+                        <option value="" selected>Select a Pet</option>
+                        <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"></option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <!-- Treatment Plan Details -->
+        <div class="treatment-plan" th:if="${pet != null}">
+            <div class="details-header">
+                <h3 th:text="${pet.name} + ' Treatment Plan'"></h3>
+            </div>
+            <div class="details-container">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Diagnosis</td>
+                        <td th:text="${treatmentPlan != null ? treatmentPlan.diagnosis : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Treatment Type</td>
+                        <td th:text="${treatmentPlan != null ? treatmentPlan.treatmentType : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Pet Condition</td>
+                        <td th:text="${treatmentPlan != null ? treatmentPlan.petCondition : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Is Emergency?</td>
+                        <td th:text="${treatmentPlan != null && treatmentPlan.isEmergency != null ? (treatmentPlan.isEmergency ? 'Yes' : 'No') : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Start Date</td>
+                        <td th:text="${treatmentPlan.startDate != null ? #temporals.format(treatmentPlan.startDate, 'yyyy-MM-dd') : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">End Date</td>
+                        <td th:text="${treatmentPlan.endDate != null ? #temporals.format(treatmentPlan.endDate, 'yyyy-MM-dd') : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Prescribed Medications</td>
+                        <td th:text="${treatmentPlan != null ? treatmentPlan.prescribedMedications : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Treatment Duration</td>
+                        <td th:text="${treatmentPlan != null ? treatmentPlan.treatmentDuration : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Next Steps</td>
+                        <td th:text="${treatmentPlan != null ? treatmentPlan.nextSteps : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Vet Name</td>
+                        <td th:text="${treatmentPlan != null ? treatmentPlan.vetName : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Follow-Up Date</td>
+                        <td th:text="${treatmentPlan.followUpDate != null ? #temporals.format(treatmentPlan.followUpDate, 'yyyy-MM-dd') : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Cost Estimate</td>
+                        <td th:text="${treatmentPlan != null ? treatmentPlan.costEstimate : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Treatment Outcome</td>
+                        <td th:text="${treatmentPlan != null ? treatmentPlan.treatmentOutcome : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Clinic Location</td>
+                        <td th:text="${treatmentPlan != null ? treatmentPlan.clinicLocation : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Is Insured?</td>
+                        <td th:text="${treatmentPlan != null && treatmentPlan.isInsured != null ? (treatmentPlan.isInsured ? 'Yes' : 'No') : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Insurance Details</td>
+                        <td th:text="${treatmentPlan != null ? treatmentPlan.insuranceDetails : 'N/A'}"></td>
+                    </tr>
+                    <tr th:each="treatmentPlan : ${treatmentPlans}">
+                        <td class="label">Payment Status</td>
+                        <td th:text="${treatmentPlan != null ? treatmentPlan.paymentStatus : 'N/A'}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <a href="/" class="btn-common btn-back">Back to Treatment Plans</a>
+        <div class="text-center">
+            <a href="#" class="btn-common btn-download" onclick="downloadPDF()">Download PDF</a>
+            <a href="#" class="btn-common btn-share" onclick="shareRecords()">Share</a>
+        </div>
+
+        <!-- JavaScript for PDF download placed inside the correct div -->
+        <script>
+function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const petName = document.querySelector('h3').textContent.trim();
+    const diagnosis = document.querySelector('tr:nth-child(1) td:nth-child(2)').textContent.trim();
+    const treatmentType = document.querySelector('tr:nth-child(2) td:nth-child(2)').textContent.trim();
+    const petCondition = document.querySelector('tr:nth-child(3) td:nth-child(2)').textContent.trim();
+    const isEmergency = document.querySelector('tr:nth-child(4) td:nth-child(2)').textContent.trim();
+    const startDate = document.querySelector('tr:nth-child(5) td:nth-child(2)').textContent.trim();
+    const endDate = document.querySelector('tr:nth-child(6) td:nth-child(2)').textContent.trim();
+    const prescribedMedications = document.querySelector('tr:nth-child(7) td:nth-child(2)').textContent.trim();
+    const treatmentDuration = document.querySelector('tr:nth-child(8) td:nth-child(2)').textContent.trim();
+    const nextSteps = document.querySelector('tr:nth-child(9) td:nth-child(2)').textContent.trim();
+    const vetName = document.querySelector('tr:nth-child(10) td:nth-child(2)').textContent.trim();
+    const followUpDate = document.querySelector('tr:nth-child(11) td:nth-child(2)').textContent.trim();
+    const costEstimate = document.querySelector('tr:nth-child(12) td:nth-child(2)').textContent.trim();
+    const treatmentOutcome = document.querySelector('tr:nth-child(13) td:nth-child(2)').textContent.trim();
+    const clinicLocation = document.querySelector('tr:nth-child(14) td:nth-child(2)').textContent.trim();
+    const isInsured = document.querySelector('tr:nth-child(15) td:nth-child(2)').textContent.trim();
+    const insuranceDetails = document.querySelector('tr:nth-child(16) td:nth-child(2)').textContent.trim();
+    const paymentStatus = document.querySelector('tr:nth-child(17) td:nth-child(2)').textContent.trim();
+
+    const lineHeight = 10;
+    let yPosition = 20;
+
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+    doc.text("Pet Treatment Plan", 105, yPosition, { align: 'center' });
+    yPosition += lineHeight + 10;
+
+
+    doc.setFontSize(14);
+    doc.text(`Pet Name: ${petName}`, 10, yPosition);
+    yPosition += lineHeight + 5;
+
+
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Treatment Details', 10, yPosition);
+    yPosition += lineHeight;
+
+
+    doc.setFont('helvetica', 'normal');
+
+    const details = [
+        { label: 'Diagnosis', value: diagnosis },
+        { label: 'Treatment Type', value: treatmentType },
+        { label: 'Pet Condition', value: petCondition },
+        { label: 'Is Emergency', value: isEmergency },
+        { label: 'Start Date', value: startDate },
+        { label: 'End Date', value: endDate },
+        { label: 'Prescribed Medications', value: prescribedMedications },
+        { label: 'Treatment Duration', value: treatmentDuration },
+        { label: 'Next Steps', value: nextSteps },
+        { label: 'Vet Name', value: vetName },
+        { label: 'Follow-Up Date', value: followUpDate },
+        { label: 'Cost Estimate', value: costEstimate },
+        { label: 'Treatment Outcome', value: treatmentOutcome },
+        { label: 'Clinic Location', value: clinicLocation },
+        { label: 'Is Insured', value: isInsured },
+        { label: 'Insurance Details', value: insuranceDetails },
+        { label: 'Payment Status', value: paymentStatus }
+    ];
+
+    details.forEach(detail => {
+        if (yPosition > 270) {
+            doc.addPage();
+            yPosition = 20;
+        }
+        doc.text(`${detail.label}: `, 10, yPosition);
+        doc.setFont('helvetica', 'bold');
+        doc.text(detail.value, 70, yPosition);
+        doc.setFont('helvetica', 'normal');
+        yPosition += lineHeight;
+    });
+
+
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text("Generated by VetCare System", 10, 280);
+
+
+    doc.save(`${petName}-treatment-plan.pdf`);
+}
+
+function shareRecords() {
+
+    if (navigator.share) {
+        try {
+            // Fetching dynamic data from the page for sharing
+            const petName = document.querySelector('h3').textContent.trim();
+            const diagnosis = document.querySelector('tr:nth-child(1) td:nth-child(2)').textContent.trim();
+            const treatmentType = document.querySelector('tr:nth-child(2) td:nth-child(2)').textContent.trim();
+            const nextSteps = document.querySelector('tr:nth-child(9) td:nth-child(2)').textContent.trim();
+            const followUpDate = document.querySelector('tr:nth-child(11) td:nth-child(2)').textContent.trim();
+
+
+            const shareTitle = `Treatment Plan for ${petName}`;
+            const shareText = `Diagnosis: ${diagnosis}\nTreatment Type: ${treatmentType}\nNext Steps: ${nextSteps}\nFollow-Up Date: ${followUpDate}`;
+            const shareURL = window.location.href;
+
+
+            navigator.share({
+                title: shareTitle,
+                text: shareText,
+                url: shareURL
+            }).then(() => {
+                console.log('Records shared successfully');
+                alert('Treatment Plan shared successfully!');
+            }).catch((error) => {
+                console.error('Error sharing records:', error);
+                alert('Failed to share the records.');
+            });
+        } catch (error) {
+            console.error('Error gathering information for sharing:', error);
+            alert('Could not gather information for sharing.');
+        }
+    } else {
+
+        alert('Web Share API is not supported in this browser.');
+    }
+}
+
+function selectPet() {
+   const petSelectElement = document.getElementById('petSelect');
+   const petId = petSelectElement.value;
+   if (petId && petId !== '') {
+       window.location.href = `/treatmentPlan?petId=${petId}`;
+   } else {
+       alert('Please select a valid pet from the list.');
+   }
+}
+
+    </script>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layout.html}">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>View Treatment Plan</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="content">-->
+<!--  <h2 class="text-center">[Pet name] Treatment Plan</h2>-->
+<!--  <div class="table-container d-flex justify-content-center">-->
+<!--  <table class="table table-bordered">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th scope="col" style="width: 33%;">Treatment Plan Number</th>-->
+<!--      <th scope="col" style="width: 67%;">[1]</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--      <th scope="row" style="width: 33%;">Diagnosis/Conditions</th>-->
+<!--      <td style="width: 67%;">Mark</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <th scope="row" style="width: 33%;">Prescriptions/Vaccinations</th>-->
+<!--      <td style="width: 67%;">Otto</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <th scope="row" style="width: 33%;">Dose</th>-->
+<!--      <td style="width: 67%;">@mdo</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <th scope="row" style="width: 33%;">Repeats</th>-->
+<!--      <td style="width: 67%;">Mark</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <th scope="row" style="width: 33%;">Lengths of treatment</th>-->
+<!--      <td style="width: 67%;">Otto</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <th scope="row" style="width: 33%;">Notes</th>-->
+<!--      <td style="width: 67%;">@mdo</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <th scope="row" style="width: 33%;">Date</th>-->
+<!--      <td style="width: 67%;">05/09/2024</td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
