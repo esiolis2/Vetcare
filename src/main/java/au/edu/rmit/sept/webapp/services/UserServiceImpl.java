@@ -30,6 +30,10 @@ public class UserServiceImpl implements UserService{
         return u!=null && u.getPassword().equals(password);
     }
 
+    @Override
+    public User findByEmail(String email){
+        return userR.findByEmail(email);
+    }
 
 
 }

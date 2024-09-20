@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
 
 import au.edu.rmit.sept.webapp.models.User;
 import au.edu.rmit.sept.webapp.services.UserService;
+
+import java.text.AttributedString;
 
 
 @Controller
@@ -29,9 +32,11 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password){
+    public String login(@RequestParam String email, @RequestParam String password, Model model){
         if(userS.verifyUser(email, password)){
-            return "redirect:/";
+            User user = userS.findByEmail(email);
+            model.addAttribute("user", user);
+            return "profile";
         }
         return "redirect:/login";
     }
