@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
@@ -8,7 +7,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="/Styles/BookApp.css" rel="stylesheet">
 </head>
-<body>
+<body onload="loginStatus()">
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-2">
     <a class="navbar-brand" href="#">VetCare</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,11 +21,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="/bookapp">Book Appointment</a>
             </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" href="/signup" id="signupLink">Signup</a>-->
+<!--            </li>-->
             <li class="nav-item">
-                <a class="nav-link" href="/signup">Signup</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="/login" id="loginLink">Login</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/changeapp">Reschedule</a>
@@ -51,18 +50,31 @@
         <div id="loginError" class="alert alert-danger mt-3" th:if="${error}" th:text="${error}"></div>
     </form>
 </div>
+
 <script>
     function emailInLocalStorage() {
         var email = document.getElementById('email').value;
         localStorage.setItem('vetUserLogged', email);
         alert("Login successful!");
     }
+
+    function loginStatus() {
+        var email = localStorage.getItem('vetUserLogged');
+        if (email) {
+            document.getElementById('loginLink').textContent = 'Logout';
+            document.getElementById('loginLink').href = '#';
+            document.getElementById('loginLink').onclick = function() {
+                localStorage.removeItem('vetUserLogged');
+                location.reload();
+            };
+            document.getElementById('signupLink').style.display = 'none';
+        }
+    }
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 
 </body>
 <footer class="container-fluid text-center py-3">
