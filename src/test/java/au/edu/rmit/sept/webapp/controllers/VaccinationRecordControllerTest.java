@@ -58,18 +58,33 @@ public class VaccinationRecordControllerTest {
         when(petInformationService.getPetById(1L)).thenReturn(pet);
         when(vaccinationRecordService.getVaccinationRecordByPetId(1L)).thenReturn(List.of(record));
 
-        mockMvc.perform(get("/vaccination?petId=1"))
+        mockMvc.perform(get("/vaccination-record-details?petId=1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("ViewVaccinationRecords"))
                 .andExpect(model().attributeExists("pet"))
-                .andExpect(model().attributeExists("vaccinationRecords"));
+                .andExpect(model().attributeExists("vaccinationRecords"))
+                .andExpect(model().attribute("pet", pet))  // Additional assertion to check the pet object
+                .andExpect(model().attribute("vaccinationRecords", List.of(record)));  // Additional assertion for vaccination records
     }
+
+
+//    @Test
+//    public void testShowVaccinationDetails_ShouldReturnVaccinationRecords() throws Exception {
+//        when(petInformationService.getPetById(1L)).thenReturn(pet);
+//        when(vaccinationRecordService.getVaccinationRecordByPetId(1L)).thenReturn(List.of(record));
+//
+//        mockMvc.perform(get("/vaccination?petId=1"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("ViewVaccinationRecords"))
+//                .andExpect(model().attributeExists("pet"))
+//                .andExpect(model().attributeExists("vaccinationRecords"));
+//    }
 
     @Test
     public void testShowVaccinationDetails_PetNotFound() throws Exception {
         when(petInformationService.getPetById(999L)).thenReturn(null);
 
-        mockMvc.perform(get("/vaccination?petId=999"))
+        mockMvc.perform(get("/vaccination-record-details?petId=999"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("ViewVaccinationRecords"))
                 .andExpect(model().attributeExists("errorMessage"));
