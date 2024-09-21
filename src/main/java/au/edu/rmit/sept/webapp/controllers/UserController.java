@@ -53,7 +53,7 @@ public class UserController {
             User user = userService.findByEmail(email);
             System.out.println("the email is: " + email );
             model.addAttribute("user", user);
-            return "profile"; // Make sure this matches your profile HTML file name
+            return "account"; // Make sure this matches your profile HTML file name
         }
         return "redirect:/"; // Redirect to home if not logged in
     }

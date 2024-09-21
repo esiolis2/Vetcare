@@ -1,20 +1,15 @@
 package au.edu.rmit.sept.webapp.repositories;
 
 
+import au.edu.rmit.sept.webapp.models.User;
+import org.springframework.jdbc.datasource.init.UncategorizedScriptException;
+import org.springframework.stereotype.Repository;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.sql.DataSource;
-
-import au.edu.rmit.sept.webapp.models.User;
-import org.springframework.jdbc.datasource.init.UncategorizedScriptException;
-import org.springframework.stereotype.Repository;
-import java.sql.Statement;
-
 
 
 @Repository
@@ -68,6 +63,24 @@ public class UserRepositoryImpl implements UserRepository {
 
         return null;
     }
+
+
+//    @Override
+//    public List<User> findAll() {
+//        List<User> users = new ArrayList<>();
+//        try (Connection connection = this.source.getConnection();
+//             PreparedStatement ps = connection.prepareStatement("SELECT * FROM user");
+//             ResultSet rs = ps.executeQuery()) {
+//
+//            while (rs.next()) {
+//                User user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
+//                users.add(user);
+//            }
+//        } catch (SQLException e) {
+//            throw new UncategorizedScriptException("Failed to retrieve users from the database", e);
+//        }
+//        return users;
+//    }
 
 
 }

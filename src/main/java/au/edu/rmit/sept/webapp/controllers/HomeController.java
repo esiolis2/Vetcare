@@ -1,15 +1,11 @@
 package au.edu.rmit.sept.webapp.controllers;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import au.edu.rmit.sept.webapp.models.PetInformation;
 import au.edu.rmit.sept.webapp.services.PetInformationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.Date;
 
 @Controller
 public class  HomeController {
@@ -45,10 +41,25 @@ public class  HomeController {
         return "SignUp.html";
     }
 
+//    @GetMapping("/userProfile")
+//    public String userProfile() {
+//        return "Profile";
+//    }
+
+
     @GetMapping("/view-vaccination-records")
     public String ViewVaccinationRecords(){
         return"ViewVaccinationRecords.html";
     }
+
+    @GetMapping("/login")
+    public String Login(Model model) {
+        model.addAttribute("message", "Welcome to Vet Care!");
+        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
+        return "Login.html";
+    }
+
+}
 
 
 
@@ -70,27 +81,20 @@ public class  HomeController {
 //    }
 
     // Helper method to create a record
-    private Map<String, Object> createRecord(String recordName, int recordNumber, String petDetails, int treatmentPlanNumber,
-                                             String vaccinationName, String clinicName, String vetName, Date date) {
-        Map<String, Object> record = new HashMap<>();
-        record.put("recordName", recordName);
-        record.put("recordNumber", recordNumber);
-        record.put("petDetails", petDetails);
-        record.put("treatmentPlanNumber", treatmentPlanNumber);
-        record.put("vaccinationName", vaccinationName);
-        record.put("clinicName", clinicName);
-        record.put("vetName", vetName);
-        record.put("date", date);
-        return record;
-    }
+//    private Map<String, Object> createRecord(String recordName, int recordNumber, String petDetails, int treatmentPlanNumber,
+//                                             String vaccinationName, String clinicName, String vetName, Date date) {
+//        Map<String, Object> record = new HashMap<>();
+//        record.put("recordName", recordName);
+//        record.put("recordNumber", recordNumber);
+//        record.put("petDetails", petDetails);
+//        record.put("treatmentPlanNumber", treatmentPlanNumber);
+//        record.put("vaccinationName", vaccinationName);
+//        record.put("clinicName", clinicName);
+//        record.put("vetName", vetName);
+//        record.put("date", date);
+//        return record;
+//    }
 
     //End Access Medical Testing, can delete later
 
-    @GetMapping("/login")
-    public String Login(Model model) {
-        model.addAttribute("message", "Welcome to Vet Care!");
-        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
-        return "Login.html";
-    }
 
-}
