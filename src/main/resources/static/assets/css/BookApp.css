@@ -1,20 +1,346 @@
+@font-face {
+    font-family: "Sergio Trendy";
+    src: url("Sergio Trendy.ttf");
+}
+
+/* GENERAL STYLING */
 body {
+    color: #f9f7f3;
+    background-color: #f9f9f9;
+    font-family: 'Poppins', serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3 {
+    color: #222222;
+    font-family: 'Sergio Trendy', serif;
+}
+
+p {
+    font-size: 1.25rem;
+}
+
+/* NAVBAR */
+.navbar-custom {
+    background-color: #388087;
+    margin-bottom: 0;
+}
+
+.navbar-brand {
+    font-family: 'Sergio Trendy', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-right: 20px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #badfe7;
+    text-decoration: underline;
+}
+
+/* FORM STYLING */
+.form-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #333;
+}
+
+.form-control {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    padding: 10px;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #388087;
+    border-color: #388087;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #2c6e6f;
+    border-color: #2c6e6f;
+}
+
+/* Modal Styling */
+.modal-content {
+    border-radius: 0.25rem;
     background-color: #f8f9fa;
 }
 
-h2 {
-    margin-bottom: 30px;
+.modal-header {
+    background-color: #388087;
+    color: #ffffff;
 }
 
-.modal-content {
-    border-radius: 5px;
+.modal-footer .btn-secondary {
+    background-color: #6c757d;
+    color: #ffffff;
 }
 
-.modal-header, .modal-footer {
+.modal-footer .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* PRICING GRID */
+.pricing-box {
+    background-color: #ebf2eb;
+    border-radius: 0.25rem;
+    padding: 15px;
+    margin-top: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-box .list-group-item {
     border: none;
-}
-
-.modal-title {
+    background-color: transparent;
     font-weight: bold;
 }
 
+.pricing-box .list-group-item:not(:last-child) {
+    border-bottom: 1px solid #ced4da;
+}
+
+/* Existing Pet Selection */
+#existingPetsGrid {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-top: 20px;
+}
+
+#existingPetsGrid h5 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.pet-selection-dropdown {
+    background-color: #f9f9f9;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#petDropdown {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}
+
+/* HERO SECTION */
+.hero-section {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ebf2eb;
+}
+
+.hero-text {
+    z-index: 1;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-text h1 {
+    font-family: 'Poppins', serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #222222;
+    margin: 0;
+}
+
+/* CARD STYLING */
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.card-body {
+    flex-grow: 1;
+    background-color: #ebf2eb;
+}
+
+.card img {
+    height: auto;
+    max-height: 250px;
+}
+
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-button {
+    background-color: #388087;
+    color: white;
+    border: none;
+}
+
+.card-button:hover {
+    background-color: #bccce1;
+}
+
+/* FOOTER */
+.footer-style {
+    background-color: #388087;
+    color: #f9f7f3;
+    margin-top: auto;
+}
+
+.footer-style p {
+    margin: 0;
+    font-size: 1rem;
+    color: #f9f7f3;
+}
+
+.footer-style a {
+    color: #f9f7f3;
+    text-decoration: none;
+    padding: 0 5px;
+}
+
+.footer-style a:hover {
+    color: #b8c5cd;
+}
+
+.footer-style .social-icon {
+    font-weight: bold;
+}
+
+/* RESPONSIVE STYLING */
+@media (max-width: 768px) {
+    .hero-text {
+        font-size: 1rem;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .footer-style .row {
+        text-align: center;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
+}
+
+/* Prices Container Styling */
+.prices {
+    background-color: #f9f7f3;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Prices Box */
+.pricing-box {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    color: #222222;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition for smooth hover effect */
+}
+
+.pricing-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pricing-box li {
+    padding: 12px;
+    background-color: #ebf2eb;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-family: 'Poppins', serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-box li:last-child {
+    margin-bottom: 0;
+}
+
+/* Hover effect for individual pricing items */
+.pricing-box li:hover {
+    background-color: #d6e8d6;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+    transform: translateY(-5px); /* Slight upward movement */
+}
+
+/* Optional Price Icon */
+.pricing-box li::before {
+    content: "💲";
+    margin-right: 10px;
+    color: #388087;
+}
+
+/* Text color for prices */
+.pricing-box .price {
+    color: #388087;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Veterinarian Form Styling */
+.vetBook {
+    background-color: #white;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    margin-top: 20px;
+}
+
+.vetBook label {
+    font-weight: bold;
+    color: #white;
+    font-size: 1rem;
+}
+
+.vetBook select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    font-family: 'Poppins', serif;
+    font-size: 1rem;
+    color: #white;
+}
+
+.vetBook select:focus {
+    border-color: #white;
+    outline: none;
+}
+
+.vetBook select option {
+    padding: 10px;
+}
