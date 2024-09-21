@@ -10,12 +10,14 @@ import au.edu.rmit.sept.webapp.models.User;
 import au.edu.rmit.sept.webapp.services.UserService;
 
 import java.text.AttributedString;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Controller
 public class UserController {
     private final UserService userS;
-
+    private Map<String, Object> response = new HashMap<>();
     @Autowired
     public UserController(UserService userS){
         this.userS = userS;
@@ -31,15 +33,31 @@ public class UserController {
 
 
 
+//    @PostMapping("/login")
+//    public String login(@RequestParam String email, @RequestParam String password, Model model){
+//        if(userS.verifyUser(email, password)){
+//            User user = userS.findByEmail(email);
+//            model.addAttribute("user", user);
+//            return "profile";
+//        }
+//        return "redirect:/login";
+//    }
+
     @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, Model model){
-        if(userS.verifyUser(email, password)){
-            User user = userS.findByEmail(email);
-            model.addAttribute("user", user);
-            return "profile";
-        }
-        return "redirect:/login";
+    @ResponseBody
+    public Map<String, Object> login(@RequestParam String email, @RequestParam String password) {
+
+        if (userS.verifyUser(email, password)) {
+             response.put("success", true);
+
+                } else {
+                    response.put("success", false);
+                    response.put("message", "Invalid email or password");
+                }
+        return response;
     }
 
 
+
 }
+
