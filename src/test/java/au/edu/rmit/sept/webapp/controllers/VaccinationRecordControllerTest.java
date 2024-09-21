@@ -68,17 +68,6 @@ public class VaccinationRecordControllerTest {
     }
 
 
-//    @Test
-//    public void testShowVaccinationDetails_ShouldReturnVaccinationRecords() throws Exception {
-//        when(petInformationService.getPetById(1L)).thenReturn(pet);
-//        when(vaccinationRecordService.getVaccinationRecordByPetId(1L)).thenReturn(List.of(record));
-//
-//        mockMvc.perform(get("/vaccination?petId=1"))
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("ViewVaccinationRecords"))
-//                .andExpect(model().attributeExists("pet"))
-//                .andExpect(model().attributeExists("vaccinationRecords"));
-//    }
 
     @Test
     public void testShowVaccinationDetails_PetNotFound() throws Exception {
