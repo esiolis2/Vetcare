@@ -51,7 +51,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findByEmail(String email){
-
         try(
                 Connection connection = this.source.getConnection();
                 PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE email = ?")){

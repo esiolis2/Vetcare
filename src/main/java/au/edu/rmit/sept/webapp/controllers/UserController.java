@@ -1,6 +1,8 @@
 package au.edu.rmit.sept.webapp.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.*;
@@ -16,48 +18,47 @@ import java.util.Map;
 
 @Controller
 public class UserController {
-    private final UserService userS;
-    private Map<String, Object> response = new HashMap<>();
+    private final UserService userService;
     @Autowired
-    public UserController(UserService userS){
-        this.userS = userS;
+    public UserController(UserService userService){
+        this.userService = userService;
     }
 
-
-    // ModelAttribute is going to get the inputs of the form and turn it to a User object
     @PostMapping("/signup")
     public String createUser(@ModelAttribute User user){
-        userS.createUser(user);
+        userService.createUser(user);
         return "redirect:/";
     }
 
-
-
-//    @PostMapping("/login")
-//    public String login(@RequestParam String email, @RequestParam String password, Model model){
-//        if(userS.verifyUser(email, password)){
-//            User user = userS.findByEmail(email);
-//            model.addAttribute("user", user);
-//            return "profile";
-//        }
-//        return "redirect:/login";
-//    }
-
     @PostMapping("/login")
-    @ResponseBody
-    public Map<String, Object> login(@RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<Map<String, Object>> login(@RequestParam String email, @RequestParam String password, HttpServletRequest request) {
+        boolean isValidUser = userService.verifyUser(email, password);
+        Map<String, Object> response = new HashMap<>();
+        if (isValidUser) {
+            request.getSession().setAttribute("userEmail", email);
 
-        if (userS.verifyUser(email, password)) {
-             response.put("success", true);
-
-                } else {
-                    response.put("success", false);
-                    response.put("message", "Invalid email or password");
-                }
-        return response;
+            response.put("success", true);
+            response.put("message", "Login successful");
+        } else {
+            response.put("success", false);
+            response.put("message", "Invalid email or password");
+        }
+        return ResponseEntity.ok(response);
     }
 
-
-
+    @GetMapping("/profile")
+    public String getUserProfile(Model model, HttpServletRequest request) {
+        String email = (String) request.getSession().getAttribute("userEmail"); // Or however you're storing it
+        if (email != null) {
+            User user = userService.findByEmail(email);
+            System.out.println("the email is: " + email );
+            model.addAttribute("user", user);
+            return "profile"; // Make sure this matches your profile HTML file name
+        }
+        return "redirect:/"; // Redirect to home if not logged in
+    }
 }
+
+
+
 

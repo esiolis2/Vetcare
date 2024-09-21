@@ -4,15 +4,17 @@
   <meta charset="UTF-8">
   <title>Profile</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
+<a href="/profile">Dashboard</a>
+
 <div class="container mt-5">
   <h2 class="text-center">User Profile</h2>
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title" th:text="'Name: ' + ${user.name}"></h5>
-      <p class="card-text" th:text="'Username: ' + ${user.username}"></p>
-      <p class="card-text" th:text="'Email: ' + ${user.email}"></p>
+      <h1>Welcome, <span th:text="${user.username}">User</span></h1>
+      <p>Email: <span th:text="${user.email}">example@example.com</span></p>
     </div>
   </div>
 </div>
