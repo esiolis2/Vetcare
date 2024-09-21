@@ -67,7 +67,7 @@ public class TreatmentPlanRepositoryImpl implements TreatmentPlanRepository {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
-
+            stmt.setLong(1, treatmentPlan.getPet().getPetID());
             stmt.setString(2, treatmentPlan.getDiagnosis());
             stmt.setString(3, treatmentPlan.getTreatmentType());
             stmt.setString(4, treatmentPlan.getTreatmentDescription());
