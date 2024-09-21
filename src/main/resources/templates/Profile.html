@@ -6,8 +6,9 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+
 <div class="container mt-5">
-  <h2 class="text-center">User Profile</h2>
+  <h2 class="text-center mb-4">User Profile</h2>
   <div class="card">
     <div class="card-body">
       <h5 class="card-title" th:text="'Name: ' + ${user.name}"></h5>
@@ -16,8 +17,233 @@
     </div>
   </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>User Profile</title>-->
+<!--  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; Profile Section &ndash;&gt;-->
+<!--<div class="container mt-5">-->
+<!--  <h2 class="text-center mb-4">User Profile</h2>-->
+
+<!--  <div class="row justify-content-center">-->
+<!--    <div class="col-md-6">-->
+<!--      <div class="card shadow">-->
+<!--        <div class="card-body">-->
+<!--          <h4 class="card-title text-center mb-4" th:text="'Welcome, ' + ${user.name} + '!'"></h4>-->
+
+<!--          &lt;!&ndash; Profile Details in Table &ndash;&gt;-->
+<!--          <table class="table table-bordered">-->
+<!--            <tbody>-->
+<!--            <tr>-->
+<!--              <th scope="row">Name</th>-->
+<!--              <td th:text="${user.name}">-</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <th scope="row">Username</th>-->
+<!--              <td th:text="${user.username}">-</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <th scope="row">Email</th>-->
+<!--              <td th:text="${user.email}">-</td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--          </table>-->
+
+<!--          &lt;!&ndash; Action Buttons &ndash;&gt;-->
+<!--          <div class="text-center mt-4">-->
+<!--            <a href="/" class="btn btn-primary mr-2">Home</a>-->
+<!--            <a href="/logout" class="btn btn-danger">Logout</a>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Bootstrap and jQuery &ndash;&gt;-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>User Profiles</title>-->
+<!--  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; Profile Section &ndash;&gt;-->
+<!--<div class="container mt-5">-->
+<!--  <h2 class="text-center mb-4">User Profiles</h2>-->
+
+<!--  <div class="row justify-content-center">-->
+<!--    <div class="col-md-8">-->
+<!--      <div class="card shadow">-->
+<!--        <div class="card-body">-->
+<!--          <h4 class="card-title text-center mb-4">User List</h4>-->
+
+<!--          &lt;!&ndash; User List in Table &ndash;&gt;-->
+<!--          <table class="table table-bordered">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--              <th>Name</th>-->
+<!--              <th>Username</th>-->
+<!--              <th>Email</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody th:each="user : ${users}">-->
+<!--            <tr>-->
+<!--              <td th:text="${user.name}">-</td>-->
+<!--              <td th:text="${user.username}">-</td>-->
+<!--              <td th:text="${user.email}">-</td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--          </table>-->
+
+<!--          &lt;!&ndash; Action Buttons &ndash;&gt;-->
+<!--          <div class="text-center mt-4">-->
+<!--            <a href="/" class="btn btn-primary mr-2">Home</a>-->
+<!--            <a href="/logout" class="btn btn-danger">Logout</a>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Bootstrap and jQuery &ndash;&gt;-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>Profile</title>-->
+<!--  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; Profile Section &ndash;&gt;-->
+<!--<div class="container mt-5">-->
+<!--  <h2 class="text-center mb-4">User Profile</h2>-->
+
+<!--  <div class="row justify-content-center">-->
+<!--    <div class="col-md-6">-->
+<!--      <div class="card shadow">-->
+<!--        <div class="card-body">-->
+<!--          <h4 class="card-title text-center mb-4" th:text="'Welcome, ' + ${user.name} + '!'"></h4>-->
+
+<!--          &lt;!&ndash; Profile Details in Table &ndash;&gt;-->
+<!--          <table class="table table-bordered">-->
+<!--            <tbody>-->
+<!--            <tr>-->
+<!--              <th scope="row">Name</th>-->
+<!--              <td th:text="${user.name}">John Doe</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <th scope="row">Username</th>-->
+<!--              <td th:text="${user.username}">johndoe123</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <th scope="row">Email</th>-->
+<!--              <td th:text="${user.email}">johndoe@example.com</td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--          </table>-->
+
+<!--          &lt;!&ndash; Action Buttons &ndash;&gt;-->
+<!--          <div class="text-center mt-4">-->
+<!--            <a href="/" class="btn btn-primary mr-2">Home</a>-->
+<!--            <a href="/logout" class="btn btn-danger">Logout</a>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Bootstrap and jQuery &ndash;&gt;-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Profile</title>-->
+<!--  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container mt-5">-->
+<!--  <h2 class="text-center">User Profile</h2>-->
+<!--  <div class="card">-->
+<!--    <div class="card-body">-->
+<!--      <h5 class="card-title" th:text="'Name: ' + ${user.name}"></h5>-->
+<!--      <p class="card-text" th:text="'Username: ' + ${user.username}"></p>-->
+<!--      <p class="card-text" th:text="'Email: ' + ${user.email}"></p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->

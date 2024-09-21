@@ -5,12 +5,14 @@ import au.edu.rmit.sept.webapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 // Specifies the METHODS' functionalities
 @Service
 public class UserServiceImpl implements UserService{
 
-    private UserRepository userR;
+    private final UserRepository userR;
 
 
     @Autowired
@@ -35,5 +37,9 @@ public class UserServiceImpl implements UserService{
         return userR.findByEmail(email);
     }
 
+//    @Override
+//    public List<User> findAll() {
+//        return userR.findAll();
+//    }
 
 }
