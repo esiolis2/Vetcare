@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Your Appointment</title>
-    <link href="/src/main/resources/static/assets/css/BookApp.css" rel="stylesheet">
+    <link href="/Styles/BookApp.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -13,9 +13,7 @@
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/resources">Resources</a>
-        </li>
+
         <li class="nav-item">
             <a class="nav-link" href="SignUp.html">Signup</a>
         </li>
@@ -25,67 +23,46 @@
         <li class="nav-item">
             <a class="nav-link" href="BookApp.html">Book Appointment</a>
         </li>
-
     </ul>
-    <div class="container mt-5">
-        <h2 class="text-center">Change Your Appointment</h2>
-        <form id="changeAppointmentForm" class="mx-auto form-container">
+</div>
+<div class="container mt-5">
+    <h2 class="text-center">Change Your Appointment</h2>
+    <form  th:action="@{/reschedule}" method="post" id="changeAppointmentForm" class="mx-auto form-container">
 
-            <div id="change-step-1" class="form-step">
-                <div class="form-group">
-                    <label for="changeAction">Would you like to cancel or reschedule your appointment?</label>
-                    <select class="form-control" id="changeAction" required>
-                        <option value="">Select an option</option>
-                        <option value="reschedule">Reschedule</option>
-                        <option value="cancel">Cancel</option>
-                    </select>
+        <div class="form-group">
+            <label for="id">Apppointment Id:</label>
+            <input  value="id" name="id" type="number" class="form-control" id="id" placeholder="Enter your Appointment ID" required>
+
+        </div>
+
+        <div class="form-group" id="veterinarianForm" style="display: none">
+            <label for="vetId" >Choose your Veterinarian:</label>
+            <select  name="veterinarianId" class="form-control" id="vetId"  required>
+                <option>Select a Veterinarian</option>
+                <option th:each="veterinarian : ${veterinarians}" th:value="${veterinarian.id}" th:text="${veterinarian.name}" th:attr="data-clinic-id=${veterinarian.clinicId}">Veterinarian Name </option>
+            </select>
+        </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="appointment-date">New Appointment Date:</label>
+                    <input  name="date" type="date" class="form-control" id="appointment-date" required>
                 </div>
-                <button type="button" class="btn btn-primary" onclick="nextChangeStep(2)">Next</button>
+                <div class="form-group col-md-6">
+                    <label for="appointment-time">New Appointment Time:</label>
+                    <input   name="time" type="time" class="form-control" id="appointment-time" required>
+                </div>
             </div>
+            <button type="button" class="btn btn-secondary" onclick="previousChangeStep(2)">Previous</button>
+            <button type="submit" class="btn btn-primary" >Reschedule</button>
 
-            <div id="change-step-2" class="form-step" style="display: none;">
-                <div class="form-group">
-                    <label for="ownerName">Your Full Name:</label>
-                    <input type="text" class="form-control" id="ownerName" placeholder="Enter your name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email Address:</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
-                </div>
-                <button type="button" class="btn btn-secondary" onclick="previousChangeStep(1)">Previous</button>
-                <button type="button" class="btn btn-primary" onclick="handleChangeAction()">Next</button>
-            </div>
 
-            <div id="change-step-reschedule" class="form-step" style="display: none;">
-                <div class="form-group">
-                    <label for="clinic">Available Clinics:</label>
-                    <select class="form-control" id="clinic" required>
-                        <option value="">Select a clinic</option>
-                        <option value="clinic1">Clinic 1</option>
-                        <option value="clinic2">Clinic 2</option>
-                        <option value="clinic3">Clinic 3</option>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="appointment-date">New Appointment Date:</label>
-                        <input type="date" class="form-control" id="appointment-date" required>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="appointment-time">New Appointment Time:</label>
-                        <input type="time" class="form-control" id="appointment-time" required>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-secondary" onclick="previousChangeStep(2)">Previous</button>
-                <button type="button" class="btn btn-primary" onclick="rescheduleAppointment()">Reschedule</button>
-            </div>
+    </form>
+</div>
 
-        </form>
-    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/scripts/ChangeApp.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="ChangeApp.js"></script>
 </body>
 </html>

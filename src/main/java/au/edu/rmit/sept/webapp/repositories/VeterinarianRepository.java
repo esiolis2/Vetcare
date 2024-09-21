@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface VeterinarianRepository {
     public List<Veterinarian> findAllVeterinarians();
+    public List<Veterinarian> findAllVeterinariansById(Long clinicId);
 }

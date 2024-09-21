@@ -21,4 +21,9 @@ public class VeterinarianServiceImpl implements VeterinarianService{
     public List<Veterinarian> getAllVeterinarians() {
         return veterinarianRepository.findAllVeterinarians();
     }
+
+    @Override
+    public List<Veterinarian> getVeterinarianById(Long clinicId) {
+        return veterinarianRepository.findAllVeterinariansById(clinicId);
+    }
 }

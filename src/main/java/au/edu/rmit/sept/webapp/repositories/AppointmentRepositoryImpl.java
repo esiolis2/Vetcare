@@ -23,8 +23,6 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
 
     @Autowired
     private final DataSource dataSource;
-
-
     public AppointmentRepositoryImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -96,4 +94,56 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         return appointment;
     }
 
+    @Override
+    public Appointment updateAppointment(Appointment appointment) {
+        String updateQuery = "UPDATE appointment SET appointmentTime = ?, appointmentDate = ?, veterinarianId = ? WHERE id = ?";
+        try(
+                Connection connection = this.dataSource.getConnection();
+                PreparedStatement stm = connection.prepareStatement(updateQuery)){
+                stm.setTime(1, java.sql.Time.valueOf(appointment.getAppointmentTime())); // LocalTime to Time
+                stm.setDate(2, java.sql.Date.valueOf(appointment.getAppointmentDate())); // LocalDate to Date
+                stm.setLong(3, appointment.getVeterinarianId());
+                stm.setLong(4, appointment.getId());
+
+                int rowsAffected = stm.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Appointment successfully rescheduled.");
+                } else {
+                    System.out.println("No appointment found with the given ID.");
+                }
+        }
+        catch (SQLException e){
+            throw new IllegalArgumentException("Cannot update appointment", e);
+        }
+        return appointment;
+    }
+
+    @Override
+    public Appointment findById(Long id) {
+        Appointment appointment;
+        try {
+            Connection connection = this.dataSource.getConnection();
+            PreparedStatement stm = connection.prepareStatement("SELECT * FROM APPOINTMENT WHERE id=?;");
+            appointment = new Appointment();
+            stm.setLong(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                appointment.setId(rs.getLong("id"));
+                appointment.setVeterinarianId(rs.getLong("veterinarianId"));
+                appointment.setClinicId(rs.getLong("clinicId"));
+                appointment.setOwnerName(rs.getString("ownerName"));
+                appointment.setEmail(rs.getString("email"));
+                appointment.setPhone(rs.getString("phone"));
+                appointment.setPetName(rs.getString("petName"));
+                appointment.setPetType(rs.getString("petType"));
+                appointment.setPetAge(rs.getInt("petAge"));
+                appointment.setReason(rs.getString("reason"));
+                appointment.setAppointmentTime(rs.getTime("appointmentTime").toLocalTime()); // Time to LocalTime
+                appointment.setAppointmentDate(rs.getDate("appointmentDate").toLocalDate()); // Date to LocalDate
+            }
+        } catch (SQLException e) {
+            throw new UncategorizedScriptException("Error in findById", e);
+        }
+        return appointment;
+    }
 }

@@ -28,4 +28,14 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment createAppointment(Appointment appointment) {
         return appointmentRepository.addAppointment(appointment);
     }
+
+    @Override
+    public Appointment rescheduleAppointment(Appointment appointment) {
+        return appointmentRepository.updateAppointment(appointment);
+    }
+
+    @Override
+    public Appointment findAppointmentById(Long appointmentId) {
+        return appointmentRepository.findById(appointmentId);
+    }
 }
