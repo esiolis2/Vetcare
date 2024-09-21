@@ -110,13 +110,12 @@
 
         </div>
 
-        <a href="/" class="btn-common btn-back">Back to Home Page</a>
-        <div class="text-center">
+        <a href="/" class="btn-common btn-back" >Back to Home Page</a>
+        <div class="text-center" th:if="${pet != null}">
             <a href="#" class="btn-common btn-download" onclick="downloadPDF()">Download PDF</a>
             <a href="#" class="btn-common btn-share" onclick="shareRecords()">Share</a>
         </div>
 
-        <!-- JavaScript for PDF download placed inside the correct div -->
         <script>
 function downloadPDF() {
     const { jsPDF } = window.jspdf;
