@@ -14,15 +14,12 @@ public class Appointment {
     private LocalTime appointmentTime;
     private LocalDate appointmentDate;
     private String reason;
-    private String petName;
-    private String petType;
-    private Integer petAge;
+    private Long petId;
 
     // Constructors, getters, and setters...
 
     public Appointment(Long id, Long veterinarianId, Long clinicId, String ownerName, String email,
-                       String phone, LocalTime appointmentTime, LocalDate appointmentDate, String reason,
-                       String petName, String petType, Integer petAge) {
+                       String phone, LocalTime appointmentTime, LocalDate appointmentDate, String reason, Long petId) {
         this.id = id;
         this.veterinarianId = veterinarianId;
         this.clinicId = clinicId;
@@ -32,12 +29,12 @@ public class Appointment {
         this.appointmentTime = appointmentTime;
         this.appointmentDate = appointmentDate;
         this.reason = reason;
-        this.petName = petName;
-        this.petType = petType;
-        this.petAge = petAge;
+        this.petId = petId;
     }
 
     public Appointment() {}
+
+
 
     // Getters and Setters
 
@@ -113,27 +110,13 @@ public class Appointment {
         this.reason = reason;
     }
 
-    public String getPetName() {
-        return petName;
+    public Long getPetId() {
+        return petId;
     }
 
-    public void setPetName(String petName) {
-        this.petName = petName;
+    public void setPetId(Long petId) {
+        this.petId = petId;
     }
 
-    public String getPetType() {
-        return petType;
-    }
 
-    public void setPetType(String petType) {
-        this.petType = petType;
-    }
-
-    public Integer getPetAge() {
-        return petAge;
-    }
-
-    public void setPetAge(Integer petAge) {
-        this.petAge = petAge;
-    }
 }

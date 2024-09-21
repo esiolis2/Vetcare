@@ -21,14 +21,16 @@ public class AppointmentController {
     private final VeterinarianService veterinarianService;
     private final ClinicServicePricingService clinicServicePricingService;
     private final ClinicReasonsService clinicReasonsService;
+    private final PetInformationService petInformationService;
 
     @Autowired
-    public AppointmentController(AppointmentService appointmentService, ClinicService clinicService, VeterinarianService veterinarianService, ClinicServicePricingService clinicServicePricingService, ClinicReasonsService clinicReasonsService) {
+    public AppointmentController(AppointmentService appointmentService, ClinicService clinicService, VeterinarianService veterinarianService, ClinicServicePricingService clinicServicePricingService, ClinicReasonsService clinicReasonsService, PetInformationService petInformationService) {
         this.appointmentService = appointmentService;
         this.clinicService = clinicService;
         this.veterinarianService = veterinarianService;
         this.clinicServicePricingService = clinicServicePricingService;
         this.clinicReasonsService = clinicReasonsService;
+        this.petInformationService = petInformationService;
     }
 
     @GetMapping("/appointments")
@@ -41,6 +43,9 @@ public class AppointmentController {
         model.addAttribute("clinicReasons", clinicReasons);
         List<ClinicServicePricing> servicePricings = clinicServicePricingService.getAll();
         model.addAttribute("servicePricings", servicePricings);
+        List<PetInformation> petInformation = petInformationService.getAllPets();
+        model.addAttribute("petInformation", petInformation);
+
         return "BookApp";
     }
 

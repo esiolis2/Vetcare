@@ -8,8 +8,6 @@ CREATE TABLE APPOINTMENT (
     appointmentTime TIME(6) NOT NULL,
     appointmentDate DATE NOT NULL,
     reason TEXT,
-    petName VARCHAR(255) DEFAULT NULL,
-    petType VARCHAR(255) DEFAULT NULL,
-    petAge INT DEFAULT NULL,
+    petId BIGINT NOT NULL,
     PRIMARY KEY (id)
 );

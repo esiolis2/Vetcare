@@ -2,6 +2,7 @@ package au.edu.rmit.sept.webapp.repositories;
 
 import au.edu.rmit.sept.webapp.models.PetInformation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.init.UncategorizedScriptException;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Primary
 public class PetInformationRepositoryImpl implements PetInformationRepository {
 
     @Autowired

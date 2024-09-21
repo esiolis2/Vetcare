@@ -36,8 +36,6 @@
 <div class="container mt-5">
     <h2 class="text-center">Book an Appointment with a Vet</h2>
     <form  th:action="@{/add}" method="post" id="appointmentForm" class="mx-auto form-container">
-
-
         <!-- Step 1: Reason for Appointment and Clinic Pricing -->
         <div id="step-1" class="form-step">
             <div class="form-group">
@@ -136,62 +134,43 @@
 
         <!-- Step 4: Pet Information -->
         <div id="step-4" class="form-step" style="display: none;">
-            <div class="form-group">
-                <label for="newOrExisting">Is this a new pet or an existing pet?</label>
-                <select class="form-control" id="newOrExisting" required onchange="togglePetSelection()">
-                    <option value="">Select an option</option>
-                    <option value="new">New Pet</option>
-                    <option value="existing">Existing Pet</option>
-                </select>
+            <div class="form-group text-center">
+                <h5>Is this a new pet or an existing pet?</h5>
+                <button type="button" class="btn btn-primary mx-2" id="newPetButton" onclick="showNewPetModal()">Register New Pet</button>
+                <button type="button" class="btn btn-secondary mx-2" id="existingPetButton" onclick="showExistingPets()">Choose Existing Pet</button>
             </div>
+
             <div id="existingPetsGrid" style="display: none;">
                 <h5>Choose your existing pet:</h5>
                 <div class="row">
-                    <!-- Placeholder pet grid (2-column, 8 rows) with buttons -->
-                    <div class="col-md-6 mb-2">
-                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 1')">Pet 1</button>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 2')">Pet 2</button>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 3')">Pet 3</button>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 4')">Pet 4</button>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 5')">Pet 5</button>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 6')">Pet 6</button>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 7')">Pet 7</button>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <button type="button" class="btn btn-outline-primary pet-button" onclick="selectPet(this, 'Pet 8')">Pet 8</button>
+                    <div class="col-md-12">
+                        <select id="petDropdown" class="form-control">
+                            <option value="">-- Select a Pet --</option>
+                            <option th:each="pet : ${petInformation}" th:value="${pet.petID}" th:text="${pet.name}"></option>
+                        </select>
                     </div>
                 </div>
             </div>
-            <!-- New Pet Form (hidden initially) -->
-            <div id="newPetForm" style="display: none;">
-                <div class="form-group">
-                    <label for="petName">Pet Name:</label>
-                    <input name="petName" type="text" class="form-control" id="petName" placeholder="Enter your pet's name" required>
-                </div>
-                <div class="form-group">
-                    <label for="petType">Pet Type:</label>
-                    <input name="petType" type="text" class="form-control" id="petType" placeholder="Enter type of pet (e.g., Dog, Cat)" required>
-                </div>
-                <div class="form-group">
-                    <label for="petAge">Pet Age:</label>
-                    <input name="petAge" type="number" class="form-control" id="petAge" placeholder="Enter your pet's age" required>
-                </div>
-            </div>
+            <div id="petModalContainer"></div>
+
+        <script>
+            function showNewPetModal() {
+                $('#petModalContainer').load('/pets/register', function() {
+                    // Show the modal after loading
+                    $('#newPetModal').modal('show');
+                });
+            }
+
+            function showExistingPets() {
+                document.getElementById('existingPetsGrid').style.display = 'block'; // Show the existing pets dropdown
+            }
+        </script>
+
+
             <button type="button" class="btn btn-secondary" onclick="previousStep(3)">Previous</button>
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
+
     </form>
 
     <!-- Confirmation Modal -->
