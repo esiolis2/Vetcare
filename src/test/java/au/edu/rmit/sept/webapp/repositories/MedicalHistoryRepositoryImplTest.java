@@ -7,8 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import javax.sql.DataSource;
+import java.util.Date;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -37,7 +40,7 @@ public class MedicalHistoryRepositoryImplTest {
     public void findAllMedicalHistories_should_returnRecords() {
         List<MedicalHistory> records = repository.findAllMedicalHistories();
         assertNotNull(records);
-        assertEquals(10, records.size()); // Assuming Flyway migration added 30 records
+        assertEquals(10, records.size());
     }
 
     @Test
@@ -60,4 +63,41 @@ public class MedicalHistoryRepositoryImplTest {
         List<MedicalHistory> updatedRecords = repository.findAllMedicalHistories();
         assertEquals(initialSize + 1, updatedRecords.size());
     }
+
+    @Test
+    public void findMedicalHistoryByPetId_should_returnEmptyListWhenNoRecords() {
+        List<MedicalHistory> records = repository.findMedicalHistoryByPetId(999L);
+        assertTrue(records.isEmpty());
+    }
+
+    @Test
+    public void testDefaultConstructor() {
+        MedicalHistory medicalHistory = new MedicalHistory();
+        assertNotNull(medicalHistory);
+    }
+
+    @Test
+    public void testMedicalHistoryGettersSetters() {
+        MedicalHistory medicalHistory = new MedicalHistory();
+        medicalHistory.setHistoryID(1L);
+        medicalHistory.setPetID(2L);
+        medicalHistory.setLastVisitDate(new Date());
+        medicalHistory.setLastDiagnosis("Diagnosis");
+        medicalHistory.setTreatmentProvided("Treatment");
+        medicalHistory.setMedicationsPrescribed("Medication");
+        medicalHistory.setOngoingConditions("Condition");
+        medicalHistory.setNextScheduledVisit(new Date());
+
+        assertEquals(1L, medicalHistory.getHistoryID());
+        assertEquals(2L, medicalHistory.getPetID());
+        assertEquals("Diagnosis", medicalHistory.getLastDiagnosis());
+        assertEquals("Treatment", medicalHistory.getTreatmentProvided());
+        assertEquals("Medication", medicalHistory.getMedicationsPrescribed());
+        assertEquals("Condition", medicalHistory.getOngoingConditions());
+        assertNotNull(medicalHistory.getLastVisitDate());
+        assertNotNull(medicalHistory.getNextScheduledVisit());
+    }
+
+
+
 }
