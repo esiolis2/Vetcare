@@ -37,7 +37,7 @@ public class VaccinationRecordController {
     }
 
 
-    @GetMapping("/vaccination")
+    @GetMapping("/vaccination-record-details")
     public String showVaccinationDetails(@RequestParam("petId") Long petId, Model model) {
         PetInformation pet = petInformationService.getPetById(petId);
         if (pet != null) {

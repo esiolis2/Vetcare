@@ -1,31 +1,37 @@
 package au.edu.rmit.sept.webapp.models;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-
 
 public class VaccinationRecord {
 
     private Long vaccinationID;
-
-    private PetInformation pet;
-
+    private Long petID;
     private String vaccineName;
-
     private LocalDate administeredDate;
-
     private LocalDate nextDueDate;
-
     private String boosterRequired;
+    private BigDecimal  dosage;
+    private String veterinarianName;
+    private String clinicName;
+    private String status;
+    private String additionalNotes;
 
-
-    public VaccinationRecord() {}
-
-    public VaccinationRecord(PetInformation pet, String vaccineName, LocalDate administeredDate, LocalDate nextDueDate, String boosterRequired) {
-        this.pet = pet;
+    public VaccinationRecord(Long vaccinationID, Long petID, String vaccineName, LocalDate administeredDate, LocalDate nextDueDate, String boosterRequired, BigDecimal  dosage, String veterinarianName, String clinicName, String status, String additionalNotes) {
+        this.vaccinationID = vaccinationID;
+        this.petID = petID;
         this.vaccineName = vaccineName;
         this.administeredDate = administeredDate;
         this.nextDueDate = nextDueDate;
         this.boosterRequired = boosterRequired;
+        this.dosage = dosage;
+        this.veterinarianName = veterinarianName;
+        this.clinicName = clinicName;
+        this.status = status;
+        this.additionalNotes = additionalNotes;
+    }
+
+    public VaccinationRecord() {
     }
 
     public Long getVaccinationID() {
@@ -36,12 +42,12 @@ public class VaccinationRecord {
         this.vaccinationID = vaccinationID;
     }
 
-    public PetInformation getPet() {
-        return pet;
+    public Long getPetID() {
+        return petID;
     }
 
-    public void setPet(PetInformation pet) {
-        this.pet = pet;
+    public void setPetID(Long petID) {
+        this.petID = petID;
     }
 
     public String getVaccineName() {
@@ -74,5 +80,45 @@ public class VaccinationRecord {
 
     public void setBoosterRequired(String boosterRequired) {
         this.boosterRequired = boosterRequired;
+    }
+
+    public BigDecimal getDosage() {
+        return dosage;
+    }
+
+    public void setDosage(BigDecimal dosage) {
+        this.dosage = dosage;
+    }
+
+    public String getVeterinarianName() {
+        return veterinarianName;
+    }
+
+    public void setVeterinarianName(String veterinarianName) {
+        this.veterinarianName = veterinarianName;
+    }
+
+    public String getClinicName() {
+        return clinicName;
+    }
+
+    public void setClinicName(String clinicName) {
+        this.clinicName = clinicName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getAdditionalNotes() {
+        return additionalNotes;
+    }
+
+    public void setAdditionalNotes(String additionalNotes) {
+        this.additionalNotes = additionalNotes;
     }
 }

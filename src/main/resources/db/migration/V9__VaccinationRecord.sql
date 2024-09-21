@@ -5,5 +5,10 @@ CREATE TABLE IF NOT EXISTS VaccinationRecords (
     AdministeredDate DATE NOT NULL,
     NextDueDate DATE,
     BoosterRequired VARCHAR(255),
-    FOREIGN KEY (PetID) REFERENCES PET_INFO(PetID) ON DELETE CASCADE
+    Dosage DECIMAL(4, 2),
+    VeterinarianName VARCHAR(100),
+    ClinicName VARCHAR(100),
+    Status VARCHAR(50),
+    AdditionalNotes TEXT,
+    FOREIGN KEY (PetID) REFERENCES pet_info(PetID) ON DELETE CASCADE
 );
