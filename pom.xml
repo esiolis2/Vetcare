@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>au.edu.rmit.sept</groupId>
 	<artifactId>webapp</artifactId>
@@ -51,6 +51,19 @@
 		</dependency>
 		<!-- UI -->
 		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.29</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jdbc</artifactId>
+			<version>3.3.3</version>
+		</dependency>
+
+		<!-- UI -->
+		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
 			<artifactId>thymeleaf-layout-dialect</artifactId>
 			<version>3.2.0</version>
@@ -60,12 +73,14 @@
 			<artifactId>bootstrap</artifactId>
 			<version>5.3.3</version>
 		</dependency>
+
 		<!-- Testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<!-- Developers tools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -73,6 +88,7 @@
 			<optional>true</optional>
 			<scope>runtime</scope>
 		</dependency>
+
 		<!-- Fly way  -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
@@ -84,6 +100,8 @@
 			<artifactId>flyway-mysql</artifactId>
 		</dependency>
 	</dependencies>
+
+
 	<build>
 		<plugins>
 			<plugin>
@@ -93,13 +111,35 @@
 			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
-				<version>10.10.0</version> <!-- Use the latest version -->
 				<configuration>
-					<url>jdbc:mysql://localhost:3306/vetcare</url>
-					<user>root</user>
-					<password>ethan1</password>
-					<locations>classpath:db/migration</locations> <!-- Location of migration scripts -->
+					<url>jdbc:mysql://localhost:3306/vetcare?allowPublicKeyRetrieval=true&amp;useSSL=false</url>
+					<user>VetCare_DB</user>
+					<password>PleaseWork@123</password>
+					<driver>com.mysql.cj.jdbc.Driver</driver>
+					<schemas>vetcare</schemas>
+					<locations>
+						<location>classpath:db/migration</location>
+					</locations>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.12</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

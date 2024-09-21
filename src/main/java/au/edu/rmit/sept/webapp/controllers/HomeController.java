@@ -1,32 +1,33 @@
 package au.edu.rmit.sept.webapp.controllers;
 
-import java.util.Date;
-
+import au.edu.rmit.sept.webapp.services.PetInformationService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomeController {
+public class  HomeController {
+
+    public HomeController(PetInformationService petInformationService) {
+    }
+
     @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("message", "Welcome to Vet Care!");
-        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
-        return "HomePage.html";
+    public String index() {
+      return "HomePage.html";
     }
 
     @GetMapping("/resources")
-    public String Resources(Model model) {
-        model.addAttribute("message", "Welcome to Vet Care!");
-        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
+    public String Resources() {
         return "Resources.html";
     }
 
+    @GetMapping("/view-treatment-plan")
+    public String  ViewTreatmentPlan() {
+        return "ViewTreatmentPlan.html";
+    }
+
     @GetMapping("/signup")
-    public String SignUp(Model model) {
-        model.addAttribute("message", "Welcome to Vet Care!");
-        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
-        return "SignUp.html";
+    public String SignUp() {
+       return "SignUp.html";
     }
 
     @GetMapping("/login")

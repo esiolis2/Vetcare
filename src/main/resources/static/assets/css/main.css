@@ -10,6 +10,14 @@ body {
     margin: 0;
     padding: 0;
 }
+/* GENERAL STYLING */
+body {
+    color: #f9f7f3;
+    background-color: #f9f9f9;
+    font-family: 'Poppins', serif;
+    margin: 0;
+    padding: 0;
+}
 
 h1,h2,h3 {
     color: #222222;
@@ -125,6 +133,20 @@ p {
 
 .card-button:hover{
     background-color: #bccce1;
+}
+
+/*TABLES*/
+.table-container {
+    margin: 20px 50px 20px 50px;
+}
+.table{
+    width: 60%;
+}
+table th, table td {
+    padding: 15px;
+    line-height: 3;
+    word-wrap: break-word;
+    vertical-align: middle;
 }
 
 /* FOOTER */
