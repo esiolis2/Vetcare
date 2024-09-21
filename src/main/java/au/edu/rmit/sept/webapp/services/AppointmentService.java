@@ -8,6 +8,7 @@ public interface AppointmentService {
     public Appointment createAppointment (Appointment appointment);
     public Appointment rescheduleAppointment (Appointment appointment);
     public Appointment findAppointmentById(Long appointmentId);
+    public boolean deleteAppointment (Long appointmentId);
 
 
 }

@@ -68,5 +68,12 @@ public class AppointmentController {
         return "redirect:/";
     }
 
+    @DeleteMapping("/delete/{id}")
+    public String deleteAppointment(@PathVariable Long id)
+    {
+        appointmentService.deleteAppointment(id);
+        System.out.println("Successfully deleted appointment");
+        return "redirect:/";
+    }
 
 }

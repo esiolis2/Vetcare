@@ -11,4 +11,7 @@ public interface AppointmentRepository {
     public Appointment addAppointment(Appointment appointment);
     public Appointment updateAppointment(Appointment appointment);
     public Appointment findById(Long id);
+    public boolean removeAppointment(Long appointmentId);
+
+
 }

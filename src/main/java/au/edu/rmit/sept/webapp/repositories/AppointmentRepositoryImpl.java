@@ -1,12 +1,8 @@
 package au.edu.rmit.sept.webapp.repositories;
 
 import au.edu.rmit.sept.webapp.models.Appointment;
-import au.edu.rmit.sept.webapp.models.Clinic;
-import au.edu.rmit.sept.webapp.services.ClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Primary;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.init.UncategorizedScriptException;
 import org.springframework.stereotype.Repository;
 
@@ -146,4 +142,30 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         }
         return appointment;
     }
+
+    @Override
+    public boolean removeAppointment(Long appointmentId) {
+        String deleteQuery = "DELETE FROM appointment WHERE id = ?";
+
+        try (Connection connection = this.dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(deleteQuery)) {
+
+            stmt.setLong(1, appointmentId);  // Set the appointment ID to delete
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Appointment successfully deleted.");
+            } else {
+                System.out.println("No appointment found with the provided ID.");
+            }
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new UncategorizedScriptException("Error deleting appointment", e);
+        }
+        return true;
+    }
+
+
 }
