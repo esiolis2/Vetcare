@@ -32,7 +32,7 @@ public class PetInformation {
 
     private String ownerContact;
 
-    public PetInformation(long petID, String name, int age, String gender, double weight, String breed, LocalDate birthDate, String ownerName, String ownerContact) {
+    public PetInformation(Long petID, String name, int age, String gender, double weight, String breed, LocalDate birthDate, String ownerName, String ownerContact) {
         this.petID = petID;
         this.name = name;
         this.age = age;
