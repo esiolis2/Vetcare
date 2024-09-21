@@ -1,0 +1,129 @@
+body {
+   background-color: #F9FAFB;
+   font-family: 'Poppins', sans-serif;
+   color: #343A40;
+   margin: 0;
+   padding: 0;
+}
+.container .medicalRecordContainer {
+   background-color: #fff;
+   max-width: 900px;
+   margin: 30px auto;
+   padding: 40px;
+   border-radius: 16px;
+   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+   border: none;
+}
+h2, h3 {
+   font-family: 'Poppins', sans-serif;
+   text-align: center;
+   color: #343A40;
+   margin-bottom: 20px;
+   text-transform: uppercase;
+   letter-spacing: 2px;
+   font-weight: bold;
+}
+.summary-section {
+   margin-bottom: 30px;
+   padding: 20px;
+   background-color: #F3F4F6;
+   border-radius: 12px;
+   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+   transition: transform 0.3s ease-in-out;
+}
+.summary-section:hover {
+   transform: scale(1.02);
+   background-color: #EAEAFF;
+}
+.summary-section h3 {
+   font-size: 1.6rem;
+   margin-bottom: 15px;
+   color: #495057;
+   font-weight: 600;
+}
+.summary-section p {
+   font-size: 1.2rem;
+   color: #6c757d;
+}
+.btn-details {
+   margin-top: 15px;
+   background-color: #6C63FF;
+   color: white;
+   padding: 12px 25px;
+   border-radius: 8px;
+   text-decoration: none;
+   transition: background-color 0.3s ease;
+}
+.btn-details:hover {
+   background-color: #4B47CC;
+   transform: scale(1.05);
+}
+.text-center {
+   text-align: center;
+   margin-top: 30px;
+}
+.btn-download, .btn-share {
+   margin-top: 15px;
+   background-color: #6C63FF;
+   color: white;
+   padding: 12px 25px;
+   border-radius: 8px;
+   text-decoration: none;
+   display: inline-block;
+   margin-right: 10px;
+   font-size: 1rem;
+   transition: background-color 0.3s ease, transform 0.2s;
+}
+.btn-share {
+   background-color: #6C63FF;
+}
+.btn-download:hover {
+   background-color: #6C63FF;
+   transform: scale(1.05);
+}
+.btn-share:hover {
+   background-color: #6C63FF;
+   transform: scale(1.05);
+}
+.table {
+   width: 100%;
+   border-collapse: collapse;
+}
+.table th, .table td {
+   padding: 12px;
+   border-bottom: 1px solid #ddd;
+   text-align: left;
+}
+.table th {
+   background-color: #dddddd;
+   color: #4B0082;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+   background-color: #FADCD9;
+}
+.table-striped tbody tr:hover {
+   background-color: #FCE4EC;
+}
+
+
+.pet-selection {
+   padding: 20px;
+   background-color: #EAF4FF;
+   border-radius: 12px;
+   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+.form-select {
+   width: 100%;
+   padding: 10px;
+   border-radius: 8px;
+   border: 1px solid #ccc;
+}
+.btn-primary {
+   background-color: #6C63FF;
+   border-color: #6C63FF;
+   transition: background-color 0.3s ease, transform 0.2s;
+}
+.btn-primary:hover {
+   background-color: #4B47CC;
+   transform: scale(1.05);
+}
