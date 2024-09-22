@@ -24,15 +24,16 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     }
 
     @Override
-    public List<Appointment> findAll() {
+    public List<Appointment> findAll(Long userId) {
         try {
             Connection connection = this.dataSource.getConnection();
-            PreparedStatement stm = connection.prepareStatement("SELECT * FROM APPOINTMENT;");
+            PreparedStatement stm = connection.prepareStatement("SELECT * FROM APPOINTMENT where ownerId = ?;");
             List<Appointment> appointments = new ArrayList<>();
+            stm.setLong(1, userId);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Timestamp timestamp = rs.getTimestamp("appointmentTime");
-                Long clinicId = rs.getLong("clinic");
+                Long clinicId = rs.getLong("clinicId");
                 // Split it into LocalDate and LocalTime
                 LocalDate appointmentDate = timestamp.toLocalDateTime().toLocalDate();
                 LocalTime appointmentTime = timestamp.toLocalDateTime().toLocalTime();
@@ -40,7 +41,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
                         rs.getLong("id"), // id
                         rs.getLong("veterinarianId"), // vetId
                         rs.getLong("clinicId"), // clinic
-                        rs.getLong("userId"),
+                        rs.getLong("ownerId"),
                         appointmentTime,
                         appointmentDate,
                         rs.getString("reason"),

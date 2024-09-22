@@ -57,11 +57,6 @@ public class UserController {
         }
         return "redirect:/"; // Redirect to home if not logged in
     }
-
-    @GetMapping("/dashboard/appointment-management")
-    public String dashboardAppointmentManangement(){
-        return "/dashboard/appointmentManagement.html";
-    }
 }
 
 

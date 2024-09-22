@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -19,8 +20,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public Collection<Appointment> getAppointments() {
-        return appointmentRepository.findAll();
+    public List<Appointment> getAppointments(Long userId) {
+        return appointmentRepository.findAll(userId);
     }
 
     @Override

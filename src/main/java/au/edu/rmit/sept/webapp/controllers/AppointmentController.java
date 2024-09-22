@@ -76,6 +76,25 @@ public class AppointmentController {
         return "ChangeApp.html";
     }
 
+    @GetMapping ("/dashboard/appointment-management")
+    public String AppointmentList(Model model, HttpServletRequest request){
+        String email = (String) request.getSession().getAttribute("userEmail"); // Or however you're storing it
+        if (email != null) {
+            User user = userService.findByEmail(email);
+            List<Clinic> clinics = clinicService.getAllClinics();
+            model.addAttribute("clinics", clinics);
+           List<Appointment> appointments =  appointmentService.getAppointments(user.getId());
+            model.addAttribute("appointments", appointments);
+            List<ClinicReasons> clinicReasons = clinicReasonsService.getAllClinicReasons();
+            model.addAttribute("clinicReasons", clinicReasons);
+            List<PetInformation> petInformation = petInformationService.getAllPets();
+            model.addAttribute("petInformation", petInformation);
+
+        }
+
+        return "/dashboard/appointmentManagement.html";
+    }
+
     @PostMapping("/reschedule")
     public String rescheduleAppointment(Model model, LocalDate date, LocalTime time, Long veterinarianId, Long id ){
         Appointment appointment = appointmentService.findAppointmentById(id);

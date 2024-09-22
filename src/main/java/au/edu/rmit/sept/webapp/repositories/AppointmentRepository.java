@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface AppointmentRepository {
-    public List<Appointment> findAll();
+    public List<Appointment> findAll(Long userId);
     public Appointment addAppointment(Appointment appointment);
     public Appointment updateAppointment(Appointment appointment);
     public Appointment findById(Long id);

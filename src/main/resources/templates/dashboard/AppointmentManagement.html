@@ -65,54 +65,36 @@
                     <div class="col-lg-8 text-black account-details fs-5">
                         <h2 class="bg-body-tertiary p-2 border-top border-bottom">Appointment List</h2>
 
-                        <div class="row border-bottom p-3">
-                            <div class="col-lg-9">
-                                <div class="fw-bold">Date: June 26 2024, 4:30 PM</div>
-                                <div>Clinic: VetCare Carlton</div>
-                                <div>Pet: Fluffy</div>
-                                <div>Reason(s) for visit: Sore foot</div>
-                            </div>
-                            <div class="col-lg-3 text-end">
-                                <span class="badge bg-success">Attended</span>
-                                <!--                                <button class="btn btn-info mt-2">View</button>-->
-                            </div>
-                        </div>
 
-                        <div class="row border-bottom p-3">
+                        <div th:each="appointment : ${appointments}" class="row border-bottom p-3">
                             <div class="col-lg-9">
-                                <div class="fw-bold">Date: June 26 2024, 4:30 PM</div>
-                                <div>Clinic: VetCare Greensborough</div>
-                                <div>Pet: Bentley</div>
-                                <div>Reason(s) for visit: Vaccinations</div>
-                            </div>
-                            <div class="col-lg-3 text-end">
-                                <span class="badge bg-danger">Cancelled</span>
-                            </div>
-                        </div>
-
-                        <div class="row border-bottom p-3">
-                            <div class="col-lg-9">
-                                <div class="fw-bold">Date: June 26 2024, 4:30 PM</div>
-                                <div>Clinic: VetCare Pascoe Vale</div>
-                                <div>Pet: Bentley</div>
-                                <div>Reason(s) for visit: Vaccinations</div>
+                                <div class="fw-bold">
+                                    <span th:text="${#temporals.format(appointment.appointmentDate, 'MMMM dd yyyy')}"></span>
+                                </div>
+                                <div>
+                                    Clinic:
+                                    <span th:each="clinic : ${clinics}"
+                                          th:if="${clinic.id == appointment.clinicId}"
+                                          th:text="${clinic.name}"></span>
+                                </div>
+                                <div>
+                                    Pet:
+                                    <span th:each="pet : ${petInformation}"
+                                          th:if="${pet.petID == appointment.petId}"
+                                          th:text="${pet.name}"></span>
+                                </div>
+                                <div>
+                                    Reason(s) for visit:
+                                    <span th:each="reason : ${clinicReasons}"
+                                          th:if="${reason.id == appointment.reason}"
+                                          th:text="${reason.serviceName}"></span>
+                                </div>
                             </div>
                             <div class="col-lg-3 text-end">
                                 <span class="badge bg-success">Attended</span>
                             </div>
                         </div>
 
-                        <div class="row border-bottom p-3">
-                            <div class="col-lg-9">
-                                <div class="fw-bold">Date: June 26 2024, 4:30 PM</div>
-                                <div>Clinic: VetCare Pascoe Vale</div>
-                                <div>Pet: Georgie</div>
-                                <div>Reason(s) for visit: Trouble eating</div>
-                            </div>
-                            <div class="col-lg-3 text-end">
-                                <span class="badge bg-warning">Upcoming</span>
-                            </div>
-                        </div>
 
                         <!--                        Buttons for manage appointment-->
                         <div class="text-center mt-4">
