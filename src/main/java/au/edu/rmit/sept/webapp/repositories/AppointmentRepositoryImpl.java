@@ -25,10 +25,10 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
 
     @Override
     public List<Appointment> findAll(Long userId) {
-        try {
-            Connection connection = this.dataSource.getConnection();
-            PreparedStatement stm = connection.prepareStatement("SELECT * FROM APPOINTMENT where ownerId = ?;");
-            List<Appointment> appointments = new ArrayList<>();
+        List<Appointment> appointments = new ArrayList<>();
+        try(  Connection connection = this.dataSource.getConnection();
+              PreparedStatement stm = connection.prepareStatement("SELECT * FROM APPOINTMENT where ownerId = ?;");) {
+
             stm.setLong(1, userId);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -110,11 +110,11 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     @Override
     // Find appointment by appointment id
     public Appointment findById(Long id) {
-        Appointment appointment;
-        try {
-            Connection connection = this.dataSource.getConnection();
-            PreparedStatement stm = connection.prepareStatement("SELECT * FROM APPOINTMENT WHERE id=?;");
-            appointment = new Appointment();
+        Appointment appointment = new Appointment();
+        String query = "SELECT * FROM APPOINTMENT WHERE id=?";
+
+        try (Connection connection = this.dataSource.getConnection();
+             PreparedStatement stm = connection.prepareStatement(query)) {
             stm.setLong(1, id);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
