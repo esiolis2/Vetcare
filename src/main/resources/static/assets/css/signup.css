@@ -1,0 +1,178 @@
+        body   {
+            font-family: 'Arial', sans-serif;
+            background-color: #eef2f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+
+
+
+        .container {
+            max-width: 800px;
+            padding: 60px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+
+
+
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: bold;
+        }
+
+        .form-container {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+
+
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 16px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .form-control:hover {
+            box-shadow: 0px 5px 10px rgba(0, 123, 255, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #2c3e50;
+            border: none;
+            color: white;
+            padding: 12px;
+            font-size: 18px;
+            width: 100%;
+            border-radius: 6px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+
+
+        .btn-primary:hover {
+            background-color: #1c2e40;
+            box-shadow: 0px 5px 10px rgba(44, 62, 80, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .btn-link {
+            font-size: 14px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            color: #EE4B2B;
+            transition: color 0.3s ease;
+        }
+
+        .btn-link:hover {
+            color: #1c2e40;
+            text-decoration: underline;
+        }
+
+         .btn-common {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #0d0238;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-align: center;
+            margin: 20px 10px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-common:hover {
+            background-color: #2980b9;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+
+
+
+
+            h2 {
+                font-size: 26px;
+            }
+
+            .btn-primary {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+
+
+
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Your Appointment</title>
+    <link rel="stylesheet" th:href="@{/assets/css/changeApp.css}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="SignUp.html">Signup</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="Login.html">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="BookApp.html">Book Appointment</a>
+        </li>
+    </ul>
+</div>
+<div class="container mt-5">
+    <h2 class="text-center">Change Your Appointment</h2>
+    <form  th:action="@{/reschedule}" method="post" id="changeAppointmentForm" class="mx-auto form-container">
+
+        <div class="form-group" id="rescheduleForm">
+            <label for="id" >Choose the Appointment you want to reschedule:</label>
+            <select name="id" class="form-control" id="id"  required>
+                <option>Select a Appointment</option>
+                <option th:each="appointment : ${appointments}"
+                        th:value="${appointment.id}"
+                        th:text="${#temporals.format(appointment.appointmentDate, 'dd MMMM yyyy')}">
+                    Appointment
+                </option>
+            </select>
+
+        </div>
+
+        <div class="form-group" id="veterinarianForm" >
+            <label for="vetId" >Choose your Veterinarian:</label>
+            <select  name="veterinarianId" class="form-control" id="vetId"  required>
+                <option>Select a Veterinarian</option>
+                <option th:each="veterinarian : ${veterinarians}" th:value="${veterinarian.id}" th:text="${veterinarian.name}" th:attr="data-clinic-id=${veterinarian.clinicId}">Veterinarian Name </option>
+            </select>
+        </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="appointment-date">New Appointment Date:</label>
+                    <input  name="date" type="date" class="form-control" id="appointment-date" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="appointment-time">New Appointment Time:</label>
+                    <input   name="time" type="time" class="form-control" id="appointment-time" required>
+                </div>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="previousChangeStep(2)">Previous</button>
+            <button type="submit" class="btn btn-primary" >Reschedule</button>
+
+    </form>
+
+    <div>
+        <a href="/" class="btn-common btn-back" >Back to Home Page</a>
+    </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/scripts/ChangeApp.js"></script>
+
+</body>
+</html>

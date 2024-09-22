@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+  <title>Clinics</title>
+  <link rel="stylesheet" href=
+          "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <script src=
+                  "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+  </script>
+
+  <script src=
+                  "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+  </script>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <!-- Hero Section -->
+  <section class="hero-section" style="background-color:#f9f9f9;">
+    <div class="container-fluid py-0 align-middle">
+      <div class="row g-0">
+        <div class="d-flex align-items-center justify-content-center hero-text">
+          <h1>Our Clinics</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="hero-section" style="background-color:#f9f9f9;">
+    <div class="row g-0 w-75">
+      <div class="container">
+        <div class="accordion" id="accordionExample" style="--bs-accordion-active-bg: #ffffff;">
+
+
+          <div th:each="clinic : ${clinics}" class="accordion-item">
+            <div class="my-0 accordion-item">
+              <h2 class="accordion-header my-0" id="headingOne">
+                <button style="font-size: 18px;" class="accordion-button" type="button" data-bs-toggle="collapse"
+                        th:data-bs-target="'#collapseOne' + ${clinic.id}" aria-expanded="false"
+                        th:aria-controls="'collapseOne' + ${clinic.id}">
+                  <span th:text="${clinic.name}">Clinic 1</span>
+                </button>
+              </h2>
+              <div th:id="'collapseOne' + ${clinic.id}" class="accordian-body hiddenRow collapse" aria-expanded="false">
+                <div class="container w-100">
+                  <div class="row">
+
+
+                    <div class="hero-text col-md-auto" style="text-align: left; align-items: flex-start;">
+                      <p style="font-size: 16px;">
+                        <b>Services:</b><br>
+                        <!-- Loop through all service pricings -->
+                        <span th:each="pricing : ${servicePricings}">
+                            <!-- Only show services for the current clinic -->
+                            <span th:if="${pricing.clinicId} == ${clinic.id}">
+                                <!-- Get service name from clinicReasons by matching the service ID -->
+                                <span th:each="reason : ${clinicReasons}"
+                                      th:if="${reason.id} == ${pricing.serviceId}">
+                                    <span th:text="${reason.serviceName}">Deworming</span> -
+                                    <span th:text="'$' + ${pricing.price}">$100</span><br>
+                                </span>
+                            </span>
+                        </span>
+                      </p>
+                    </div>
+
+                    <div class="hero-text col-md-auto" style="text-align: left; align-items: flex-start;">
+                      <p style="font-size: 16px;">
+                        <b>Clinicians:</b><br>
+                        <span th:each="veterinarian : ${veterinarians}">
+                          <span th:if="${veterinarian.clinicId} == ${clinic.id}">
+                          <span th:text="${veterinarian.name}">Dr. Brown</span>:<br>
+                          </span>
+                        </span>
+                      </p>
+                    </div>
+
+                    <div class="hero-text col-md-auto" style="text-align: left; align-items: flex-start;">
+                      <p style="font-size: 16px;"><b>Hours:</b><br>
+                        Monday: 9am - 5pm<br>
+                        Tuesday: 9am - 5pm<br>
+                        Wednesday: 9am - 5pm<br>
+                        Thursday: 9am - 5pm<br>
+                        Friday: 9am - 5pm<br>
+                        Saturday: Closed<br>
+                        Sunday: Closed</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="hero-text col-md-auto" style="text-align: left; align-items: flex-start;">
+                      <b>Address: </b><span th:text="${clinic.address}">Address 1</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

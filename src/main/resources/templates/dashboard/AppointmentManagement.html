@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment Management</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex min-vh-100">
+        <!-- Sidebar -->
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 350px;">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <h1 class="navbar-brand">Vet Care</h1>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto custom-sidebar">
+                <li class="nav-item">
+                    <a href="/account" class="nav-link userDashboard" aria-current="page">
+                        <i class="bi bi-house-door"></i>
+                        User Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/appointment-management" class="nav-link text-white">
+                        <i class="bi bi-calendar-check me-2"></i>
+                        Appointment Management
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/prescription-management" class="nav-link text-white">
+                        <i class="bi bi-file-earmark-medical me-2"></i>
+                        Prescription Management
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/pet-management" class="nav-link text-white">
+                        <i class="bi bi-heart me-2"></i>
+                        Pet Management
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <div class="dropdown mt-auto">
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                    <strong>mdo</strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content on the right -->
+        <div class="flex-grow-1 dashboard-content">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-lg-8 text-black account-details fs-5">
+                        <h2 class="bg-body-tertiary p-2 border-top border-bottom">Appointment List</h2>
+
+
+                        <div th:each="appointment : ${appointments}" class="row border-bottom p-3">
+                            <div class="col-lg-9">
+                                <div class="fw-bold">
+                                    <span th:text="${#temporals.format(appointment.appointmentDate, 'MMMM dd yyyy')}"></span>
+                                </div>
+                                <div>
+                                    Clinic:
+                                    <span th:each="clinic : ${clinics}"
+                                          th:if="${clinic.id == appointment.clinicId}"
+                                          th:text="${clinic.name}"></span>
+                                </div>
+                                <div>
+                                    Pet:
+                                    <span th:each="pet : ${petInformation}"
+                                          th:if="${pet.petID == appointment.petId}"
+                                          th:text="${pet.name}"></span>
+                                </div>
+                                <div>
+                                    Reason(s) for visit:
+                                    <span th:each="reason : ${clinicReasons}"
+                                          th:if="${reason.id == appointment.reason}"
+                                          th:text="${reason.serviceName}"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 text-end">
+                                <span class="badge bg-success">Attended</span>
+                            </div>
+                        </div>
+
+
+                        <!--                        Buttons for manage appointment-->
+                        <div class="text-center mt-4">
+                            <a th:href="@{/appointments}" class="btn btn-primary mx-3 p-4">Book Appointment</a>
+                            <a th:href="@{/appointments/reschedule}" class="btn btn-secondary mx-3 p-4">Change Appointment</a>
+                            <a th:href="@{/appointments/cancel}" class="btn btn-danger mx-3 p-4">Cancel Appointment</a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

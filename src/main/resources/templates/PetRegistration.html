@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Title</title>
+</head>
+<body>
+<!-- Modal -->
+<div class="modal fade" id="newPetModal" tabindex="-1" role="dialog" aria-labelledby="newPetModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newPetModalLabel">Register New Pet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/pets/register" method="post"> <!-- Adjust action as needed -->
+                    <div class="form-group">
+                        <label for="petName">Pet Name:</label>
+                        <input name="name" type="text" class="form-control" id="petName" placeholder="Enter your pet's name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="petAge">Pet Age:</label>
+                        <input name="age" type="number" class="form-control" id="petAge" placeholder="Enter your pet's age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="petGender">Pet Gender:</label>
+                        <select name="gender" class="form-control" id="petGender" required>
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="petWeight">Pet Weight (kg):</label>
+                        <input name="weight" type="number" class="form-control" id="petWeight" placeholder="Enter your pet's weight" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="petBreed">Pet Breed:</label>
+                        <input name="breed" type="text" class="form-control" id="petBreed" placeholder="Enter your pet's breed" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDate">Birth Date:</label>
+                        <input name="birthDate" type="date" class="form-control" id="birthDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ownerName">Owner Name:</label>
+                        <input name="ownerName" type="text" class="form-control" id="ownerName" placeholder="Enter owner's name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ownerContact">Owner Contact:</label>
+                        <input name="ownerContact" type="text" class="form-control" id="ownerContact" placeholder="Enter owner's contact number" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register Pet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Medical Records - Summary</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/assets/css/medicalRecord.css}">
+</head>
+<body>
+<div layout:fragment="content">
+<div class="container medicalRecordContainer">
+    <div class="text-center mb-4">
+        <h2>View Pet Medical Records Summary</h2>
+    </div>
+    <!-- Pet Selection Dropdown -->
+    <div class="pet-selection mb-4">
+        <form th:action="@{/viewMedicalRecord}" method="get">
+            <div class="form-group">
+                <label for="petSelect">Choose the Pet</label>
+                <select class="form-select" id="petSelect" name="petId" onchange="this.form.submit()">
+                    <option value="" selected>Select a Pet</option>
+                    <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"></option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <!-- Pet Information Summary -->
+    <div  class="summary-section" th:if="${pet != null}">
+        <h3>Pet Information</h3>
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <th scope="row">Name</th>
+                <td th:text="${pet.name}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Age</th>
+                <td th:text="${pet.age}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Gender</th>
+                <td th:text="${pet.gender}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Weight</th>
+                <td th:text="${pet.weight}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Breed</th>
+                <td th:text="${pet.breed}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Birth Date</th>
+                <td th:text="${pet.birthDate}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Owner Name</th>
+                <td th:text="${pet.ownerName}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Owner Contact</th>
+                <td th:text="${pet.ownerContact}">-</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Medical History Summary -->
+    <div class="summary-section" th:if="${pet != null}">
+        <h3>Medical History</h3>
+        <table class="table table-striped">
+            <tbody th:each="history : ${medicalHistory}">
+            <tr>
+                <th scope="row">Last Visit Date</th>
+                <td th:text="${history.lastVisitDate}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Last Diagnosis</th>
+                <td th:text="${history.lastDiagnosis}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Treatment Provided</th>
+                <td th:text="${history.treatmentProvided}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Medications Prescribed</th>
+                <td th:text="${history.medicationsPrescribed}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Ongoing Conditions</th>
+                <td th:text="${history.ongoingConditions}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Next Scheduled Visit</th>
+                <td th:text="${history.nextScheduledVisit}">-</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div  class="summary-section" th:if="${pet != null}">
+        <h3>Vaccination Summary</h3>
+        <table class="table table-striped">
+            <tbody th:each="vaccination : ${vaccinationRecords}">
+            <tr>
+                <th scope="row" th:text="${vaccination.vaccineName}">Vaccine Name</th>
+                <td th:text="'Administered on ' + ${vaccination.administeredDate} + ', Next Due: ' + ${vaccination.nextDueDate}">Vaccination Details</td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/vaccination-record-details(petId=${pet.petID})}" class="btn btn-primary">View Full Vaccination Records</a>
+    </div>
+
+    <!--Treatment Plan Summary -->
+    <div class="summary-section" th:if="${pet != null}">
+        <h3>Treatment Plan Summary</h3>
+        <table class="table table-striped">
+            <tbody th:each="treatment : ${treatmentPlans}">
+            <tr>
+                <th scope="row">Treatment Description</th>
+                <td th:text="${treatment.treatmentDescription}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Start Date</th>
+                <td th:text="${treatment.startDate}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Prescribed Medications</th>
+                <td th:text="${treatment.prescribedMedications}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Treatment Duration</th>
+                <td th:text="${treatment.treatmentDuration}">-</td>
+            </tr>
+            <tr>
+                <th scope="row">Next Steps</th>
+                <td th:text="${treatment.nextSteps}">-</td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href= "@{/treatmentPlan(petId=${pet.petID})}" class="btn btn-primary">View Full Treatment Plan</a>
+
+    </div>
+
+    <!-- Ddownload and Share -->
+    <div class="text-center" th:if="${pet != null}">
+        <button class="btn-common btn-download" onclick="downloadPDF()">Download PDF</button>
+        <button class="btn-common btn-share" onclick="shareRecords()">Share</button>
+    </div>
+
+</div>
+    <script>
+
+function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const lineHeight = 10;
+    let yPosition = 20;
+    const marginLeft = 15;
+    const sectionSpacing = 12;
+
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(40, 100, 150);
+    doc.text("Pet Medical Records Summary", 105, yPosition, { align: 'center' });
+    doc.setDrawColor(40, 100, 150);
+    doc.setLineWidth(1);
+    doc.line(10, yPosition + 3, 200, yPosition + 3);
+    yPosition += lineHeight + sectionSpacing;
+
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont('helvetica', 'bold');
+    doc.text("Pet Information:", marginLeft, yPosition);
+    yPosition += lineHeight + 2;
+
+    doc.setFont('helvetica', 'normal');
+    const petName = document.querySelector('table tbody tr:nth-child(1) td').textContent.trim();
+    const petAge = document.querySelector('table tbody tr:nth-child(2) td').textContent.trim();
+    const petGender = document.querySelector('table tbody tr:nth-child(3) td').textContent.trim();
+    const petWeight = document.querySelector('table tbody tr:nth-child(4) td').textContent.trim();
+    const petBreed = document.querySelector('table tbody tr:nth-child(5) td').textContent.trim();
+
+    doc.text(`Name: ${petName}`, marginLeft, yPosition);
+    doc.text(`Age: ${petAge}`, marginLeft, yPosition + lineHeight);
+    doc.text(`Gender: ${petGender}`, marginLeft, yPosition + lineHeight * 2);
+    doc.text(`Weight: ${petWeight}`, marginLeft, yPosition + lineHeight * 3);
+    doc.text(`Breed: ${petBreed}`, marginLeft, yPosition + lineHeight * 4);
+    yPosition += lineHeight * 6;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(40, 100, 150);
+    doc.text('Medical History:', marginLeft, yPosition);
+    yPosition += lineHeight;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(0, 0, 0);
+
+    const medicalHistoryRows = document.querySelectorAll('.summary-section:nth-child(3) table tbody tr');
+    medicalHistoryRows.forEach(row => {
+        const label = row.querySelector('th').textContent.trim();
+        const value = row.querySelector('td').textContent.trim();
+
+        doc.text(`${label}: ${value}`, marginLeft, yPosition);
+        yPosition += lineHeight;
+
+        if (yPosition > 270) {
+            doc.addPage();
+            yPosition = 20;
+        }
+    });
+
+    yPosition += sectionSpacing;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(40, 100, 150);
+    doc.text('Treatment Plan Summary:', marginLeft, yPosition);
+    yPosition += lineHeight;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(0, 0, 0);
+
+    const vaccinationRows = document.querySelectorAll('.summary-section:nth-child(4) table tbody tr');
+    vaccinationRows.forEach(row => {
+        const vaccine = row.querySelector('th').textContent.trim();
+        const details = row.querySelector('td').textContent.trim();
+
+        doc.text(`${vaccine}: ${details}`, marginLeft, yPosition);
+        yPosition += lineHeight;
+
+        if (yPosition > 270) {
+            doc.addPage();
+            yPosition = 20;
+        }
+    });
+
+    yPosition += sectionSpacing;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(40, 100, 150);
+    doc.text('Vaccination Record Summary:', marginLeft, yPosition);
+    yPosition += lineHeight;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(0, 0, 0);
+
+    const treatmentRows = document.querySelectorAll('.summary-section:nth-child(5) table tbody tr');
+    treatmentRows.forEach(row => {
+        const label = row.querySelector('th').textContent.trim();
+        const value = row.querySelector('td').textContent.trim();
+
+        doc.text(`${label}: ${value}`, marginLeft, yPosition);
+        yPosition += lineHeight;
+
+        if (yPosition > 270) {
+            doc.addPage();
+            yPosition = 20;
+        }
+    });
+
+    yPosition += sectionSpacing;
+
+    doc.setFontSize(10);
+    doc.setTextColor(150);
+    doc.text("Generated by VetCare System", 10, 280);
+    doc.save(`${petName}-medical-record-summary.pdf`);
+}
+function shareRecords() {
+    if (navigator.share) {
+        const petName = document.querySelector('table tbody tr:nth-child(1) td').textContent.trim();
+        const petAge = document.querySelector('table tbody tr:nth-child(2) td').textContent.trim();
+        const petBreed = document.querySelector('table tbody tr:nth-child(5) td').textContent.trim();
+
+        const shareTitle = `Pet Medical Record for ${petName}`;
+        const shareText = `Here's a summary of ${petName}, a ${petBreed}, aged ${petAge}.`;
+        const shareURL = window.location.href;
+
+        navigator.share({
+            title: shareTitle,
+            text: shareText,
+            url: shareURL
+        }).then(() => {
+            console.log('Records shared successfully');
+            alert('Medical Record shared successfully!');
+        }).catch((error) => {
+            console.error('Error sharing records:', error);
+            alert('Failed to share the records.');
+        });
+    } else {
+        alert('Web Share API is not supported in this browser.');
+    }
+}
+
+</script>
+
+
+    <!--<script th:src="@{/scripts/getPetMedicalRecord.js}"></script>-->
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</html>

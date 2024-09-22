@@ -1,39 +1,42 @@
 package au.edu.rmit.sept.webapp.controllers;
 
-import java.util.Date;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class  HomeController {
+
+    public HomeController() {
+    }
+
     @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("message", "Welcome to Vet Care!");
-        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
+    public String index() {
         return "HomePage.html";
     }
 
-    @GetMapping("/resources")
-    public String Resources(Model model) {
-        model.addAttribute("message", "Welcome to Vet Care!");
-        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
-        return "Resources.html";
-    }
-
+    
     @GetMapping("/signup")
-    public String SignUp(Model model) {
-        model.addAttribute("message", "Welcome to Vet Care!");
-        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
+    public String SignUp() {
         return "SignUp.html";
     }
 
+
+    @GetMapping("/home-view-vaccination-records")
+    public String ViewVaccinationRecords(){
+        return"ViewVaccinationRecords.html";
+    }
+
+    @GetMapping("/home-treatment-plan")
+    public String ViewTreatment(){
+        return"ViewVaccinationRecords.html";
+    }
+
+
     @GetMapping("/login")
-    public String Login(Model model) {
-        model.addAttribute("message", "Welcome to Vet Care!");
-        model.addAttribute("today", new Date()); // not a good approach for testing. More later.
+    public String Login() {
         return "Login.html";
     }
 
 }
+

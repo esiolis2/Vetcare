@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Prescription Management</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex min-vh-100">
+        <!-- Sidebar -->
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 350px;">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <h1 class="navbar-brand">Vet Care</h1>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto custom-sidebar">
+                <li class="nav-item">
+                    <a href="/account" class="nav-link userDashboard" aria-current="page">
+                        <i class="bi bi-house-door"></i>
+                        User Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/appointment-management" class="nav-link text-white">
+                        <i class="bi bi-calendar-check me-2"></i>
+                        Appointment Management
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/prescription-management" class="nav-link text-white">
+                        <i class="bi bi-file-earmark-medical me-2"></i>
+                        Prescription Management
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/pet-management" class="nav-link text-white">
+                        <i class="bi bi-heart me-2"></i>
+                        Pet Management
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <div class="dropdown mt-auto">
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                    <strong>mdo</strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content on the right -->
+        <div class="flex-grow-1 dashboard-content">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-lg-8 text-black account-details fs-5">
+                        <h2 class="bg-body-tertiary p-2 border-top border-bottom">Prescription List</h2>
+
+                        <div class="row border-bottom p-3">
+                            <div class="col-lg-9">
+                                <!--                                <div class="fw-bold">Date: June 26 2024, 4:30 PM</div>-->
+                                <!--                                <div>Clinic: VetCare Carlton</div>-->
+                                <!--                                <div>Pet: Fluffy</div>-->
+                                <!--                                <div>Reason(s) for visit: Sore foot</div>-->
+                                <!--Treatment Plan Summary -->
+                                <!--                                <div class="summary-section" th:if="${pet != null}">-->
+                                <div>
+                                    <h3>Treatment Plan Summary</h3>
+                                    <h4>Treatment 01</h4>
+                                    <table class="table table-striped">
+                                        <!--                                        <tbody th:each="treatment : ${treatmentPlans}">-->
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Treatment Description</th>
+                                            <!--                                            <td th:text="${treatment.treatmentDescription}">-</td>-->
+                                            <td>Vaccination and Flea Treatment</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Start Date</th>
+                                            <!--                                            <td th:text="${treatment.startDate}">-</td>-->
+                                            <td>01/06/2023</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Prescribed Medications</th>
+                                            <!--                                            <td th:text="${treatment.prescribedMedications}">-</td>-->
+                                            <td>Flea prevention medication</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Treatment Duration</th>
+                                            <!--                                            <td th:text="${treatment.treatmentDuration}">-</td>-->
+                                            <td>3 months</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Next Steps</th>
+                                            <!--                                            <td th:text="${treatment.nextSteps}">-</td>-->
+                                            <td>Next screening in 6 months</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom p-3">
+                                <div class="col-lg-9">
+                                    <h4>Treatment 02</h4>
+                                    <table class="table table-striped">
+                                        <!--                                        <tbody th:each="treatment : ${treatmentPlans}">-->
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Treatment Description</th>
+                                            <!--                                            <td th:text="${treatment.treatmentDescription}">-</td>-->
+                                            <td>Vaccination and Flea Treatment</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Start Date</th>
+                                            <!--                                            <td th:text="${treatment.startDate}">-</td>-->
+                                            <td>01/06/2023</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Prescribed Medications</th>
+                                            <!--                                            <td th:text="${treatment.prescribedMedications}">-</td>-->
+                                            <td>Flea prevention medication</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Treatment Duration</th>
+                                            <!--                                            <td th:text="${treatment.treatmentDuration}">-</td>-->
+                                            <td>3 months</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Next Steps</th>
+                                            <!--                                            <td th:text="${treatment.nextSteps}">-</td>-->
+                                            <td>Next screening in 6 months</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row border-bottom p-3">
+                                <div class="col-lg-9">
+                                    <h4>Treatment 03</h4>
+                                    <table class="table table-striped">
+                                        <!--                                        <tbody th:each="treatment : ${treatmentPlans}">-->
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Treatment Description</th>
+                                            <!--                                            <td th:text="${treatment.treatmentDescription}">-</td>-->
+                                            <td>Vaccination and Flea Treatment</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Start Date</th>
+                                            <!--                                            <td th:text="${treatment.startDate}">-</td>-->
+                                            <td>01/06/2023</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Prescribed Medications</th>
+                                            <!--                                            <td th:text="${treatment.prescribedMedications}">-</td>-->
+                                            <td>Flea prevention medication</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Treatment Duration</th>
+                                            <!--                                            <td th:text="${treatment.treatmentDuration}">-</td>-->
+                                            <td>3 months</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Next Steps</th>
+                                            <!--                                            <td th:text="${treatment.nextSteps}">-</td>-->
+                                            <td>Next screening in 6 months</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!--                        Buttons for manage appointment-->
+                            <div class="text-center mt-4">
+                                <button class="btn btn-primary mx-3 p-4">Access Medical Records</button>
+                                <button class="btn btn-secondary mx-3 p-4">Request Prescriptions</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

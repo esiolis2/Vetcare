@@ -1,0 +1,15 @@
+INSERT INTO CLINIC_SERVICE (service_name) VALUES
+('Dental Care'),
+('Neutering'),
+('Spaying'),
+('Microchipping'),
+('Deworming'),
+('Blood Test'),
+('X-Ray'),
+('Emergency Care'),
+('Vaccination'),
+('Heartworm Treatment'),
+('Flea and Tick Treatment'),
+('Nutrition Consultation'),
+('Behavioral Therapy'),
+('Surgery Follow-up');
