@@ -129,8 +129,26 @@ public class AppointmentController {
 
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteAppointment(@PathVariable Long id)
+    @GetMapping ("/appointments/cancel")
+    public String deleteApp(Model model,  HttpServletRequest request){
+        String email = (String) request.getSession().getAttribute("userEmail"); // Or however you're storing it
+        if (email != null) {
+            User user = userService.findByEmail(email);
+            List<Veterinarian> veterinarians = veterinarianService.getAllVeterinarians();
+            model.addAttribute("veterinarians", veterinarians);
+            List<Appointment> appointments =  appointmentService.getAppointments(user.getId());
+            model.addAttribute("appointments", appointments);
+            System.out.print(appointments.get(0).getAppointmentDate());
+            return "DeleteAppointment.html";
+        }
+        else{
+            return "redirect:/login";
+        }
+
+    }
+
+    @PostMapping("/delete")
+    public String deleteAppointment(@RequestParam Long id)
     {
         appointmentService.deleteAppointment(id);
         System.out.println("Successfully deleted appointment");
