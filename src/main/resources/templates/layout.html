@@ -1,23 +1,108 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">-->
+
+<!--<head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+<!--    <title>Layout page</title>-->
+<!--    &lt;!&ndash; Layout &ndash;&gt;-->
+<!--    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet" />-->
+<!--    <link th:href="@{/assets/css/main.css}" rel="stylesheet">-->
+<!--    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>-->
+<!--    &lt;!&ndash; Optional: Fonts &ndash;&gt;-->
+<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">-->
+<!--    &lt;!&ndash; / Layout &ndash;&gt;-->
+<!--</head>-->
+
+<!--<body>-->
+<!--&lt;!&ndash; Navbar &ndash;&gt;-->
+<!--<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">-->
+<!--    <div class="container">-->
+<!--        <a class="navbar-brand" href="/">VetCare</a>-->
+<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+<!--        <div class="collapse navbar-collapse" id="navbarNav">-->
+<!--            <ul class="navbar-nav ms-auto">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" href="/">Home</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/resources">Resources</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item dropdown">-->
+<!--                    &lt;!&ndash;                <a class="nav-link" href="/access-medical-records">Access Medical Record</a>&ndash;&gt;-->
+<!--                    <button class="nav-link dropdown-toggle" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                        Medical Access-->
+<!--                    </button>-->
+<!--                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">-->
+<!--                        <li><a class="dropdown-item" href="/access-medical-records">Access Medical Record</a></li>-->
+<!--                        <li><a class="dropdown-item" href="/view-vaccination-records">View Vaccination Records</a></li>-->
+<!--                        <li><a class="dropdown-item" href="/view-treatment-plan">View Treatment Plan</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/signup">Signup</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/login">Login</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+
+<!--<div id="content">-->
+<!--    <div class="main-content">-->
+<!--&lt;!&ndash;Page Content&ndash;&gt;-->
+<!--    <div layout:fragment="content">-->
+<!--        Page content goes here-->
+<!--    </div>-->
+
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Footer &ndash;&gt;-->
+<!--<footer class="container-fluid text-center py-3 mt-5 footer-style">-->
+<!--    <div class="row">-->
+<!--        <div class="col-md-4">-->
+<!--            <p>Contact Us: +123 456 789</p>-->
+<!--        </div>-->
+<!--        <div class="col-md-4">-->
+<!--            <p>© 2024 VetCare. All rights reserved.</p>-->
+<!--        </div>-->
+<!--        <div class="col-md-4">-->
+<!--            <p>Follow Us:-->
+<!--                <a href="#" class="social-icon">Facebook</a> |-->
+<!--                <a href="#" class="social-icon">Instagram</a> |-->
+<!--                <a href="#" class="social-icon">Twitter</a>-->
+<!--            </p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</footer>-->
+
+<!--&lt;!&ndash;&lt;!&ndash; Include Bootstrap 5.3.3 JS and Popper.js &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>&ndash;&gt;-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>-->
+<!--</body>-->
+
+<!--</html>-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Layout page</title>
-    <!-- Layout -->
     <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet" />
     <link th:href="@{/assets/css/main.css}" rel="stylesheet">
     <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>
-    <!-- Optional: Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <!-- / Layout -->
 </head>
-
-<body>
-<!-- Navbar -->
+<body onload="loginStatus()">
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container">
         <a class="navbar-brand" href="/">VetCare</a>
@@ -32,22 +117,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/resources">Resources</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <!--                <a class="nav-link" href="/access-medical-records">Access Medical Record</a>-->
-                    <button class="nav-link dropdown-toggle" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Medical Access
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="/access-medical-records">Access Medical Record</a></li>
-                        <li><a class="dropdown-item" href="/view-vaccination-records">View Vaccination Records</a></li>
-                        <li><a class="dropdown-item" href="/view-treatment-plan">View Treatment Plan</a></li>
-                    </ul>
+                <li class="nav-item" id="profileLink" style="display: none;">
+                    <a class="nav-link" href="/profile">Dashboard</a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/signup">Signup</a>
+                <li class="nav-item" id="logoutLink" style="display: none;">
+                    <a class="nav-link" href="#" onclick="logout()">Logout</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="loginLink">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
             </ul>
@@ -57,15 +133,14 @@
 
 <div id="content">
     <div class="main-content">
-<!--Page Content-->
-<div layout:fragment="content">
-    Page content goes here
-</div>
+
+        <div layout:fragment="content">
+            <!-- content -->
+        </div>
 
     </div>
 </div>
 
-<!-- Footer -->
 <footer class="container-fluid text-center py-3 mt-5 footer-style">
     <div class="row">
         <div class="col-md-4">
@@ -84,10 +159,27 @@
     </div>
 </footer>
 
-<!--&lt;!&ndash; Include Bootstrap 5.3.3 JS and Popper.js &ndash;&gt;-->
-<!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>-->
+<script>
+    function loginStatus() {
+        var email = localStorage.getItem('vetUserLogged');
+        if (email) {
+            document.getElementById('profileLink').style.display = 'block';
+            document.getElementById('logoutLink').style.display = 'block';
+            document.getElementById('loginLink').style.display = 'none';
+        } else {
+            document.getElementById('profileLink').style.display = 'none';
+            document.getElementById('logoutLink').style.display = 'none';
+            document.getElementById('loginLink').style.display = 'block';
+        }
+    }
+
+     function logout() {
+            localStorage.removeItem('vetUserLogged');
+            alert("Logout successful!");
+            location.reload();
+     }
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
-
 </html>

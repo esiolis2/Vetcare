@@ -1,5 +1,6 @@
 package au.edu.rmit.sept.webapp.controllers;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -25,7 +26,14 @@ public class  HomeController {
         return "SignUp.html";
     }
 
+
     @GetMapping("/home-view-vaccination-records")
+
+//    @GetMapping("/userProfile")
+//    public String userProfile() {
+//        return "Profile";
+//    }
+
     public String ViewVaccinationRecords(){
         return"ViewVaccinationRecords.html";
     }
@@ -36,9 +44,11 @@ public class  HomeController {
     }
 
 
+
     @GetMapping("/login")
     public String Login() {
         return "Login.html";
     }
 
 }
+

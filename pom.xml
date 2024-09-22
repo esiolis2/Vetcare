@@ -1,35 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.2</version>
-		<relativePath/>
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>au.edu.rmit.sept</groupId>
 	<artifactId>webapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>webapp</name>
 	<description>COSC2299 SEPT WebApplication</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
 
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -39,24 +30,32 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+		<!-- Jakarta Persistence API (JPA) -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.29</version>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>3.1.0</version>
 		</dependency>
 
+		<!-- JDBC Support -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
-			<version>3.3.3</version>
 		</dependency>
 
-		<!-- UI -->
+		<!--      <dependency>-->
+		<!--         <groupId>org.springframework.boot</groupId>-->
+		<!--         <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+		<!--      </dependency>-->
+
+		<!-- UI  -->
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
 			<artifactId>thymeleaf-layout-dialect</artifactId>
 			<version>3.2.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
@@ -70,15 +69,17 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Developers tools -->
+		<!--      <dependency>-->
+		<!--         <groupId>com.mysql</groupId>-->
+		<!--         <artifactId>mysql-connector-j</artifactId>-->
+		<!--         <version>8.0.33</version>-->
+		<!--      </dependency>-->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-			<scope>runtime</scope>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.30</version>
 		</dependency>
 
-		<!-- Fly way  -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-maven-plugin</artifactId>
@@ -88,28 +89,32 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-mysql</artifactId>
 		</dependency>
-	</dependencies>
 
+
+	</dependencies>
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+
+			<!-- added while debugging -->
 			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
+				<version>10.10.0</version>
 				<configuration>
 					<url>jdbc:mysql://localhost:3306/vetcare?allowPublicKeyRetrieval=true&amp;useSSL=false</url>
-					<user>VetCare_DB</user>
-					<password>PleaseWork@123</password>
+					<user>sukh</user>
+					<password>s3945471</password>
 					<driver>com.mysql.cj.jdbc.Driver</driver>
 					<schemas>vetcare</schemas>
-					<locations>
-						<location>classpath:db/migration</location>
-					</locations>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>8.0.30</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -131,6 +136,7 @@
 				</executions>
 			</plugin>
 		</plugins>
+
 	</build>
 </project>
 
