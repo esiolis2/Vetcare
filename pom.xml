@@ -67,6 +67,7 @@
 			<artifactId>thymeleaf-layout-dialect</artifactId>
 			<version>3.2.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
@@ -100,7 +101,6 @@
 		</dependency>
 	</dependencies>
 
-
 	<build>
 		<plugins>
 
@@ -127,16 +127,21 @@
 			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
+				<version>10.10.0</version>
 				<configuration>
 					<url>jdbc:mysql://localhost:3306/vetcare?allowPublicKeyRetrieval=true&amp;useSSL=false</url>
 					<user>sukh</user>
 					<password>s3945471</password>
 					<driver>com.mysql.cj.jdbc.Driver</driver>
 					<schemas>vetcare</schemas>
-					<locations>
-						<location>classpath:db/migration</location>
-					</locations>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>8.0.30</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -161,5 +166,4 @@
 
 	</build>
 </project>
-
 

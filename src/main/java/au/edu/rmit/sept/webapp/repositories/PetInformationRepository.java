@@ -12,9 +12,4 @@ public interface PetInformationRepository {
     public PetInformation addPetInformation(PetInformation petInformation);
     public PetInformation findPetById(Long id);
 
-
-//    public List<PetInformation> findAll() throws SQLException;
-//
-//    public PetInformation findPetById(Long id) throws SQLException;
-
 }

@@ -72,6 +72,7 @@
                 document.getElementById('loginLink').href = '#';
                 document.getElementById('loginLink').onclick = function() {
                     localStorage.removeItem('vetUserLogged');
+                    window.location.href = '/';
                     location.reload();
                 };
             }

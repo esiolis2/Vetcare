@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 
 public class PetInformation {
 
-
     private Long petID;
 
 
@@ -123,4 +122,5 @@ public class PetInformation {
         }
         return "";
     }
+
 }

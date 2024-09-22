@@ -117,9 +117,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/resources">Resources</a>
                 </li>
-                <li class="nav-item" id="profileLink" style="display: none;">
-                    <a class="nav-link" href="/account">Dashboard</a>
+                <li class="nav-item dropdown">
+
+                    <button class="nav-link dropdown-toggle" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"  style="display: none;">
+                        Medical Access
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="/access-medical-records">Access Medical Record</a></li>
+                        <li><a class="dropdown-item" href="/view-vaccination-records">View Vaccination Records</a></li>
+                        <li><a class="dropdown-item" href="/view-treatment-plan">View Treatment Plan</a></li>
+                    </ul>
                 </li>
+                <li class="nav-item" id="profileLink" style="display: none;">
+                    <a class="nav-link" href="/profile">Dashboard</a>
+                </li>
+
                 <li class="nav-item" id="logoutLink" style="display: none;">
                     <a class="nav-link" href="#" onclick="logout()">Logout</a>
                 </li>
@@ -133,9 +145,11 @@
 
 <div id="content">
     <div class="main-content">
+
         <div layout:fragment="content">
             <!-- content -->
         </div>
+
     </div>
 </div>
 
@@ -163,10 +177,12 @@
         if (email) {
             document.getElementById('profileLink').style.display = 'block';
             document.getElementById('logoutLink').style.display = 'block';
+            document.getElementById('dropdownMenuLink').style.display = 'block';
             document.getElementById('loginLink').style.display = 'none';
         } else {
             document.getElementById('profileLink').style.display = 'none';
             document.getElementById('logoutLink').style.display = 'none';
+            document.getElementById('dropdownMenuLink').style.display = 'none';
             document.getElementById('loginLink').style.display = 'block';
         }
     }

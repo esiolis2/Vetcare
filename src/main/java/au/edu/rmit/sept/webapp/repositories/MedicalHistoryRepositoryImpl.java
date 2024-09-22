@@ -34,12 +34,12 @@ public class MedicalHistoryRepositoryImpl implements MedicalHistoryRepository {
             while (rs.next()) {
                 MedicalHistory history = new MedicalHistory(
                         rs.getLong("PetID"),
-                        rs.getDate("LastVisitDate"),
+                        rs.getDate("LastVisitDate") != null ? new java.util.Date(rs.getDate("LastVisitDate").getTime()) : null,
                         rs.getString("LastDiagnosis"),
                         rs.getString("TreatmentProvided"),
                         rs.getString("MedicationsPrescribed"),
                         rs.getString("OngoingConditions"),
-                        rs.getDate("NextScheduledVisit")
+                        rs.getDate("NextScheduledVisit") != null ? new java.util.Date(rs.getDate("NextScheduledVisit").getTime()) : null
                 );
                 medicalHistories.add(history);
             }
@@ -55,12 +55,24 @@ public class MedicalHistoryRepositoryImpl implements MedicalHistoryRepository {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setLong(1, medicalHistory.getPetID());
-            stmt.setDate(2, new java.sql.Date(medicalHistory.getLastVisitDate().getTime()));
+
+            if (medicalHistory.getLastVisitDate() != null) {
+                stmt.setDate(2, new java.sql.Date(medicalHistory.getLastVisitDate().getTime()));
+            } else {
+                stmt.setNull(2, java.sql.Types.DATE);
+            }
+
             stmt.setString(3, medicalHistory.getLastDiagnosis());
             stmt.setString(4, medicalHistory.getTreatmentProvided());
             stmt.setString(5, medicalHistory.getMedicationsPrescribed());
             stmt.setString(6, medicalHistory.getOngoingConditions());
-            stmt.setDate(7, new java.sql.Date(medicalHistory.getNextScheduledVisit().getTime()));
+
+            if (medicalHistory.getNextScheduledVisit() != null) {
+                stmt.setDate(7, new java.sql.Date(medicalHistory.getNextScheduledVisit().getTime()));
+            } else {
+                stmt.setNull(7, java.sql.Types.DATE);
+            }
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new UncategorizedScriptException("Error inserting medical history", e);

@@ -33,7 +33,6 @@
 
         <!-- Vaccination Records in separate boxes with scrollable navigation -->
         <div class="scroll-container">
-            <button class="scroll-btn scroll-left" onclick="scrollLeft()">&#9664;</button>
             <div class="vaccination-records-row">
                 <div class="vaccination-record card" th:each="vaccinationRecord : ${vaccinationRecords}">
                     <div class="card-body">
@@ -73,16 +72,15 @@
                     </div>
                 </div>
             </div>
-            <button class="scroll-btn scroll-right" onclick="scrollRight()">&#9654;</button>
         </div>
 
         <!-- Buttons -->
-        <a href="/home-page" class="btn-common btn-back">Back to Home Page</a>
+        <a href="/" class="btn-common btn-back">Back to Home Page</a>
 
-<!--        <div class="text-center">-->
-<!--            <a href="#" class="btn-common btn-download" onclick="downloadPDF()">Download PDF</a>-->
-<!--            <a href="#" class="btn-common btn-share" onclick="shareRecords()">Share</a>-->
-<!--        </div>-->
+        <!--        <div class="text-center">-->
+        <!--            <a href="#" class="btn-common btn-download" onclick="downloadPDF()">Download PDF</a>-->
+        <!--            <a href="#" class="btn-common btn-share" onclick="shareRecords()">Share</a>-->
+        <!--        </div>-->
     </div>
 
     <script th:src="@{/scripts/getVaccinationRecord.js}"></script>
@@ -94,52 +92,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      layout:decorate="~{layout.html}">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>ViewVaccinationRecords</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div layout:fragment="content">-->
-<!--    <h2 class="text-center" th:text="${petName} + ' Vaccination Records'">PetName Vaccination Records</h2>-->
-<!--    <div class="table-container d-flex justify-content-center">-->
-<!--        <table class="table table-bordered">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th scope="col">Number</th>-->
-<!--                <th scope="col">Vaccination Name</th>-->
-<!--                <th scope="col">Purpose</th>-->
-<!--                <th scope="col">Date</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr th:each="v, stat : ${vaccinations}">-->
-<!--                <th scope="row" th:text="${stat.index + 1}">1</th>-->
-<!--                <td th:text="${v.name}">Feline Leukemia Vaccine</td>-->
-<!--                <td th:text="${v.purpose}">Otto</td>-->
-<!--                <td th:text="${v.date}">2/7/24</td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--    </div>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
