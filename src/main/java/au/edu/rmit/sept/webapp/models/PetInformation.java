@@ -43,6 +43,7 @@ public class PetInformation {
         this.ownerContact = ownerContact;
     }
 
+    public PetInformation() {}
 
     public Long getPetID() {
         return petID;
