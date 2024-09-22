@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="/Styles/BookApp.css" rel="stylesheet">
+</head>
+<body>
+<a href="/account">Dashboard</a>
+
+
+<div layout:fragment="content">
+
+    <div class="d-flex min-vh-100">
+        <!-- Sidebar -->
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 380px;">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <h1 class="navbar-brand">Vet Care</h1>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto custom-sidebar">
+                <li class="nav-item">
+                    <a href="/account" class="nav-link userDashboard" aria-current="page">
+                        <i class="bi bi-house-door"></i>
+                        User Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/appointment-management" class="nav-link text-white">
+                        <i class="bi bi-calendar-check me-2"></i>
+                        Appointment Management
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/prescription-management" class="nav-link text-white">
+                        <i class="bi bi-file-earmark-medical me-2"></i>
+                        Prescription Management
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/pet-management" class="nav-link text-white">
+                        <i class="bi bi-heart me-2"></i>
+                        Pet Management
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <div class="dropdown mt-auto">
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                    <strong>mdo</strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content on the right -->
+        <div class="flex-grow-1 dashboard-content">
+            <div class="container mt-5">
+                <h2>Pet name</h2>
+                <div class="account-details mt-4 card p-4">
+                    <h3>Account Information</h3>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+                                        </div>
+
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+                                        </div>
+
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Phone</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">(097) 234-5678</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Mobile</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">(098) 765-4321</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Address</p>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                            Pet Details-->
+                        <div class="pet-details mt-4 card p-4">
+                            <h3>Pet Details</h3>
+                            <div id="pet-details-container" class="border rounded p-3">
+                                <!--                                The comment line can be used when adding backend-->
+                                <!--                                <div  class="summary-section" th:if="${pet != null}">-->
+                                <div class="summary-section">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Name</th>
+                                            <!--                                            <td th:text="${pet.name}">-</td>-->
+                                            <td>Fluffy</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Age</th>
+                                            <!--                                            <td th:text="${pet.age}">-</td>-->
+                                            <td>12</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Gender</th>
+                                            <!--                                            <td th:text="${pet.gender}">-</td>-->
+                                            <td>Female</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Weight</th>
+                                            <!--                                            <td th:text="${pet.weight}">-</td>-->
+                                            <td>15kg</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Breed</th>
+                                            <!--                                            <td th:text="${pet.breed}">-</td>-->
+                                            <td>British Short Hair</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Birth Date</th>
+                                            <!--                                            <td th:text="${pet.birthDate}">-</td>-->
+                                            <td>12/4/2015</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Owner Name</th>
+                                            <!--                                            <td th:text="${pet.ownerName}">-</td>-->
+                                            <td>Jane</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Owner Contact</th>
+                                            <!--                                            <td th:text="${pet.ownerContact}">-</td>-->
+                                            <td>Jane</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--                        Button to add new pet-->
+                        <div class="add-pet mt-4 card p-4">
+                            <button class="btn btn-primary" id="add-pet-button" data-bs-toggle="modal"
+                                    data-bs-target="#addPetModal">Add New Pet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal for Add New Pet -->
+                <div class="modal fade" id="addPetModal" tabindex="-1" aria-labelledby="addPetModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addPetModalLabel">Add New Pet</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="add-pet-form">
+                                    <div class="form-group">
+                                        <label for="petName">Pet Name:</label>
+                                        <input type="text" class="form-control" id="petName"
+                                               placeholder="Enter pet name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petType">Pet Type:</label>
+                                        <input type="text" class="form-control" id="petType"
+                                               placeholder="Enter pet type" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petAge">Pet Age:</label>
+                                        <input type="number" class="form-control" id="petAge"
+                                               placeholder="Enter pet age" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petGender">Pet Gender:</label>
+                                        <select class="form-control" id="petGender" required>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petWeight">Pet Weight:</label>
+                                        <input type="text" class="form-control" id="petWeight"
+                                               placeholder="Enter pet weight" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petBreed">Pet Breed:</label>
+                                        <input type="text" class="form-control" id="petBreed"
+                                               placeholder="Enter pet breed" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="petBirthDate">Birth Date:</label>
+                                        <input type="date" class="form-control" id="petBirthDate" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ownerName">Owner Name:</label>
+                                        <input type="text" class="form-control" id="ownerName"
+                                               placeholder="Enter owner name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ownerContact">Owner Contact:</label>
+                                        <input type="text" class="form-control" id="ownerContact"
+                                               placeholder="Enter owner contact" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal for Confirmation -->
+                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmationModalLabel">Pet Added</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Your pet has been successfully added!</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/Scripts/Account.js"></script>
+</body>
+</html>

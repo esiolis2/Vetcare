@@ -3,14 +3,11 @@
     src: url("Sergio Trendy.ttf");
 }
 /* GENERAL STYLING */
-body {
-    color: #f9f7f3;
-    background-color: #f9f9f9;
-    font-family: 'Poppins', serif;
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
 }
-/* GENERAL STYLING */
 body {
     color: #f9f7f3;
     background-color: #f9f9f9;
@@ -135,24 +132,145 @@ p {
     background-color: #bccce1;
 }
 
-/*TABLES*/
-.table-container {
-    margin: 20px 50px 20px 50px;
+/*SIDEBAR*/
+.min-vh-100 {
+    min-height: 100vh;
 }
-.table{
-    width: 60%;
+
+.d-flex {
+    display: flex;
 }
-table th, table td {
-    padding: 15px;
-    line-height: 3;
-    word-wrap: break-word;
-    vertical-align: middle;
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.custom-sidebar .nav-item {
+    margin-bottom: 20px; /* Add space between each item */
+}
+
+.custom-sidebar .nav-link {
+    font-size: 1.2rem; /* Bigger font size */
+    padding: 15px; /* Increase padding for a larger clickable area */
+    color: #f9f7f3;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+.custom-sidebar .nav-link i {
+    font-size: 1.5rem; /* Bigger icon */
+    margin-right: 10px; /* Space between icon and text */
+}
+
+.custom-sidebar .nav-link:hover {
+    background-color: #388087; /* Background color on hover */
+    color: #e0f7fa; /* Text color on hover */
+}
+
+.custom-sidebar .nav-link.active {
+    background-color: #6c757d; /* Background color for active link */
+    color: #fff; /* Text color for active link */
+}
+
+.custom-sidebar .nav-link.active:hover {
+    background-color: #465a67; /* Darker background for active link on hover */
+}
+
+/*styling for user dashboard link*/
+.custom-sidebar .nav-link.userDashboard {
+    background-color: #666666; /* Primary color for User Dashboard */
+    color: #fff; /* White text for better contrast */
+}
+
+.custom-sidebar .nav-link.userDashboard:hover {
+    background-color: #388087;; /* Darker grey background on hover */
+    color: #fff; /* Ensure text remains white */
+}
+
+/*USER DASHBOARD*/
+.account-details, .pet-prescriptions, .pet-details, .add-pet {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.account-details h3, .pet-prescriptions h3, .pet-details h3, .add-pet h3 {
+    font-size: 1.5rem;
+    color: #222222;
+}
+
+#account-info-container, #pet-prescriptions-container, #pet-details-container {
+    font-size: 1rem;
+    color: #555555;
+}
+
+#add-pet-button {
+    font-size: 1.1rem;
+}
+
+/* Styling for Add New Pet Form */
+#add-pet-form-container {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+}
+
+.btn-primary {
+    background-color: #388087;
+    border-color: #388087;
+}
+
+.btn-primary:hover {
+    background-color: #2c6e6f;
+    border-color: #2c6e6f;
+}
+
+/*User Dashboard Content*/
+.dashboard-content {
+    background-color: #ebf2eb;
+}
+
+/* Modal Styling */
+.modal-content {
+    border-radius: 0.25rem;
+}
+
+.modal-header {
+    background-color: #388087;
+    color: #ffffff;
+}
+
+.modal-footer .btn-secondary {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: #5a6268;
 }
 
 /* FOOTER */
 .footer-style {
     background-color: #388087;
     color: #f9f7f3;
+    margin-top: auto;
+}
+
+#content {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1;
 }
 
 .footer-style p {
@@ -174,7 +292,6 @@ table th, table td {
 .footer-style .social-icon {
     font-weight: bold;
 }
-
 /*MOBILE RESPONSIVE*/
 @media(max-width:768px){
     .hero-text{
@@ -188,4 +305,12 @@ table th, table td {
     .footer-style .row {
         text-align: center;
     }
+    /*.container {*/
+    /*    padding: 15px;*/
+    /*}*/
+
+    .btn-primary {
+        width: 100%;
+    }
+
 }
