@@ -117,6 +117,28 @@
             text-decoration: underline;
         }
 
+         .btn-common {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #0d0238;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-align: center;
+            margin: 20px 10px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-common:hover {
+            background-color: #2980b9;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
         @media (max-width: 576px) {
             .container {
                 width: 90%;
@@ -151,3 +173,6 @@
         footer p {
             margin: 0;
             font-size: 14px;
+        }
+
+
