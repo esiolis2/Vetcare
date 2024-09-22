@@ -1,16 +1,11 @@
-
-
-
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout.html}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/Styles/BookApp.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/assets/css/login.css}">
 </head>
 <body onload="loginStatus()">
 
@@ -88,6 +83,6 @@
 
 </body>
 <footer class="container-fluid text-center py-3">
-    <p>Footer Text</p>
+<!--    <p>Footer Text</p>-->
 </footer>
 </html>
