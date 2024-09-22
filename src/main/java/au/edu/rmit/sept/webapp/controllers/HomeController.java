@@ -2,7 +2,6 @@ package au.edu.rmit.sept.webapp.controllers;
 
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -16,12 +15,7 @@ public class  HomeController {
         return "HomePage.html";
     }
 
-    @GetMapping("/resources")
-    public String Resources() {
-        return "Resources.html";
-    }
-
-
+    
     @GetMapping("/signup")
     public String SignUp() {
         return "SignUp.html";
@@ -29,12 +23,6 @@ public class  HomeController {
 
 
     @GetMapping("/home-view-vaccination-records")
-
-//    @GetMapping("/userProfile")
-//    public String userProfile() {
-//        return "Profile";
-//    }
-
     public String ViewVaccinationRecords(){
         return"ViewVaccinationRecords.html";
     }
@@ -43,7 +31,6 @@ public class  HomeController {
     public String ViewTreatment(){
         return"ViewVaccinationRecords.html";
     }
-
 
 
     @GetMapping("/login")
