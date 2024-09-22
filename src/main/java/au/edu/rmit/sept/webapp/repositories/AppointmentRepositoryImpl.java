@@ -32,11 +32,12 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
             stm.setLong(1, userId);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Timestamp timestamp = rs.getTimestamp("appointmentTime");
+                Timestamp dateStamp = rs.getTimestamp("appointmentDate");
+                Timestamp timeStamp = rs.getTimestamp("appointmentTime");
                 Long clinicId = rs.getLong("clinicId");
                 // Split it into LocalDate and LocalTime
-                LocalDate appointmentDate = timestamp.toLocalDateTime().toLocalDate();
-                LocalTime appointmentTime = timestamp.toLocalDateTime().toLocalTime();
+                LocalDate appointmentDate = dateStamp.toLocalDateTime().toLocalDate();
+                LocalTime appointmentTime = timeStamp.toLocalDateTime().toLocalTime();
                 Appointment appointment = new Appointment(
                         rs.getLong("id"), // id
                         rs.getLong("veterinarianId"), // vetId
@@ -79,7 +80,6 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
             e.printStackTrace();
             throw new UncategorizedScriptException("Error inserting appointment", e);
         }
-
         return appointment;
     }
 
@@ -121,7 +121,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
                 appointment.setId(rs.getLong("id"));
                 appointment.setVeterinarianId(rs.getLong("veterinarianId"));
                 appointment.setClinicId(rs.getLong("clinicId"));
-                appointment.setUserId(rs.getLong("userId"));
+                appointment.setUserId(rs.getLong("ownerId"));
                 appointment.setPetId(rs.getLong("petId"));
                 appointment.setReason(rs.getString("reason"));
                 appointment.setAppointmentTime(rs.getTime("appointmentTime").toLocalTime()); // Time to LocalTime

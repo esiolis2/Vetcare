@@ -69,12 +69,7 @@ public class AppointmentController {
         return "redirect:/";
     }
 
-    @GetMapping ("/appointments/reschedule")
-    public String ChangeApp(Model model){
-        List<Veterinarian> veterinarians = veterinarianService.getAllVeterinarians();
-        model.addAttribute("veterinarians", veterinarians);
-        return "ChangeApp.html";
-    }
+
 
     @GetMapping ("/dashboard/appointment-management")
     public String AppointmentList(Model model, HttpServletRequest request){
@@ -95,15 +90,43 @@ public class AppointmentController {
         return "/dashboard/appointmentManagement.html";
     }
 
+    @GetMapping ("/appointments/reschedule")
+    public String ChangeApp(Model model,  HttpServletRequest request){
+        String email = (String) request.getSession().getAttribute("userEmail"); // Or however you're storing it
+        if (email != null) {
+            User user = userService.findByEmail(email);
+            List<Veterinarian> veterinarians = veterinarianService.getAllVeterinarians();
+            model.addAttribute("veterinarians", veterinarians);
+            List<Appointment> appointments =  appointmentService.getAppointments(user.getId());
+            model.addAttribute("appointments", appointments);
+            System.out.print(appointments.get(0).getAppointmentDate());
+            return "ChangeApp.html";
+        }
+        else{
+            return "redirect:/login";
+        }
+
+    }
+
     @PostMapping("/reschedule")
-    public String rescheduleAppointment(Model model, LocalDate date, LocalTime time, Long veterinarianId, Long id ){
-        Appointment appointment = appointmentService.findAppointmentById(id);
-        appointment.setAppointmentTime(time);
-        appointment.setAppointmentDate(date);
-        appointment.setVeterinarianId(veterinarianId);
-        appointmentService.rescheduleAppointment(appointment);
-        System.out.println("Successfully rescheduled appointment");
-        return "redirect:/";
+    public String rescheduleAppointment(Model model, LocalDate date, LocalTime time, Long veterinarianId, @RequestParam Long id, HttpServletRequest request){
+        String email = (String) request.getSession().getAttribute("userEmail"); // Or however you're storing it
+        if (email != null) {
+            User user = userService.findByEmail(email);
+            Appointment appointment = appointmentService.findAppointmentById(id);
+            appointment.setAppointmentTime(time);
+            appointment.setAppointmentDate(date);
+            appointment.setVeterinarianId(veterinarianId);
+            appointment.setUserId(user.getId());
+            appointmentService.rescheduleAppointment(appointment);
+            System.out.println("Successfully rescheduled appointment");
+            return "redirect:/";
+
+        }
+        else{
+            return "/";
+        }
+
     }
 
     @DeleteMapping("/delete/{id}")

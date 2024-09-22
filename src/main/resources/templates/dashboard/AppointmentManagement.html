@@ -98,8 +98,8 @@
 
                         <!--                        Buttons for manage appointment-->
                         <div class="text-center mt-4">
-                            <button class="btn btn-primary mx-3 p-4">Book Appointment</button>
-                            <button class="btn btn-secondary mx-3 p-4">Change Appointment</button>
+                            <a th:href="@{/appointments}" class="btn btn-primary mx-3 p-4">Book Appointment</a>
+                            <a th:href="@{/appointments/reschedule}" class="btn btn-secondary mx-3 p-4">Change Appointment</a>
                             <button class="btn btn-danger mx-3 p-4">Cancel Appointment</button>
                         </div>
                     </div>
