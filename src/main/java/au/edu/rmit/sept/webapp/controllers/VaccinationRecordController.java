@@ -35,22 +35,22 @@ public class VaccinationRecordController {
         addPetSelectionToModel(model);
         return"ViewVaccinationRecords";
     }
-
-
-    @GetMapping("/vaccination")
-    public String showVaccinationDetails(@RequestParam("petId") Long petId, Model model) {
-        PetInformation pet = petInformationService.getPetById(petId);
-        if (pet != null) {
-            List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
-            model.addAttribute("pet", pet);
-            model.addAttribute("vaccinationRecords", vaccinationRecords);
-        } else {
-            model.addAttribute("errorMessage", "Pet not found.");
-        }
-
-        addPetSelectionToModel(model);
-        return "ViewVaccinationRecords";
-    }
+//
+//
+//    @GetMapping("/vaccination")
+//    public String showVaccinationDetails(@RequestParam("petId") Long petId, Model model) {
+//        PetInformation pet = petInformationService.getPetById(petId);
+//        if (pet != null) {
+//            List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
+//            model.addAttribute("pet", pet);
+//            model.addAttribute("vaccinationRecords", vaccinationRecords);
+//        } else {
+//            model.addAttribute("errorMessage", "Pet not found.");
+//        }
+//
+//        addPetSelectionToModel(model);
+//        return "ViewVaccinationRecords";
+//    }
 
 }
 

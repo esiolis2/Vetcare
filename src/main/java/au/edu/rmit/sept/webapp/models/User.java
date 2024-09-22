@@ -6,9 +6,9 @@ public class User {
     private String password;
     private String email;
     private String name;
-    private Integer id;
+    private Long id;
 
-    public User(Integer id, String name, String username, String email, String password) {
+    public User(Long id, String name, String username, String email, String password) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -20,11 +20,11 @@ public class User {
     public User() {}
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -43,7 +43,6 @@ public class User {
     public String getName() {
         return name;
     }
-
 
     public void setEmail(String email){
         this.email=email;

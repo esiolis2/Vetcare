@@ -55,7 +55,7 @@ public class UserRepositoryImpl implements UserRepository {
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 System.out.println("Logged in successfully!");
-                return  new User(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
+                return  new User(rs.getLong("id"), rs.getString("name"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
             }
         }catch(SQLException e){
             throw new UncategorizedScriptException("Failed to find an user in the database", e);

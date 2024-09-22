@@ -8,9 +8,7 @@ public class Appointment {
     private Long id;
     private Long veterinarianId;
     private Long clinicId; // Changed to Clinic object
-    private String ownerName;
-    private String email;
-    private String phone;
+    private Long userId;
     private LocalTime appointmentTime;
     private LocalDate appointmentDate;
     private String reason;
@@ -18,14 +16,11 @@ public class Appointment {
 
     // Constructors, getters, and setters...
 
-    public Appointment(Long id, Long veterinarianId, Long clinicId, String ownerName, String email,
-                       String phone, LocalTime appointmentTime, LocalDate appointmentDate, String reason, Long petId) {
+    public Appointment(Long id, Long veterinarianId, Long clinicId, Long userId, LocalTime appointmentTime, LocalDate appointmentDate, String reason, Long petId) {
         this.id = id;
+
         this.veterinarianId = veterinarianId;
         this.clinicId = clinicId;
-        this.ownerName = ownerName;
-        this.email = email;
-        this.phone = phone;
         this.appointmentTime = appointmentTime;
         this.appointmentDate = appointmentDate;
         this.reason = reason;
@@ -33,8 +28,6 @@ public class Appointment {
     }
 
     public Appointment() {}
-
-
 
     // Getters and Setters
 
@@ -62,30 +55,12 @@ public class Appointment {
         this.clinicId = clinicId;
     }
 
-    public String getOwnerName() {
-        return ownerName;
+    public Long getUserId(){
+        return userId;
     }
-
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
+    public void setUserId(Long userId){
+        this.userId = userId;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public LocalTime getAppointmentTime() {
         return appointmentTime;
     }

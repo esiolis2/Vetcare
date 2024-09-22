@@ -46,7 +46,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/account")
     public String getUserProfile(Model model, HttpServletRequest request) {
         String email = (String) request.getSession().getAttribute("userEmail"); // Or however you're storing it
         if (email != null) {
@@ -56,6 +56,11 @@ public class UserController {
             return "account"; // Make sure this matches your profile HTML file name
         }
         return "redirect:/"; // Redirect to home if not logged in
+    }
+
+    @GetMapping("/dashboard/appointment-management")
+    public String dashboardAppointmentManangement(){
+        return "/dashboard/appointmentManagement.html";
     }
 }
 

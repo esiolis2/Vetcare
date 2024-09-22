@@ -40,9 +40,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
                         rs.getLong("id"), // id
                         rs.getLong("veterinarianId"), // vetId
                         rs.getLong("clinicId"), // clinic
-                        rs.getString("ownerName"), // ownerName
-                        rs.getString("email"), // email
-                        rs.getString("phone"), // phone
+                        rs.getLong("userId"),
                         appointmentTime,
                         appointmentDate,
                         rs.getString("reason"),
@@ -59,20 +57,18 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     // https://www.tutorialspoint.com/jdbc/jdbc-insert-records.htm
     @Override
     public Appointment addAppointment(Appointment appointment) {
-        String insertQuery = "INSERT INTO appointment (veterinarianId, clinicId, ownerName, email, phone, petId, reason, appointmentTime, appointmentDate) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO appointment (veterinarianId, clinicId, ownerId, petId, reason, appointmentTime, appointmentDate) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = this.dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(insertQuery)) {
 
             stmt.setLong(1, appointment.getVeterinarianId());
             stmt.setLong(2, appointment.getClinicId());
-            stmt.setString(3, appointment.getOwnerName());
-            stmt.setString(4, appointment.getEmail());
-            stmt.setString(5, appointment.getPhone());
-            stmt.setLong(6, appointment.getPetId());
-            stmt.setString(7, appointment.getReason());
-            stmt.setTime(8, java.sql.Time.valueOf(appointment.getAppointmentTime())); // LocalTime to Time
-            stmt.setDate(9, java.sql.Date.valueOf(appointment.getAppointmentDate())); // LocalDate to Date
+            stmt.setLong(3, appointment.getUserId());
+            stmt.setLong(4, appointment.getPetId());
+            stmt.setString(5, appointment.getReason());
+            stmt.setTime(6, java.sql.Time.valueOf(appointment.getAppointmentTime())); // LocalTime to Time
+            stmt.setDate(7, java.sql.Date.valueOf(appointment.getAppointmentDate())); // LocalDate to Date
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Appointment successfully added.");
@@ -111,6 +107,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     }
 
     @Override
+    // Find appointment by appointment id
     public Appointment findById(Long id) {
         Appointment appointment;
         try {
@@ -123,9 +120,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
                 appointment.setId(rs.getLong("id"));
                 appointment.setVeterinarianId(rs.getLong("veterinarianId"));
                 appointment.setClinicId(rs.getLong("clinicId"));
-                appointment.setOwnerName(rs.getString("ownerName"));
-                appointment.setEmail(rs.getString("email"));
-                appointment.setPhone(rs.getString("phone"));
+                appointment.setUserId(rs.getLong("userId"));
                 appointment.setPetId(rs.getLong("petId"));
                 appointment.setReason(rs.getString("reason"));
                 appointment.setAppointmentTime(rs.getTime("appointmentTime").toLocalTime()); // Time to LocalTime

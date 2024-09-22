@@ -2,6 +2,7 @@ package au.edu.rmit.sept.webapp.controllers;
 
 import au.edu.rmit.sept.webapp.models.*;
 import au.edu.rmit.sept.webapp.services.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,15 +23,17 @@ public class AppointmentController {
     private final ClinicServicePricingService clinicServicePricingService;
     private final ClinicReasonsService clinicReasonsService;
     private final PetInformationService petInformationService;
+    private final UserService userService;
 
     @Autowired
-    public AppointmentController(AppointmentService appointmentService, ClinicService clinicService, VeterinarianService veterinarianService, ClinicServicePricingService clinicServicePricingService, ClinicReasonsService clinicReasonsService, PetInformationService petInformationService) {
+    public AppointmentController(AppointmentService appointmentService, ClinicService clinicService, VeterinarianService veterinarianService, ClinicServicePricingService clinicServicePricingService, ClinicReasonsService clinicReasonsService, PetInformationService petInformationService, UserService userService) {
         this.appointmentService = appointmentService;
         this.clinicService = clinicService;
         this.veterinarianService = veterinarianService;
         this.clinicServicePricingService = clinicServicePricingService;
         this.clinicReasonsService = clinicReasonsService;
         this.petInformationService = petInformationService;
+        this.userService = userService;
     }
 
     @GetMapping("/appointments")
@@ -50,8 +53,19 @@ public class AppointmentController {
     }
 
     @PostMapping("/add")
-    public String createAppointment(@ModelAttribute Appointment appointment){
-        appointmentService.createAppointment(appointment);
+    public String createAppointment(@ModelAttribute Appointment appointment, HttpServletRequest request){
+        String email = (String) request.getSession().getAttribute("userEmail");
+        if (email != null) {
+            User user = userService.findByEmail(email);
+            appointment.setUserId(user.getId());
+            appointmentService.createAppointment(appointment);
+        }
+        else{
+            System.out.print("An error occured while booking appointment with user.");
+            return "redirect:/";
+        }
+
+
         return "redirect:/";
     }
 
