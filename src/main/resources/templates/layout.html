@@ -1,3 +1,86 @@
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta charset="utf-8">&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">&ndash;&gt;-->
+<!--&lt;!&ndash;    <title>Layout page</title>&ndash;&gt;-->
+<!--&lt;!&ndash;    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet" />&ndash;&gt;-->
+<!--&lt;!&ndash;    <link th:href="@{/assets/css/main.css}" rel="stylesheet">&ndash;&gt;-->
+<!--&lt;!&ndash;    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+<!--&lt;!&ndash;<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="container">&ndash;&gt;-->
+<!--&lt;!&ndash;        <a class="navbar-brand" href="/">VetCare</a>&ndash;&gt;-->
+<!--&lt;!&ndash;        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">&ndash;&gt;-->
+<!--&lt;!&ndash;            <span class="navbar-toggler-icon"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </button>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="collapse navbar-collapse" id="navbarNav">&ndash;&gt;-->
+<!--&lt;!&ndash;            <ul class="navbar-nav ms-auto">&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="nav-item">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a class="nav-link active" href="/">Home</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="nav-item">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a class="nav-link" href="/resources">Resources</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <button class="nav-link dropdown-toggle" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">&ndash;&gt;-->
+<!--&lt;!&ndash;                        Medical Access&ndash;&gt;-->
+<!--&lt;!&ndash;                    </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <li><a class="dropdown-item" href="/access-medical-records">Access Medical Record</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <li><a class="dropdown-item" href="/view-vaccination-records">View Vaccination Records</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <li><a class="dropdown-item" href="/view-treatment-plan">View Treatment Plan</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </ul>&ndash;&gt;-->
+<!--&lt;!&ndash;                </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="nav-item" sec:authorize="isAuthenticated()">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a class="nav-link" href="/account">Dashboard</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="nav-item" sec:authorize="isAuthenticated()">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <form th:action="@{/logout}" method="post" style="display: inline;">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <button type="submit" class="nav-link btn btn-link" style="display: inline;">Logout</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </form>&ndash;&gt;-->
+<!--&lt;!&ndash;                </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="nav-item" sec:authorize="!isAuthenticated()">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a class="nav-link" href="/login">Login</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                </li>&ndash;&gt;-->
+<!--&lt;!&ndash;            </ul>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</nav>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<div id="content">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="main-content">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div layout:fragment="content">&ndash;&gt;-->
+<!--&lt;!&ndash;            &lt;!&ndash; content &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<footer class="container-fluid text-center py-3 mt-5 footer-style">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="row">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="col-md-4">&ndash;&gt;-->
+<!--&lt;!&ndash;            <p>Contact Us: +123 456 789</p>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="col-md-4">&ndash;&gt;-->
+<!--&lt;!&ndash;            <p>© 2024 VetCare. All rights reserved.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="col-md-4">&ndash;&gt;-->
+<!--&lt;!&ndash;            <p>Follow Us:&ndash;&gt;-->
+<!--&lt;!&ndash;                <a href="#" class="social-icon">Facebook</a> |&ndash;&gt;-->
+<!--&lt;!&ndash;                <a href="#" class="social-icon">Instagram</a> |&ndash;&gt;-->
+<!--&lt;!&ndash;                <a href="#" class="social-icon">Twitter</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </p>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</footer>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->
+
+
+
 <!--<!DOCTYPE html>-->
 <!--<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">-->
 <!--<head>-->
@@ -8,7 +91,7 @@
 <!--    <link th:href="@{/assets/css/main.css}" rel="stylesheet">-->
 <!--    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>-->
 <!--</head>-->
-<!--<body onload="loginStatus()">-->
+<!--<body onload="checkLoginStatus()">-->
 <!--<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">-->
 <!--    <div class="container">-->
 <!--        <a class="navbar-brand" href="/">VetCare</a>-->
@@ -23,9 +106,9 @@
 <!--                <li class="nav-item">-->
 <!--                    <a class="nav-link" href="/resources">Resources</a>-->
 <!--                </li>-->
-<!--                <li class="nav-item dropdown">-->
+<!--                <li class="nav-item dropdown" th:if="${loggedInUser != null}">-->
 
-<!--                    <button class="nav-link dropdown-toggle" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"  style="display: none;">-->
+<!--                    <button class="nav-link dropdown-toggle" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="display: none;">-->
 <!--                        Medical Access-->
 <!--                    </button>-->
 <!--                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">-->
@@ -34,18 +117,18 @@
 <!--                        <li><a class="dropdown-item" href="/view-treatment-plan">View Treatment Plan</a></li>-->
 <!--                    </ul>-->
 <!--                </li>-->
-<!--                <li class="nav-item" id="profileLink" style="display: none;">-->
+<!--                <li class="nav-item" id="profileLink" th:if="${loggedInUser != null}">-->
 <!--                    <a class="nav-link" href="/account">Dashboard</a>-->
 <!--                </li>-->
-
-<!--                <li class="nav-item" id="logoutLink" style="display: none;">-->
-<!--                    <form th:action="@{/logout}" method="post" style="display: none;">-->
-<!--                        <button type="submit" class="nav-link btn btn-link" style="display: none;">Logout</button>-->
+<!--                <li class="nav-item" th:if="${loggedInUser != null}">-->
+<!--                    <form th:action="@{/logout}" method="post" style="display: inline;">-->
+<!--                        <button type="submit" class="nav-link btn btn-link">Logout</button>-->
 <!--                    </form>-->
 <!--                </li>-->
-<!--                <li class="nav-item" id="loginLink">-->
+<!--                <li class="nav-item" th:if="${loggedInUser == null}">-->
 <!--                    <a class="nav-link" href="/login">Login</a>-->
 <!--                </li>-->
+
 <!--            </ul>-->
 <!--        </div>-->
 <!--    </div>-->
@@ -53,11 +136,9 @@
 
 <!--<div id="content">-->
 <!--    <div class="main-content">-->
-
 <!--        <div layout:fragment="content">-->
 <!--            &lt;!&ndash; content &ndash;&gt;-->
 <!--        </div>-->
-
 <!--    </div>-->
 <!--</div>-->
 
@@ -80,26 +161,35 @@
 <!--</footer>-->
 
 <!--<script>-->
-<!--    function loginStatus() {-->
-<!--        var email = localStorage.getItem('vetUserLogged');-->
-<!--        if (email) {-->
-<!--            document.getElementById('profileLink').style.display = 'block';-->
-<!--            document.getElementById('logoutLink').style.display = 'block';-->
-<!--            document.getElementById('dropdownMenuLink').style.display = 'block';-->
-<!--            document.getElementById('loginLink').style.display = 'none';-->
-<!--        } else {-->
-<!--            document.getElementById('profileLink').style.display = 'none';-->
-<!--            document.getElementById('logoutLink').style.display = 'none';-->
-<!--            document.getElementById('dropdownMenuLink').style.display = 'none';-->
-<!--            document.getElementById('loginLink').style.display = 'block';-->
-<!--        }-->
+<!--    function checkLoginStatus() {-->
+<!--&lt;!&ndash;        // Fetch the user's login status&ndash;&gt;-->
+<!--&lt;!&ndash;        fetch('/login-status')&ndash;&gt;-->
+<!--&lt;!&ndash;            .then(response => response.json())&ndash;&gt;-->
+<!--&lt;!&ndash;            .then(data => {&ndash;&gt;-->
+<!--&lt;!&ndash;                if (data.loggedIn) {&ndash;&gt;-->
+<!--&lt;!&ndash;                    document.getElementById('profileLink').style.display = 'block';&ndash;&gt;-->
+<!--&lt;!&ndash;                    document.getElementById('logoutLink').style.display = 'block';&ndash;&gt;-->
+<!--&lt;!&ndash;                    document.getElementById('loginLink').style.display = 'none';&ndash;&gt;-->
+<!--&lt;!&ndash;                } else {&ndash;&gt;-->
+<!--&lt;!&ndash;                    document.getElementById('profileLink').style.display = 'none';&ndash;&gt;-->
+<!--&lt;!&ndash;                    document.getElementById('logoutLink').style.display = 'none';&ndash;&gt;-->
+<!--&lt;!&ndash;                    document.getElementById('loginLink').style.display = 'block';&ndash;&gt;-->
+<!--&lt;!&ndash;                }&ndash;&gt;-->
+<!--&lt;!&ndash;            })&ndash;&gt;-->
+<!--&lt;!&ndash;            .catch(error => console.error('Error checking login status:', error));&ndash;&gt;-->
 <!--    }-->
 
-<!--     function logout() {-->
-<!--            localStorage.removeItem('vetUserLogged');-->
-<!--            alert("Logout successful!");-->
-<!--            location.reload();-->
-<!--     }-->
+<!--    function logout() {-->
+
+<!--        fetch('/logout', { method: 'POST' })-->
+<!--            .then(response => {-->
+<!--                if (response.ok) {-->
+<!--                    alert("Logout successful!");-->
+<!--                    location.reload(); // Reload the page to reflect the changes-->
+<!--                }-->
+<!--            })-->
+<!--            .catch(error => console.error('Error during logout:', error));-->
+<!--    }-->
 <!--</script>-->
 
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>-->
@@ -107,8 +197,10 @@
 <!--</html>-->
 
 
+
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -132,7 +224,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/resources">Resources</a>
                 </li>
-                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                <li class="nav-item dropdown" th:if="${loggedInUser != null}">
                     <button class="nav-link dropdown-toggle" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Medical Access
                     </button>
@@ -142,15 +234,15 @@
                         <li><a class="dropdown-item" href="/view-treatment-plan">View Treatment Plan</a></li>
                     </ul>
                 </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
+                <li class="nav-item" th:if="${loggedInUser != null}">
                     <a class="nav-link" href="/account">Dashboard</a>
                 </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
+                <li class="nav-item" th:if="${loggedInUser != null}">
                     <form th:action="@{/logout}" method="post" style="display: inline;">
-                        <button type="submit" class="nav-link btn btn-link" style="display: inline;">Logout</button>
+                        <button type="submit" class="nav-link btn btn-link">Logout</button>
                     </form>
                 </li>
-                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <li class="nav-item" th:if="${loggedInUser == null}">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
             </ul>

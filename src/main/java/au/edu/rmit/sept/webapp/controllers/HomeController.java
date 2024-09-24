@@ -1,8 +1,13 @@
 package au.edu.rmit.sept.webapp.controllers;
 
 
+import au.edu.rmit.sept.webapp.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class  HomeController {
@@ -36,6 +41,13 @@ public class  HomeController {
     @GetMapping("/login")
     public String Login() {
         return "Login.html";
+    }
+
+
+//
+    @ModelAttribute("loggedInUser")
+    public User getLoggedInUser(HttpServletRequest request) {
+        return (User) request.getSession().getAttribute("loggedInUser");
     }
 
 }

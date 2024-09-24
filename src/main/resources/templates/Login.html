@@ -29,52 +29,6 @@
     <div>
     <a href="/" class="btn-common btn-back" >Back to Home Page</a>
     </div>
-<!--    <script>-->
-<!--        document.getElementById('loginForm').addEventListener('submit', function(event) {-->
-<!--            event.preventDefault();-->
-<!--            var email = document.getElementById('email').value;-->
-<!--            var password = document.getElementById('password').value;-->
-
-<!--            fetch('/login', {-->
-<!--                method: 'POST',-->
-<!--                headers: {-->
-<!--                    'Content-Type': 'application/x-www-form-urlencoded'-->
-<!--                },-->
-<!--                body: new URLSearchParams({-->
-<!--                    email: email,-->
-<!--                    password: password-->
-<!--                })-->
-<!--            })-->
-<!--            .then(response => response.json())-->
-<!--            .then(data => {-->
-<!--                if (data.success) {-->
-<!--                    localStorage.setItem('vetUserLogged', email);-->
-<!--                    alert("Login successful!");-->
-<!--&lt;!&ndash;                    window.location.href = '/';&ndash;&gt;-->
-<!--                } else {-->
-<!--                    alert("Email is not registered!");-->
-<!--                    document.getElementById('loginError').textContent = data.message;-->
-<!--                    document.getElementById('loginError').style.display = 'block';-->
-<!--                }-->
-<!--            })-->
-<!--            .catch(error => {-->
-<!--                console.error('Error:', error);-->
-<!--            });-->
-<!--        });-->
-
-<!--        function loginStatus() {-->
-<!--            var email = localStorage.getItem('vetUserLogged');-->
-<!--            if (email) {-->
-<!--                document.getElementById('loginLink').textContent = 'Logout';-->
-<!--                document.getElementById('loginLink').href = '#';-->
-<!--                document.getElementById('loginLink').onclick = function() {-->
-<!--                    localStorage.removeItem('vetUserLogged');-->
-<!--                    window.location.href = '/';-->
-<!--                    location.reload();-->
-<!--                };-->
-<!--            }-->
-<!--        }-->
-<!--    </script>-->
 
 </div>
 
