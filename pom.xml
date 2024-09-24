@@ -89,6 +89,11 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-mysql</artifactId>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.thymeleaf.extras</groupId>-->
+<!--			<artifactId>thymeleaf-extras-springsecurity5</artifactId>-->
+<!--			<version>3.0.0</version>-->
+<!--		</dependency>-->
 
 
 	</dependencies>
@@ -103,8 +108,8 @@
 				<version>10.10.0</version>
 				<configuration>
 					<url>jdbc:mysql://localhost:3306/vetcare?allowPublicKeyRetrieval=true&amp;useSSL=false</url>
-					<user>VetCare_DB</user>
-					<password>Password@123</password>
+					<user>root</user>
+					<password>password</password>
 					<driver>com.mysql.cj.jdbc.Driver</driver>
 					<schemas>vetcare</schemas>
 				</configuration>
