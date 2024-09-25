@@ -26,19 +26,6 @@ public class UserController {
         return "redirect:/login";
     }
 
-//    @PostMapping("/login")
-//    public String login(@RequestParam String email, @RequestParam String password, Model model) {
-//        boolean isValidUser = userService.verifyUser(email, password);
-//        if (isValidUser) {
-//            User user = userService.findByEmail(email);
-//            model.addAttribute("loggedInUser", user);
-//            System.out.println("Logged in successfully!!!!");
-//            return "redirect:/account";
-//        } else {
-//            model.addAttribute("error", "Invalid email or password");
-//            return "login";
-//        }
-//    }
 
     @PostMapping("/login")
     public String login(@RequestParam String email, @RequestParam String password, Model model, HttpServletRequest request) {
@@ -67,12 +54,14 @@ public class UserController {
 
     @PostMapping("/logout")
     public String logout(HttpServletRequest request,Model model) {
+//        terminating the session
         request.getSession().invalidate();
         System.out.println("Logged out!!!");
 //        for proper navbar after logging out
         model.addAttribute("loggedInUser", null);
         return "redirect:/";
     }
+
 
 }
 
