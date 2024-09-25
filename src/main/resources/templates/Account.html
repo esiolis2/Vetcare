@@ -122,14 +122,14 @@
                                 </div>
                                 <hr>
 
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0 fw-bold">Phone</p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <p class="text-muted mb-0">(097) 234-5678</p>
-                                    </div>
-                                </div>
+<!--                                <div class="row">-->
+<!--                                    <div class="col-sm-3">-->
+<!--                                        <p class="mb-0 fw-bold">Phone</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-sm-9">-->
+<!--                                        <p class="text-muted mb-0">(097) 234-5678</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
@@ -160,6 +160,56 @@
                                     data-bs-target="#deleteProfileModal">
                                 Delete Profile
                             </button>
+                            <button class="btn btn-primary" id="add-pet-button" data-bs-toggle="modal"
+                                    data-bs-target="#addPetModal">Add New Pet
+                            </button>
+                        </div>
+                        <!-- Modal for Add New Pet -->
+                        <div class="modal fade" id="addPetModal" tabindex="-1" aria-labelledby="addPetModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addPetModalLabel">Add New Pet</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form th:action="@{/account/pet-register}" method="post" id="add-pet-form">
+                                            <div class="form-group">
+                                                <label for="petName">Pet Name:</label>
+                                                <input type="text" class="form-control" id="petName" name="name" placeholder="Enter pet name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="petType">Pet Type:</label>
+                                                <input type="text" class="form-control" id="petType" name="type" placeholder="Enter pet type" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="petAge">Pet Age:</label>
+                                                <input type="number" class="form-control" id="petAge" name="age" placeholder="Enter pet age" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="petGender">Pet Gender:</label>
+                                                <select class="form-control" id="petGender" name="gender" required>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="petWeight">Pet Weight:</label>
+                                                <input type="text" class="form-control" id="petWeight" name="weight" placeholder="Enter pet weight" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="petBreed">Pet Breed:</label>
+                                                <input type="text" class="form-control" id="petBreed" name="breed" placeholder="Enter pet breed" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="petBirthDate">Birth Date:</label>
+                                                <input type="date" class="form-control" id="petBirthDate" name="birthDate" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- Edit Profile Modal -->
                         <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">

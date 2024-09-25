@@ -1,5 +1,8 @@
+
 package au.edu.rmit.sept.webapp.controllers;
 
+import au.edu.rmit.sept.webapp.models.PetInformation;
+import au.edu.rmit.sept.webapp.services.PetInformationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,11 +17,14 @@ import au.edu.rmit.sept.webapp.services.UserService;
 @SessionAttributes("loggedInUser")
 public class UserController {
     private final UserService userService;
-
+    private final PetInformationService petInfoService;
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService, PetInformationService petInfoService){
         this.userService = userService;
+        this.petInfoService = petInfoService;
     }
+
+
 
     @PostMapping("/signup")
     public String createUser(@ModelAttribute User user){
@@ -62,6 +68,29 @@ public class UserController {
         return "redirect:/";
     }
 
+    //    @PostMapping("/account/pet-register")
+//    public String registerPet(@ModelAttribute PetInformation petInformation){
+//        petInfoService.createPetInformation(petInformation);
+//        System.out.println("Pet registered successfully!!!!");
+//        return "redirect:/";
+//    }
+    @PostMapping("/account/pet-register")
+    public String registerPet(@ModelAttribute PetInformation petInformation, HttpServletRequest request) {
+        User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
+        if (loggedInUser != null) {
+            petInformation.setOwnerName(loggedInUser.getName());
+            petInformation.setOwnerContact(loggedInUser.getEmail());
+            petInfoService.createPetInformation(petInformation);
+            System.out.println("Pet registered successfully!!!!");
+        }
+        return "redirect:/";
+
+    }
+//  @GetMapping("/account/pet-register")
+//    public String showPetRegistrationForm(Model model) {
+//        // You can add any additional attributes to the model if needed
+//        return "PetRegistration"; // This should match the name of your HTML template
+//    }
 
 }
 
