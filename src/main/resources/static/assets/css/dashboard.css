@@ -1,0 +1,181 @@
+
+/*SIDEBAR*/
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+/*SIDEBAR*/
+
+.custom-sidebar .nav-item {
+    margin-bottom: 20px; /* Add space between each item */
+}
+
+.custom-sidebar .nav-link {
+    font-size: 1.5rem; /* Bigger font size */
+    padding: 15px; /* Increase padding for a larger clickable area */
+    color: #f9f7f3;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+.custom-sidebar .nav-link i {
+    font-size: 1.5rem; /* Bigger icon */
+    margin-right: 10px; /* Space between icon and text */
+}
+
+.custom-sidebar .nav-link:hover {
+    background-color: #388087; /* Background color on hover */
+    color: #e0f7fa; /* Text color on hover */
+}
+
+.custom-sidebar .nav-link.active {
+    background-color: #6c757d; /* Background color for active link */
+    color: #fff; /* Text color for active link */
+}
+
+.custom-sidebar .nav-link.active:hover {
+    background-color: #465a67; /* Darker background for active link on hover */
+}
+
+/*styling for user dashboard link*/
+.custom-sidebar .nav-link.userDashboard {
+    background-color: #666666; /* Primary color for User Dashboard */
+    color: #fff; /* White text for better contrast */
+}
+
+.custom-sidebar .nav-link.userDashboard:hover {
+    background-color: #388087;; /* Darker grey background on hover */
+    color: #fff; /* Ensure text remains white */
+}
+
+/*USER DASHBOARD*/
+.dashboard-content {
+    background-color: #eee;
+}
+
+.account-details, .pet-prescriptions, .pet-details, .add-pet {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.account-details h3, .pet-prescriptions h3, .pet-details h3, .add-pet h3 {
+    font-size: 1.5rem;
+    color: #222222;
+}
+
+#account-info-container, #pet-prescriptions-container, #pet-details-container {
+    font-size: 1.25rem;
+    color: #e74c3c;
+}
+
+#add-pet-button {
+    font-size: 1.1rem;
+}
+
+/* Styling for Add New Pet Form */
+#add-pet-form-container {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+}
+
+/*BUTTON*/
+.btn-primary {
+    background-color: #061945;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #bccce1;
+    color:#061945;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:focus, .btn-primary:active {
+    outline: none;
+    box-shadow: 0px 0px 0px 2px #ffffff, 0px 0px 0px 4px #061945;
+}
+
+.btn-outline-danger {
+    padding: 10px 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/*MODAL*/
+.modal-dialog {
+    max-width: 600px;
+    margin-top: 70px;
+}
+
+.modal-content {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.modal-header {
+    background-color: #061945; /* Background color for the header */
+    color: white; /* Text color for the header */
+}
+.modal-title {
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
+.modal-body {
+    background-color: #f8f9fa;
+    font-size: 1.25rem;
+    color: #222222;
+}
+
+.modal-footer {
+    background-color: #e9ecef; /* Light background for the footer */
+}
+
+.form-label {
+    color: #222222;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/*Modify styles for close buttons*/
+.btn-close {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.btn-close:hover {
+    background-color: #c82333;
+}
