@@ -68,29 +68,20 @@ public class UserController {
         return "redirect:/";
     }
 
-    //    @PostMapping("/account/pet-register")
-//    public String registerPet(@ModelAttribute PetInformation petInformation){
-//        petInfoService.createPetInformation(petInformation);
-//        System.out.println("Pet registered successfully!!!!");
-//        return "redirect:/";
-//    }
+
     @PostMapping("/account/pet-register")
     public String registerPet(@ModelAttribute PetInformation petInformation, HttpServletRequest request) {
         User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
         if (loggedInUser != null) {
             petInformation.setOwnerName(loggedInUser.getName());
-            petInformation.setOwnerContact(loggedInUser.getEmail());
+//            petInformation.setOwnerContact(loggedInUser.getEmail());
             petInfoService.createPetInformation(petInformation);
             System.out.println("Pet registered successfully!!!!");
         }
         return "redirect:/";
 
     }
-//  @GetMapping("/account/pet-register")
-//    public String showPetRegistrationForm(Model model) {
-//        // You can add any additional attributes to the model if needed
-//        return "PetRegistration"; // This should match the name of your HTML template
-//    }
+
 
 }
 
