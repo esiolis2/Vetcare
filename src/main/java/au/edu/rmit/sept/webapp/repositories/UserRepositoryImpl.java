@@ -65,22 +65,28 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
 
-//    @Override
-//    public List<User> findAll() {
-//        List<User> users = new ArrayList<>();
-//        try (Connection connection = this.source.getConnection();
-//             PreparedStatement ps = connection.prepareStatement("SELECT * FROM user");
-//             ResultSet rs = ps.executeQuery()) {
-//
-//            while (rs.next()) {
-//                User user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
-//                users.add(user);
-//            }
-//        } catch (SQLException e) {
-//            throw new UncategorizedScriptException("Failed to retrieve users from the database", e);
-//        }
-//        return users;
-//    }
+    @Override
+    public User updateUser(User u){
+        try(
+                Connection connection = this.source.getConnection();
+                PreparedStatement ps = connection.prepareStatement("UPDATE user SET name = ?, username = ?, email = ?, password = ? WHERE id = ?")){
 
+            ps.setString(1, u.getName());
+            ps.setString(2, u.getUsername());
+            ps.setString(3, u.getEmail());
+            ps.setString(4, u.getPassword());
+            ps.setLong(5, u.getId());
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Account successfully updated!!");
+                return u;
+            }
+        }catch(SQLException e){
+            throw new UncategorizedScriptException("Failed to update an user in the database", e);
+        }
+
+        return u;
+    }
 
 }

@@ -9,4 +9,5 @@ public interface UserRepository {
     public User insertUserData(User user);
     public User findByEmail(String email);
 //    public List<User> findAll();
+    public User updateUser(User user);
 }

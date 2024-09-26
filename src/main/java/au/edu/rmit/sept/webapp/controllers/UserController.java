@@ -83,5 +83,17 @@ public class UserController {
     }
 
 
+    @PostMapping("/account/edit")
+    public String editUser(@ModelAttribute User user, HttpServletRequest request) {
+        User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
+        if (loggedInUser != null) {
+            user.setId(loggedInUser.getId());
+            userService.updateUser(user);
+            request.getSession().setAttribute("loggedInUser", user);
+        }
+        return "redirect:/account";
+    }
+
+
 }
 
