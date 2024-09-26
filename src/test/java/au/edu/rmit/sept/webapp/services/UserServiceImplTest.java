@@ -24,7 +24,7 @@ public class UserServiceImplTest {
     public void testCreateUser_ShouldReturnUser() {
         User user = new User();
         user.setName("Mark Smith");
-        user.setUsername("mark.smith");
+//        user.setUsername("mark.smith");
         user.setEmail("mark.smith@example.com");
         user.setPassword("securepassword");
 

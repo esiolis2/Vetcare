@@ -48,10 +48,7 @@
             </ul>
             <hr>
             <div class="dropdown mt-auto">
-                <a href="#" class="d-flex align-items-center text-white fs-4 text-decoration-none dropdown-toggle"
-                   data-bs-toggle="dropdown" aria-expanded="false">
-                    <strong><span th:text="${user.username}"></span></strong>
-                </a>
+
                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                     <li>
                         <hr class="dropdown-divider">
@@ -85,23 +82,12 @@
                     </div>
                 </div>
 
-                <!--                <div class="account-details mt-4 card p-4">-->
-                <!--                    <h3>Account Information</h3>-->
-
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <h2 class="p-4 mb-4 border-top border-bottom" style="background-color: #061945;color: #ffffff">Account Information</h2>
 
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0 fw-bold">Username</p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <p class="text-muted mb-0" th:text="${user.username}"></p>
-                                    </div>
-                                </div>
                                 <hr>
 
                                 <div class="row">
@@ -123,6 +109,25 @@
                                     </div>
                                 </div>
                                 <hr>
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0 fw-bold">Phone</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0" th:text="${user.phone}"></p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0 fw-bold">Address</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0" th:text="${user.address}"></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!--                        Buttons-->
@@ -197,12 +202,8 @@
                                     <div class="modal-body">
                                         <form th:action="@{/account/edit}" method="post">
                                             <div class="mb-3">
-                                                <label for="username" class="form-label">Username</label>
-                                                <input type="text" class="form-control" id="username" name="username" th:value="${user.username}" required>
-                                            </div>
-                                            <div class="mb-3">
                                                 <label for="name" class="form-label">Name</label>
-                                                <input type="text" class="form-control" id="name" name="name" th:value="${user.name}" required>
+                                                <input type="text" class="form-control" id="name" name="name" th:value="${user.name}" >
                                             </div>
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label>
@@ -210,7 +211,15 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="password" class="form-label">Password</label>
-                                                <input type="password" class="form-control" id="password" name="password" required>
+                                                <input type="password" class="form-control" id="password" name="password" th:value="${user.password}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="phone" class="form-label">Phone</label>
+                                                <input type="text" class="form-control" id="phone" name="phone" th:value="${user.phone}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="address" class="form-label">Address</label>
+                                                <input type="text" class="form-control" id="address" name="address" th:value="${user.address}">
                                             </div>
 
                                             <button type="submit" class="btn btn-primary">Save changes</button>
