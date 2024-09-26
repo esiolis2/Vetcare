@@ -84,12 +84,16 @@ public class UserController {
 
 
     @PostMapping("/account/edit")
-    public String editUser(@ModelAttribute User user, HttpServletRequest request) {
+    public String editUser(@ModelAttribute User user, HttpServletRequest request, Model model) {
         User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
         if (loggedInUser != null) {
             user.setId(loggedInUser.getId());
-            userService.updateUser(user);
-            request.getSession().setAttribute("loggedInUser", user);
+            User u= userService.updateUser(user);
+            request.getSession().setAttribute("loggedInUser", u);
+//            added updated user to the model to pass updated data to the view
+            model.addAttribute("loggedInUser", u);
+            System.out.println("Account updated successfully!!!!");
+            return "redirect:/";
         }
         return "redirect:/account";
     }
