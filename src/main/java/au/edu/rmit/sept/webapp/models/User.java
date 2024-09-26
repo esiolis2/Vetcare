@@ -2,19 +2,21 @@ package au.edu.rmit.sept.webapp.models;
 
 public class User {
 
-    private String username;
+
     private String password;
     private String email;
     private String name;
+    private Long phoneNumber;
+    private String address;
     private Long id;
 
-    public User(Long id, String name, String username, String email, String password) {
+    public User(Long id, String name, String email, String password, Long phoneNumber, String address) {
         this.id = id;
         this.name = name;
-        this.username = username;
         this.email=email;
         this.password = password;
-
+        this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     public User() {}
@@ -28,14 +30,20 @@ public class User {
         this.id = id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public Long getPhoneNumber(){
+        return phoneNumber;
     }
 
-    public String getUsername() {
-        return username;
+    public void setPhoneNumber(Long phoneNumber){
+        this.phoneNumber = phoneNumber;
     }
 
+    public String getAddress(){
+        return address;
+    }
+    public void setAddress(String address){
+        this.address = address;
+    }
     public void setName(String name) {
         this.name = name;
     }

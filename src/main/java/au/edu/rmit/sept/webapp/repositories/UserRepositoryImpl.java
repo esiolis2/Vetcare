@@ -24,12 +24,13 @@ public class UserRepositoryImpl implements UserRepository {
     public User insertUserData(User u){
         try(
                 Connection connection = this.source.getConnection();
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO user (name, username, email, password) VALUES (?, ?, ?, ?)")){
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO user (name, address, phoneNumber, email, password) VALUES (?, ?, ?, ?, ?)")){
 
             ps.setString(1, u.getName());
-            ps.setString(2, u.getUsername());
-            ps.setString(3, u.getEmail());
-            ps.setString(4, u.getPassword());
+            ps.setString(2, u.getAddress());
+            ps.setLong(3, u.getPhoneNumber());
+            ps.setString(4, u.getEmail());
+            ps.setString(5, u.getPassword());
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -55,7 +56,13 @@ public class UserRepositoryImpl implements UserRepository {
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 System.out.println("Logged in successfully!");
-                return  new User(rs.getLong("id"), rs.getString("name"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
+                return  new User(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getLong("phoneNumber"),
+                        rs.getString("address"));
             }
         }catch(SQLException e){
             throw new UncategorizedScriptException("Failed to find an user in the database", e);
