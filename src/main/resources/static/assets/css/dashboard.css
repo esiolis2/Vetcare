@@ -79,22 +79,6 @@
     font-size: 1.1rem;
 }
 
-/* Styling for Add New Pet Form */
-#add-pet-form-container {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 0.25rem;
-}
-
-.form-group label {
-    font-weight: bold;
-}
-
-.form-group input {
-    border-radius: 0.25rem;
-    border: 1px solid #ced4da;
-}
-
 /*BUTTON*/
 .btn-primary {
     background-color: #061945;
@@ -165,6 +149,35 @@
     color: #222222;
     font-weight: bold;
     font-size: 1.5rem;
+}
+
+/* EXISTING PET DROPDOWN */
+#existingPetsGrid {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-top: 20px;
+}
+
+#existingPetsGrid h5 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.pet-selection-dropdown {
+    background-color: #f9f9f9;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#petDropdown {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
 }
 
 /*Modify styles for close buttons*/
