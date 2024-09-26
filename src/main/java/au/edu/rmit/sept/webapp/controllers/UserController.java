@@ -74,7 +74,7 @@ public class UserController {
         User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
         if (loggedInUser != null) {
             petInformation.setOwnerName(loggedInUser.getName());
-//            petInformation.setOwnerContact(loggedInUser.getEmail());
+            petInformation.setOwnerContact(loggedInUser.getPhone());
             petInfoService.createPetInformation(petInformation);
             System.out.println("Pet registered successfully!!!!");
         }
