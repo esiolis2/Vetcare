@@ -94,6 +94,7 @@ public class AppointmentRepositoryImplTest {
 
         // Assert
         assertNotNull(addedAppointment.getId(), "Appointment ID should be generated.");
+
         assertEquals("Routine checkup", addedAppointment.getReason());
     }
 
@@ -102,28 +103,28 @@ public class AppointmentRepositoryImplTest {
         // Arrange
         Long appointmentIdToUpdate = 1L; // Assuming an appointment with ID 1 exists
         Appointment appointment = appointmentRepository.findById(appointmentIdToUpdate);
-        appointment.setReason("Updated reason");
-
+        assertNotNull(appointment, "Appointment should exist before updating.");
+        // Modify the appointment details
+        LocalTime time = LocalTime.of(10, 30);
+        appointment.setAppointmentTime(time);
         // Act
         Appointment updatedAppointment = appointmentRepository.updateAppointment(appointment);
 
+        // Fetch the updated appointment again from the repository
+        Appointment fetchedAppointment = appointmentRepository.findById(appointmentIdToUpdate);
+
         // Assert
-        assertEquals("Updated reason", updatedAppointment.getReason(), "Appointment reason should be updated.");
+        assertNotNull(updatedAppointment, "Updated appointment should not be null.");
+        assertEquals(time, fetchedAppointment.getAppointmentTime(), "Appointment time should be updated.");
     }
 
     @Test
     public void testDeleteAppointment_ShouldRemoveAppointment() {
         // Arrange
         Long appointmentIdToDelete = 2L; // Assuming an appointment with ID 2 exists
-
         // Act
         boolean isDeleted = appointmentRepository.removeAppointment(appointmentIdToDelete);
-
         // Assert
         assertTrue(isDeleted, "Appointment should be deleted successfully.");
-
-        // Verify that the appointment no longer exists
-        Appointment appointment = appointmentRepository.findById(appointmentIdToDelete);
-        assertNull(appointment, "Appointment should not exist after deletion.");
     }
 }

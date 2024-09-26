@@ -6,6 +6,5 @@ CREATE TABLE IF NOT EXISTS pet_info (
     Weight DECIMAL(5, 2),
     Breed VARCHAR(100),
     BirthDate DATE,
-    OwnerName VARCHAR(100),
-    OwnerContact VARCHAR(15)
+    OwnerId BIGINT NOT NULL
 );

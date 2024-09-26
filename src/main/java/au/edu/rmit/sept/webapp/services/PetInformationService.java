@@ -11,4 +11,6 @@ public interface PetInformationService {
 
     public PetInformation getPetById(Long id);
 
+    public List<PetInformation> getPetByUserId(Long userId);
+
 }
