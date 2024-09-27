@@ -1,17 +1,17 @@
 package au.edu.rmit.sept.webapp.controllers;
 
+import au.edu.rmit.sept.webapp.models.User;
+import au.edu.rmit.sept.webapp.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-
-import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import au.edu.rmit.sept.webapp.models.User;
-import au.edu.rmit.sept.webapp.services.UserService;
-
-import java.text.AttributedString;
 import java.util.HashMap;
 import java.util.Map;
 

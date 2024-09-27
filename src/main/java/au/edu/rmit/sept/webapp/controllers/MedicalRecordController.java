@@ -1,17 +1,12 @@
 package au.edu.rmit.sept.webapp.controllers;
 
-import au.edu.rmit.sept.webapp.models.MedicalHistory;
-import au.edu.rmit.sept.webapp.models.PetInformation;
-import au.edu.rmit.sept.webapp.models.TreatmentPlan;
-import au.edu.rmit.sept.webapp.models.VaccinationRecord;
-import au.edu.rmit.sept.webapp.services.MedicalHistoryService;
-import au.edu.rmit.sept.webapp.services.PetInformationService;
-import au.edu.rmit.sept.webapp.services.TreatmentPlanService;
-import au.edu.rmit.sept.webapp.services.VaccinationRecordService;
+import au.edu.rmit.sept.webapp.models.*;
+import au.edu.rmit.sept.webapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -22,13 +17,17 @@ public class MedicalRecordController {
     private final MedicalHistoryService medicalHistoryService;
     private final VaccinationRecordService vaccinationRecordService;
     private final TreatmentPlanService treatmentPlanService;
+    private final UserService userService;
+ //   private final UserService userService;
 
     @Autowired
-    public MedicalRecordController(PetInformationService petInformationService, MedicalHistoryService medicalHistoryService, VaccinationRecordService vaccinationRecordService, TreatmentPlanService treatmentPlanService) {
+    public MedicalRecordController(PetInformationService petInformationService, MedicalHistoryService medicalHistoryService, VaccinationRecordService vaccinationRecordService, TreatmentPlanService treatmentPlanService, UserService userService){// userService userService) {
         this.petInformationService = petInformationService;
         this.medicalHistoryService = medicalHistoryService;
         this.vaccinationRecordService = vaccinationRecordService;
         this.treatmentPlanService = treatmentPlanService;
+        this.userService = userService;
+        //     this.userService = userService;
     }
 
 
@@ -47,6 +46,11 @@ public class MedicalRecordController {
     public String viewMedicalRecord(@RequestParam("petId") Long petId, Model model) {
         PetInformation pet = petInformationService.getPetById(petId);
         if (pet != null) {
+
+            User owner = userService.findByUser(pet.getOwnerId());
+
+            model.addAttribute("owner", owner);
+
             List<MedicalHistory> fullMedicalHistory = medicalHistoryService.getMedicalHistoryByPetId(petId);
             List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
             List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
@@ -67,6 +71,7 @@ public class MedicalRecordController {
         addPetSelectionToModel(model);
         return "AccessMedicalRecords";
     }
+
 
     @GetMapping("/medicalHistory")
     public String showFullMedicalRecords(@RequestParam("petId") Long petId, Model model) {

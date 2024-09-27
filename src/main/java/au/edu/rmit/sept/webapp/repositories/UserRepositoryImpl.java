@@ -71,6 +71,30 @@ public class UserRepositoryImpl implements UserRepository {
         return null;
     }
 
+    public User findUserById(Long id) {
+        String query = "SELECT * FROM user WHERE id = ?";
+        try (Connection connection =this.source.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                System.out.println("Get the pets by userid...");
+                return new User(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getLong("phoneNumber"),
+                        rs.getString("address"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching user by ID", e);
+        }
+        return null;
+    }
+
+
 
 //    @Override
 //    public List<User> findAll() {

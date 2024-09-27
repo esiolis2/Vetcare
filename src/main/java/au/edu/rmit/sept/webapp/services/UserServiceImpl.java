@@ -5,19 +5,18 @@ import au.edu.rmit.sept.webapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 
 // Specifies the METHODS' functionalities
 @Service
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userR;
-
+    private final PetInformationService petInformationService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository){
+    public UserServiceImpl(UserRepository userRepository, PetInformationService petInformationService){
         this.userR = userRepository;
+        this.petInformationService = petInformationService;
     }
 
     @Override
@@ -28,7 +27,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean verifyUser(String email, String password){
         User u= userR.findByEmail(email);
-//        after getting the email checking the password
+//      after getting the email checking the password
         return u!=null && u.getPassword().equals(password);
     }
 
@@ -37,9 +36,9 @@ public class UserServiceImpl implements UserService{
         return userR.findByEmail(email);
     }
 
-//    @Override
-//    public List<User> findAll() {
-//        return userR.findAll();
-//    }
+    @Override
+    public User findByUser(Long id) {
+        return userR.findUserById(id);
+    }
 
 }

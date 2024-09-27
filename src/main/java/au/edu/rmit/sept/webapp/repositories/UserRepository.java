@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository {
     public User insertUserData(User user);
     public User findByEmail(String email);
+    public User findUserById(Long id);
 //    public List<User> findAll();
 }
