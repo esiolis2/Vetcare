@@ -6,9 +6,3 @@ CREATE TABLE IF NOT EXISTS user (
     email VARCHAR(255) NOT NULL UNIQUE,
     name VARCHAR(255) NOT NULL
 );
-
-ALTER TABLE user AUTO_INCREMENT = 1;
-
-INSERT INTO user (phoneNumber, address, password, email, name)
-VALUES (0435153999, '123 Main St, Test City', 'test123', 'test@test.com', 'John Doe');
-
