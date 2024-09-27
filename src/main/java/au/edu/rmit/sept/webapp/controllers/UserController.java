@@ -34,10 +34,15 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> login(@RequestParam String email, @RequestParam String password, HttpServletRequest request) {
         boolean isValidUser = userService.verifyUser(email, password);
         Map<String, Object> response = new HashMap<>();
-        if (isValidUser) {
-            request.getSession().setAttribute("userEmail", email);
+//        if (isValidUser) {
+//            request.getSession().setAttribute("userEmail", email);
 
-            response.put("success", true);
+            if (isValidUser) {
+                User user = userService.findByEmail(email);
+                request.getSession().setAttribute("userId", user.getId());
+                request.getSession().setAttribute("userEmail", email);
+
+                response.put("success", true);
             response.put("message", "Login successful");
         } else {
             response.put("success", false);

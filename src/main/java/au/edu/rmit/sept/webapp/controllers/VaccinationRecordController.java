@@ -4,6 +4,8 @@ import au.edu.rmit.sept.webapp.models.PetInformation;
 import au.edu.rmit.sept.webapp.models.VaccinationRecord;
 import au.edu.rmit.sept.webapp.services.PetInformationService;
 import au.edu.rmit.sept.webapp.services.VaccinationRecordService;
+import au.edu.rmit.sept.webapp.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,57 +19,77 @@ public class VaccinationRecordController {
 
     private final PetInformationService petInformationService;
     private final VaccinationRecordService vaccinationRecordService;
+    private final UserService userService;
 
     @Autowired
-    public VaccinationRecordController(PetInformationService petInformationService,VaccinationRecordService vaccinationRecordService) {
+    public VaccinationRecordController(PetInformationService petInformationService, VaccinationRecordService vaccinationRecordService, UserService userService) {
         this.petInformationService = petInformationService;
         this.vaccinationRecordService = vaccinationRecordService;
+        this.userService = userService;
     }
 
-
-    private void addPetSelectionToModel(Model model) {
-        List<PetInformation> pets = petInformationService.getAllPets();
-        model.addAttribute("pets", pets);
+    private void addPetSelectionToModel(Model model, HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        if (userId != null) {
+            List<PetInformation> pets = petInformationService.getPetByUserId(userId);
+            if (pets != null && !pets.isEmpty()) {
+                model.addAttribute("pets", pets);
+            } else {
+                model.addAttribute("errorMessage", "No pets found for the logged-in user.");
+            }
+        } else {
+            model.addAttribute("errorMessage", "You must be logged in to view your pets.");
+        }
     }
 
     @GetMapping("/view-vaccination-records")
-    public String ViewVaccinationRecords(Model model){
-        addPetSelectionToModel(model);
-        return"ViewVaccinationRecords";
-    }
+    public String viewVaccinationRecordsPage(Model model, HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
 
-
-    @GetMapping("/vaccination-record-details")
-    public String showVaccinationDetails(@RequestParam("petId") Long petId, Model model) {
-        PetInformation pet = petInformationService.getPetById(petId);
-        if (pet != null) {
-            List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
-            model.addAttribute("pet", pet);
-            model.addAttribute("vaccinationRecords", vaccinationRecords);
-        } else {
-            model.addAttribute("errorMessage", "Pet not found.");
+        if (userId == null) {
+            model.addAttribute("errorMessage", "No vaccination records available for the user.");
+            return "ViewVaccinationRecords";
         }
 
-        addPetSelectionToModel(model);
+        List<PetInformation> pets = petInformationService.getPetByUserId(userId);
+
+        if (pets == null || pets.isEmpty()) {
+            model.addAttribute("errorMessage", "No vaccination records found for the logged-in user.");
+        } else {
+            model.addAttribute("pets", pets);
+        }
+
         return "ViewVaccinationRecords";
     }
 
+    @GetMapping("/vaccination-record-details")
+    public String showVaccinationDetails(@RequestParam("petId") Long petId, Model model, HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
 
+        if (userId == null) {
+            model.addAttribute("errorMessage", "You must be logged in to view vaccination records.");
+            addPetSelectionToModel(model, request);
+            return "ViewVaccinationRecords";
+        }
 
+        PetInformation pet = petInformationService.getPetById(petId);
+        if (pet != null) {
+            if (pet.getOwnerId().equals(userId)) {
+                List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
+
+                if (vaccinationRecords != null && !vaccinationRecords.isEmpty()) {
+                    model.addAttribute("pet", pet);
+                    model.addAttribute("vaccinationRecords", vaccinationRecords);
+                } else {
+                    model.addAttribute("errorMessage", "No vaccination records found for this pet.");
+                }
+            } else {
+                model.addAttribute("errorMessage", "You are not authorized to view this pet's vaccination records.");
+            }
+        } else {
+            model.addAttribute("errorMessage", "Pet not found.");
+        }
+        addPetSelectionToModel(model, request);
+        return "ViewVaccinationRecords";
+    }
 }
-
-
-
-//    @GetMapping("/vaccinationRecord")
-//    public String viewMedicalRecord(@RequestParam("petId") Long petId, Model model) {
-//        PetInformation pet = petInformationService.getPetById(petId);
-//        if (pet != null) {
-//            List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
-//
-//            model.addAttribute("pet", pet);
-//            model.addAttribute("vaccinationRecords", vaccinationRecords);
-//        }
-//
-//        addPetSelectionToModel(model);
-//        return "AccessMedicalRecords";
-//    }

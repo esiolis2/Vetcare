@@ -2,6 +2,7 @@ package au.edu.rmit.sept.webapp.controllers;
 
 import au.edu.rmit.sept.webapp.models.*;
 import au.edu.rmit.sept.webapp.services.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,6 @@ public class MedicalRecordController {
     private final VaccinationRecordService vaccinationRecordService;
     private final TreatmentPlanService treatmentPlanService;
     private final UserService userService;
- //   private final UserService userService;
 
     @Autowired
     public MedicalRecordController(PetInformationService petInformationService, MedicalHistoryService medicalHistoryService, VaccinationRecordService vaccinationRecordService, TreatmentPlanService treatmentPlanService, UserService userService){// userService userService) {
@@ -27,54 +27,78 @@ public class MedicalRecordController {
         this.vaccinationRecordService = vaccinationRecordService;
         this.treatmentPlanService = treatmentPlanService;
         this.userService = userService;
-        //     this.userService = userService;
+
     }
 
-
-    private void addPetSelectionToModel(Model model) {
-        List<PetInformation> pets = petInformationService.getAllPets();
-        model.addAttribute("pets", pets);
+    private void addPetSelectionToModel(Model model, HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        if (userId != null) {
+            List<PetInformation> pets = petInformationService.getPetByUserId(userId);
+            model.addAttribute("pets", pets);
+        } else {
+            model.addAttribute("errorMessage", "No pets found for the logged-in user.");
+        }
     }
 
     @GetMapping("/access-medical-records")
-    public String AccessMedicalRecords(Model model) {
-        addPetSelectionToModel(model);
+    public String AccessMedicalRecords(Model model, HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+
+        if (userId == null) {
+            model.addAttribute("errorMessage", "No medical records available for the user.");
+            System.out.println("No medical records available for the user");
+            return "AccessMedicalRecords";
+        }
+
+        List<PetInformation> pets = petInformationService.getPetByUserId(userId);
+
+        if (pets == null || pets.isEmpty()) {
+            model.addAttribute("errorMessage", "No medical records found for the logged-in user.");
+            System.out.println("No medical records found for the logged-in user.");
+            return "AccessMedicalRecords";
+        } else {
+            model.addAttribute("pets", pets);
+        }
+
         return "AccessMedicalRecords";
     }
 
     @GetMapping("/viewMedicalRecord")
-    public String viewMedicalRecord(@RequestParam("petId") Long petId, Model model) {
+    public String viewMedicalRecord(@RequestParam("petId") Long petId, Model model, HttpServletRequest request) {
         PetInformation pet = petInformationService.getPetById(petId);
         if (pet != null) {
 
             User owner = userService.findByUser(pet.getOwnerId());
 
-            model.addAttribute("owner", owner);
+            if (owner.getName().equals("Mark Smith")) {
+                model.addAttribute("owner", owner);
 
-            List<MedicalHistory> fullMedicalHistory = medicalHistoryService.getMedicalHistoryByPetId(petId);
-            List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
-            List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
+                List<MedicalHistory> fullMedicalHistory = medicalHistoryService.getMedicalHistoryByPetId(petId);
+                List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
+                List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
 
-            if (fullMedicalHistory.isEmpty() && vaccinationRecords.isEmpty() && treatmentPlans.isEmpty()) {
-                model.addAttribute("errorMessage", "No medical records found for the selected pet.");
+                if (fullMedicalHistory.isEmpty() && vaccinationRecords.isEmpty() && treatmentPlans.isEmpty()) {
+                    model.addAttribute("errorMessage", "No medical records found for the selected pet.");
+                } else {
+                    model.addAttribute("medicalHistory", fullMedicalHistory);
+                    model.addAttribute("vaccinationRecords", vaccinationRecords);
+                    model.addAttribute("treatmentPlans", treatmentPlans);
+                }
+
+                model.addAttribute("pet", pet);
             } else {
-                model.addAttribute("medicalHistory", fullMedicalHistory);
-                model.addAttribute("vaccinationRecords", vaccinationRecords);
-                model.addAttribute("treatmentPlans", treatmentPlans);
+                model.addAttribute("errorMessage", "No medical records available for the user.");
             }
-
-            model.addAttribute("pet", pet);
         } else {
             model.addAttribute("errorMessage", "Pet not found.");
         }
-
-        addPetSelectionToModel(model);
+        addPetSelectionToModel(model, request);
         return "AccessMedicalRecords";
     }
 
 
     @GetMapping("/medicalHistory")
-    public String showFullMedicalRecords(@RequestParam("petId") Long petId, Model model) {
+    public String showFullMedicalRecords(@RequestParam("petId") Long petId, Model model, HttpServletRequest request) {
         PetInformation pet = petInformationService.getPetById(petId);
         if (pet != null) {
             List<MedicalHistory> fullMedicalHistory = medicalHistoryService.getMedicalHistoryByPetId(petId);
@@ -88,12 +112,12 @@ public class MedicalRecordController {
             model.addAttribute("errorMessage", "Pet not found.");
         }
 
-        addPetSelectionToModel(model);
+        addPetSelectionToModel(model, request);
         return "FullMedicalRecords";
     }
 
     @GetMapping("/vaccination")
-    public String showVaccinationDetails(@RequestParam("petId") Long petId, Model model) {
+    public String showVaccinationDetails(@RequestParam("petId") Long petId, Model model, HttpServletRequest request) {
         PetInformation pet = petInformationService.getPetById(petId);
         if (pet != null) {
             List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
@@ -107,12 +131,12 @@ public class MedicalRecordController {
             model.addAttribute("errorMessage", "Pet not found.");
         }
 
-        addPetSelectionToModel(model);
+        addPetSelectionToModel(model, request);
         return "ViewVaccinationRecords";
     }
 
     @GetMapping("/vtreatmentPlan")
-    public String showTreatmentPlanDetails(@RequestParam("petId") Long petId, Model model) {
+    public String showTreatmentPlanDetails(@RequestParam("petId") Long petId, Model model, HttpServletRequest request) {
         PetInformation pet = petInformationService.getPetById(petId);
         if (pet != null) {
             List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
@@ -126,144 +150,11 @@ public class MedicalRecordController {
             model.addAttribute("errorMessage", "Pet not found.");
         }
 
-        addPetSelectionToModel(model);
+        addPetSelectionToModel(model, request);
         return "ViewTreatmentPlan";
     }
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-//    @GetMapping("/medicalHistoryDetails")
-//    public String showFullMedicalRecords() {
-//        return "FullMedicalRecords";
-//    }
-
-
-
-//@RequestParam("petId") Long petId, Model model
-//        PetInformation pet = petInformationService.getPetById(petId);
-//        if (pet != null) {
-//            List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
-//            model.addAttribute("pet", pet);
-//            model.addAttribute("treatmentPlans", treatmentPlans);
-//        } else {
-//            model.addAttribute("errorMessage", "No treatment plans found for this pet.");
-//        }
-//        addPetSelectionToModel(model);
-
-//package au.edu.rmit.sept.webapp.controllers;
-//
-//import au.edu.rmit.sept.webapp.models.MedicalHistory;
-//import au.edu.rmit.sept.webapp.models.PetInformation;
-//import au.edu.rmit.sept.webapp.models.TreatmentPlan;
-//import au.edu.rmit.sept.webapp.models.VaccinationRecord;
-//import au.edu.rmit.sept.webapp.services.MedicalHistoryService;
-//import au.edu.rmit.sept.webapp.services.PetInformationService;
-//import au.edu.rmit.sept.webapp.services.TreatmentPlanService;
-//import au.edu.rmit.sept.webapp.services.VaccinationRecordService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.Collection;
-//import java.util.List;
-//
-//@Controller
-//public class MedicalRecordController {
-//
-//    private final PetInformationService petInformationService;
-//    private final MedicalHistoryService medicalHistoryService;
-//    private final VaccinationRecordService vaccinationRecordService;
-//    private final TreatmentPlanService treatmentPlanService;
-//
-//
-//    @Autowired
-//    public MedicalRecordController(PetInformationService petInformationService, MedicalHistoryService medicalHistoryService, VaccinationRecordService vaccinationRecordService, TreatmentPlanService treatmentPlanService) {
-//        this.petInformationService = petInformationService;
-//        this.medicalHistoryService = medicalHistoryService;
-//        this.vaccinationRecordService = vaccinationRecordService;
-//        this.treatmentPlanService = treatmentPlanService;
-//    }
-//
-//    @GetMapping("/access-medical-records")
-//    public String AccessMedicalRecords(Model model) {
-//        List<PetInformation> pets = petInformationService.getAllPets();
-//        model.addAttribute("pets", pets);
-//        return "AccessMedicalRecords";
-//    }
-//
-//    @GetMapping("/viewMedicalRecord")
-//    public String viewMedicalRecord(@RequestParam("petId") Long petId, Model model) {
-//        PetInformation pet = petInformationService.getPetById(petId);
-//        if (pet != null) {
-//            List<MedicalHistory> fullMedicalHistory = medicalHistoryService.getMedicalHistoryByPetId(petId);
-//            List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
-//            List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
-//
-//            model.addAttribute("pet", pet);
-//            model.addAttribute("medicalHistory", fullMedicalHistory);
-//            model.addAttribute("vaccinationRecords", vaccinationRecords);
-//            model.addAttribute("treatmentPlans", treatmentPlans);  // Updated treatment plan attribute
-//        }
-//        return "AccessMedicalRecords";
-//    }
-//    @GetMapping("/medicalHistoryDetails")
-//    public String showFullMedicalRecords() {
-//        return "FullMedicalRecords";
-//    }
-//
-//    @GetMapping("/vaccinationDetails")
-//    public String showVaccinationDetails() {
-//        return "ViewVaccinationRecords";
-//    }
-//
-//    @GetMapping("/treatmentPlanDetails")
-//    public String showTreatmentPlanDetails() {
-//        return "ViewTreatmentPlan";
-//    }
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    @GetMapping("/vaccinationDetails")
-//    public String showVaccinationDetails(@RequestParam("petId") Long petId, Model model) {
-//        PetInformation pet = petInformationService.getPetById(petId);
-//        if (pet != null) {
-//            List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
-//            model.addAttribute("pet", pet);
-//            model.addAttribute("vaccinationRecords", vaccinationRecords);
-//        }
-//        return "ViewVaccinationRecords";
-//    }
 
