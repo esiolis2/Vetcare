@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS user (
     name VARCHAR(255),
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    phoneNumber BIGINT NOT NULL,
-    address VARCHAR(255) NOT NULL
+    phoneNumber BIGINT ,
+    address VARCHAR(255)
     
 );
