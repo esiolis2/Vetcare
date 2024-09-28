@@ -39,8 +39,7 @@ public class UserRepositoryImplTest {
     public void testInsertUserData_ShouldReturnUser() {
         User user = new User();
         user.setName("Mark Smith");
-        user.setAddress("123 Test Road, Melbourne");
-        user.setPhoneNumber(1L);
+//        user.setUsername("mark.smith");
         user.setEmail("mark.smith@example.com");
         user.setPassword("securepassword");
 
@@ -57,8 +56,7 @@ public class UserRepositoryImplTest {
 
         User user = new User();
         user.setName("Mark Smith");
-        user.setAddress("123 Test Road, Melbourne");
-        user.setPhoneNumber(1L);
+//        user.setUsername("mark.smith");
         user.setEmail("mark.smith@example.com");
         user.setPassword("anotherpassword");
         userRepository.insertUserData(user);

@@ -10,4 +10,5 @@ public interface UserRepository {
     public User findByEmail(String email);
     public User findUserById(Long id);
 //    public List<User> findAll();
+    public User updateUser(User user);
 }

@@ -7,12 +7,12 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/assets/css/login.css}">
 </head>
-<body onload="loginStatus()">
+<body >
 
 <div layout:fragment="content">
     <div class="container mt-5">
         <h2 class="text-center">Login</h2>
-        <form  method="post" action="/login" id="loginForm" class="mx-auto form-container">
+        <form th:action="@{/login}" method="post"  id="loginForm" class="mx-auto form-container">
             <div class="form-group">
                 <label for="email">Email address</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
@@ -29,52 +29,6 @@
     <div>
     <a href="/" class="btn-common btn-back" >Back to Home Page</a>
     </div>
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var email = document.getElementById('email').value;
-            var password = document.getElementById('password').value;
-
-            fetch('/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    email: email,
-                    password: password
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    localStorage.setItem('vetUserLogged', email);
-                    alert("Login successful!");
-                    window.location.href = '/';
-                } else {
-                    alert("Email is not registered!");
-                    document.getElementById('loginError').textContent = data.message;
-                    document.getElementById('loginError').style.display = 'block';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-
-        function loginStatus() {
-            var email = localStorage.getItem('vetUserLogged');
-            if (email) {
-                document.getElementById('loginLink').textContent = 'Logout';
-                document.getElementById('loginLink').href = '#';
-                document.getElementById('loginLink').onclick = function() {
-                    localStorage.removeItem('vetUserLogged');
-                    window.location.href = '/';
-                    location.reload();
-                };
-            }
-        }
-    </script>
 
 </div>
 

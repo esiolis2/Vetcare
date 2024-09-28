@@ -36,6 +36,11 @@ public class UserServiceImpl implements UserService{
         return userR.findByEmail(email);
     }
 
+
+    @Override
+    public User updateUser(User user) {
+        return userR.updateUser(user);
+    }
     @Override
     public User findByUser(Long id) {
         return userR.findUserById(id);

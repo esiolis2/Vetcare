@@ -1,6 +1,5 @@
 package au.edu.rmit.sept.webapp.repositories;
 
-
 import au.edu.rmit.sept.webapp.models.User;
 import org.springframework.jdbc.datasource.init.UncategorizedScriptException;
 import org.springframework.stereotype.Repository;
@@ -11,11 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
     private final DataSource source;
+
     public UserRepositoryImpl(DataSource source) {
         this.source = source;
     }
@@ -37,24 +36,22 @@ public class UserRepositoryImpl implements UserRepository {
                 System.out.println("Account successfully created!");
                 return u;
             }
-        }catch(SQLException e){
-            throw new UncategorizedScriptException("Failed to insert data an user in the database", e);
+        } catch (SQLException e) {
+            throw new UncategorizedScriptException("Failed to insert data for user in the database", e);
         }
 
         return u;
     }
 
-
     @Override
-    public User findByEmail(String email){
-        try(
-                Connection connection = this.source.getConnection();
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE email = ?")){
+    public User findByEmail(String email) {
+        try (Connection connection = this.source.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE email = ?")) {
 
             ps.setString(1, email);
 
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 System.out.println("Logged in successfully!");
                 return  new User(
                         rs.getLong("id"),
@@ -64,8 +61,8 @@ public class UserRepositoryImpl implements UserRepository {
                         rs.getLong("phoneNumber"),
                         rs.getString("address"));
             }
-        }catch(SQLException e){
-            throw new UncategorizedScriptException("Failed to find an user in the database", e);
+        } catch (SQLException e) {
+            throw new UncategorizedScriptException("Failed to find user in the database", e);
         }
 
         return null;
@@ -114,4 +111,27 @@ public class UserRepositoryImpl implements UserRepository {
 //    }
 
 
+    @Override
+    public User updateUser(User u) {
+        try (Connection connection = this.source.getConnection();
+             PreparedStatement ps = connection.prepareStatement("UPDATE user SET name = ?, email = ?, password = ?, phone = ?, address = ? WHERE id = ?")) {
+
+            ps.setString(1, u.getName());
+            ps.setString(2, u.getEmail());
+            ps.setString(3, u.getPassword());
+            ps.setString(4, u.getPhone());
+            ps.setString(5, u.getAddress());
+            ps.setLong(6, u.getId());
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Account successfully updated!!");
+                return u;
+            }
+        } catch (SQLException e) {
+            throw new UncategorizedScriptException("Failed to update user in the database", e);
+        }
+
+        return u;
+    }
 }

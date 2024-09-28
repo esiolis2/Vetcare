@@ -1,28 +1,30 @@
+
 package au.edu.rmit.sept.webapp.controllers;
+
+import au.edu.rmit.sept.webapp.models.PetInformation;
+import au.edu.rmit.sept.webapp.services.PetInformationService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import au.edu.rmit.sept.webapp.models.User;
 import au.edu.rmit.sept.webapp.services.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 @Controller
+@SessionAttributes("loggedInUser")
 public class UserController {
     private final UserService userService;
+    private final PetInformationService petInfoService;
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService, PetInformationService petInfoService){
         this.userService = userService;
+        this.petInfoService = petInfoService;
     }
+
+
 
     @PostMapping("/signup")
     public String createUser(@ModelAttribute User user){
@@ -30,40 +32,72 @@ public class UserController {
         return "redirect:/login";
     }
 
+
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestParam String email, @RequestParam String password, HttpServletRequest request) {
+    public String login(@RequestParam String email, @RequestParam String password, Model model, HttpServletRequest request) {
         boolean isValidUser = userService.verifyUser(email, password);
-        Map<String, Object> response = new HashMap<>();
-//        if (isValidUser) {
-//            request.getSession().setAttribute("userEmail", email);
+        if (isValidUser) {
+            User user = userService.findByEmail(email);
+            // storing user info in the session to maintain login state
+            request.getSession().setAttribute("loggedInUser", user);
+            request.getSession().setAttribute("userEmail", email);
 
-            if (isValidUser) {
-                User user = userService.findByEmail(email);
-                request.getSession().setAttribute("userId", user.getId());
-                request.getSession().setAttribute("userEmail", email);
-
-                response.put("success", true);
-            response.put("message", "Login successful");
+            // added logged-in user to the model to pass data to the view
+            model.addAttribute("loggedInUser", user);
+            System.out.println("Logged in successfully!!!!");
+            return "redirect:/account";
         } else {
-            response.put("success", false);
-            response.put("message", "Invalid email or password");
+            model.addAttribute("error", "Invalid email or password");
+            return "login";
         }
-        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/account")
-    public String getUserProfile(Model model, HttpServletRequest request) {
-        String email = (String) request.getSession().getAttribute("userEmail"); // Or however you're storing it
-        if (email != null) {
-            User user = userService.findByEmail(email);
-            System.out.println("the email is: " + email );
-            model.addAttribute("user", user);
-            return "account"; // Make sure this matches your profile HTML file name
-        }
-        return "redirect:/"; // Redirect to home if not logged in
+    public String getUserProfile(Model model, @ModelAttribute("loggedInUser") User loggedInUser) {
+        model.addAttribute("user", loggedInUser);
+        return "account";
     }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request,Model model) {
+//        terminating the session
+        request.getSession().invalidate();
+        System.out.println("Logged out!!!");
+//        for proper navbar after logging out
+        model.addAttribute("loggedInUser", null);
+        return "redirect:/";
+    }
+
+
+    @PostMapping("/account/pet-register")
+    public String registerPet(@ModelAttribute PetInformation petInformation, HttpServletRequest request) {
+        User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
+        if (loggedInUser != null) {
+            petInformation.setOwnerName(loggedInUser.getName());
+            petInformation.setOwnerContact(loggedInUser.getPhone());
+            petInfoService.createPetInformation(petInformation);
+            System.out.println("Pet registered successfully!!!!");
+        }
+        return "redirect:/";
+
+    }
+
+
+    @PostMapping("/account/edit")
+    public String editUser(@ModelAttribute User user, HttpServletRequest request, Model model) {
+        User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
+        if (loggedInUser != null) {
+            user.setId(loggedInUser.getId());
+            User u= userService.updateUser(user);
+            request.getSession().setAttribute("loggedInUser", u);
+//            added updated user to the model to pass updated data to the view
+            model.addAttribute("loggedInUser", u);
+            System.out.println("Account updated successfully!!!!");
+            return "redirect:/";
+        }
+        return "redirect:/account";
+    }
+
+
 }
-
-
-
 
