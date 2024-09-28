@@ -24,7 +24,6 @@ public class UserRepositoryImpl implements UserRepository {
         try(
                 Connection connection = this.source.getConnection();
                 PreparedStatement ps = connection.prepareStatement("INSERT INTO user (name, address, phoneNumber, email, password) VALUES (?, ?, ?, ?, ?)")){
-
             ps.setString(1, u.getName());
             ps.setString(2, u.getAddress());
             ps.setLong(3, u.getPhoneNumber());
@@ -119,7 +118,7 @@ public class UserRepositoryImpl implements UserRepository {
             ps.setString(1, u.getName());
             ps.setString(2, u.getEmail());
             ps.setString(3, u.getPassword());
-            ps.setString(4, u.getPhone());
+            ps.setLong(4, u.getPhoneNumber());
             ps.setString(5, u.getAddress());
             ps.setLong(6, u.getId());
 
