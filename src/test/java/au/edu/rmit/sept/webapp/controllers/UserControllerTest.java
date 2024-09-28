@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -25,26 +26,24 @@ public class UserControllerTest {
     private User user;
 
     @BeforeEach
-    public void setUp(){
-        user = new User();
-        user.setEmail("test@example.com");
-        user.setPassword("password");
-        user.setName("Mark");
+    public void setUp() {
+        user = new User(1L, "Mark", "test@example.com", "password", 1234567890L, "123 Example St");
     }
 
     @Test
     public void testCreateUser_Success() throws Exception {
-        Mockito.when(userService.createUser(Mockito.any(User.class))).thenReturn(user); // if createUser returns a User object
+        Mockito.when(userService.createUser(Mockito.any(User.class))).thenReturn(user);
 
         mockMvc.perform(post("/signup")
                         .flashAttr("user", user))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"));
+                .andExpect(redirectedUrl("/login"));
     }
 
     @Test
     public void testLogin_Success() throws Exception {
         Mockito.when(userService.verifyUser("test@example.com", "password")).thenReturn(true);
+        Mockito.when(userService.findByEmail("test@example.com")).thenReturn(user);
 
         mockMvc.perform(post("/login")
                         .param("email", "test@example.com")
@@ -70,7 +69,7 @@ public class UserControllerTest {
     public void testGetUserProfile_Success() throws Exception {
         Mockito.when(userService.findByEmail("test@example.com")).thenReturn(user);
 
-        mockMvc.perform(get("/profile")
+        mockMvc.perform(get("/account")
                         .sessionAttr("userEmail", "test@example.com"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("user"))
@@ -80,11 +79,8 @@ public class UserControllerTest {
 
     @Test
     public void testGetUserProfile_NotLoggedIn() throws Exception {
-        mockMvc.perform(get("/profile"))
+        mockMvc.perform(get("/account"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
     }
-
-
-
 }
