@@ -44,7 +44,7 @@ public class  HomeController {
     }
 
 
-//
+
     @ModelAttribute("loggedInUser")
     public User getLoggedInUser(HttpServletRequest request) {
         return (User) request.getSession().getAttribute("loggedInUser");

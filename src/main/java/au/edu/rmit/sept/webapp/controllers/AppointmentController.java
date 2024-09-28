@@ -36,6 +36,10 @@ public class AppointmentController {
         this.userService = userService;
     }
 
+    @ModelAttribute("loggedInUser")
+    public User getLoggedInUser(HttpServletRequest request) {
+        return (User) request.getSession().getAttribute("loggedInUser");
+    }
     @GetMapping("/appointments")
     public String BookApp(Model model,  HttpServletRequest request) {
         String email = (String) request.getSession().getAttribute("userEmail");
