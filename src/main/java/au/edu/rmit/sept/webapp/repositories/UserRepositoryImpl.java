@@ -113,7 +113,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User updateUser(User u) {
         try (Connection connection = this.source.getConnection();
-             PreparedStatement ps = connection.prepareStatement("UPDATE user SET name = ?, email = ?, password = ?, phone = ?, address = ? WHERE id = ?")) {
+             PreparedStatement ps = connection.prepareStatement("UPDATE user SET name = ?, email = ?, password = ?, phoneNumber = ?, address = ? WHERE id = ?")) {
 
             ps.setString(1, u.getName());
             ps.setString(2, u.getEmail());
