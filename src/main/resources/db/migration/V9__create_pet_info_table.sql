@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS pet_info (
+ CREATE TABLE IF NOT EXISTS pet_info (
     PetID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(100) NOT NULL,
     Age INT,
@@ -6,6 +6,6 @@ CREATE TABLE IF NOT EXISTS pet_info (
     Weight DECIMAL(5, 2),
     Breed VARCHAR(100),
     BirthDate DATE,
-    OwnerName VARCHAR(100),
-    OwnerContact VARCHAR(15)
+    OwnerId BIGINT NOT NULL,
+    CONSTRAINT fk_owner FOREIGN KEY (OwnerId) REFERENCES user(id)
 );

@@ -57,7 +57,7 @@ public class TreatmentPlanRepositoryImplTest {
         List<TreatmentPlan> initialPlans = repository.findAll();
         int initialSize = initialPlans.size();
 
-        PetInformation pet = new PetInformation(1L, "Max", 3, "Male", 10.5, "Golden Retriever", LocalDate.of(2018, 6, 15), "John Doe", "123-456-789");
+        PetInformation pet = new PetInformation(1L, "Max", 3, "Male", 10.5, "Golden Retriever", LocalDate.of(2018, 6, 15),1L);
 
         TreatmentPlan newPlan = new TreatmentPlan(
                 null, "Dental Surgery", "Surgery", "Details about dental surgery", "Recovering",

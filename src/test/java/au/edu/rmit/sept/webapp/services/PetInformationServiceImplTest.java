@@ -24,8 +24,8 @@ public class PetInformationServiceImplTest {
 
     @Test
     public void testGetAllPets_shouldReturnAllPets() {
-        PetInformation pet1 = new PetInformation(1L, "Buddy", 3, "Male", 10.0, "Golden Retriever", null, "Mark Smith", "123456789");
-        PetInformation pet2 = new PetInformation(2L, "Max", 4, "Male", 15.0, "German Shepherd", null, "Mark Smith", "987654321");
+        PetInformation pet1 = new PetInformation(1L, "Buddy", 3, "Male", 10.0, "Golden Retriever", null, 1L);
+        PetInformation pet2 = new PetInformation(2L, "Max", 4, "Male", 15.0, "German Shepherd", null, 1L);
 
         when(petInformationRepository.findAll()).thenReturn(List.of(pet1, pet2));
 
@@ -37,7 +37,7 @@ public class PetInformationServiceImplTest {
 
     @Test
     public void testCreatePetInformation_shouldCallRepository() {
-        PetInformation pet = new PetInformation(1L, "Buddy", 3, "Male", 10.0, "Golden Retriever", null, "John Doe", "123456789");
+        PetInformation pet = new PetInformation(1L, "Buddy", 3, "Male", 10.0, "Golden Retriever", null, 1L);
 
         when(petInformationRepository.addPetInformation(pet)).thenReturn(pet);
 
@@ -48,7 +48,7 @@ public class PetInformationServiceImplTest {
 
     @Test
     public void testGetPetById_shouldReturnPet() {
-        PetInformation pet = new PetInformation(1L, "Buddy", 3, "Male", 10.0, "Golden Retriever", null, "John Doe", "123456789");
+        PetInformation pet = new PetInformation(1L, "Buddy", 3, "Male", 10.0, "Golden Retriever", null, 1L);
 
         when(petInformationRepository.findPetById(1L)).thenReturn(pet);
 

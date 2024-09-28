@@ -26,12 +26,9 @@ public class PetInformation {
     private LocalDate birthDate;
 
 
-    private String ownerName;
+    private Long ownerId;
 
-
-    private String ownerContact;
-
-    public PetInformation(Long petID, String name, int age, String gender, double weight, String breed, LocalDate birthDate, String ownerName, String ownerContact) {
+    public PetInformation(Long petID, String name, int age, String gender, double weight, String breed, LocalDate birthDate, Long ownerId) {
         this.petID = petID;
         this.name = name;
         this.age = age;
@@ -39,8 +36,7 @@ public class PetInformation {
         this.weight = weight;
         this.breed = breed;
         this.birthDate = birthDate;
-        this.ownerName = ownerName;
-        this.ownerContact = ownerContact;
+        this.ownerId = ownerId;
     }
 
     public PetInformation() {}
@@ -101,20 +97,12 @@ public class PetInformation {
         this.birthDate = birthDate;
     }
 
-    public String getOwnerName() {
-        return ownerName;
+    public Long getOwnerId(){
+        return ownerId;
     }
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
-
-    public String getOwnerContact() {
-        return ownerContact;
-    }
-
-    public void setOwnerContact(String ownerContact) {
-        this.ownerContact = ownerContact;
+    public void setOwnerId(Long ownerId){
+        this.ownerId = ownerId;
     }
 
     public String getFormattedBirthDate() {

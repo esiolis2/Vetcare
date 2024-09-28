@@ -14,8 +14,16 @@
     <div class="text-center mb-4">
         <h2>View Pet Medical Records Summary</h2>
     </div>
+
+    <div class="alert alert-danger" th:if="${errorMessage != null}">
+        <div class="alert-content">
+            <span class="icon">⚠️</span>
+            <p th:text="${errorMessage}"></p>
+        </div>
+    </div>
+
     <!-- Pet Selection Dropdown -->
-    <div class="pet-selection mb-4">
+    <div class="pet-selection mb-4"  th:if="${errorMessage == null}">
         <form th:action="@{/viewMedicalRecord}" method="get">
             <div class="form-group">
                 <label for="petSelect">Choose the Pet</label>
@@ -58,12 +66,21 @@
             </tr>
             <tr>
                 <th scope="row">Owner Name</th>
-                <td th:text="${pet.ownerName}">-</td>
+                <td th:text="${owner.name}">-</td>
             </tr>
-            <tr>
-                <th scope="row">Owner Contact</th>
-                <td th:text="${pet.ownerContact}">-</td>
-            </tr>
+<!--            <tr>-->
+<!--                <th scope="row">Owner Contact</th>-->
+<!--                <td th:text="${owner.contact}">-</td>-->
+<!--            </tr>-->
+
+<!--            <tr>-->
+<!--                <th scope="row">Owner Name</th>-->
+<!--                <td th:text="${pet.ownerName}">-</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th scope="row">Owner Contact</th>-->
+<!--                <td th:text="${pet.ownerContact}">-</td>-->
+<!--            </tr>-->
             </tbody>
         </table>
     </div>
@@ -144,6 +161,7 @@
 
     </div>
 
+    <a href="/" class="btn-common btn-back" >Back to Home Page</a>
     <!-- Ddownload and Share -->
     <div class="text-center" th:if="${pet != null}">
         <button class="btn-common btn-download" onclick="downloadPDF()">Download PDF</button>

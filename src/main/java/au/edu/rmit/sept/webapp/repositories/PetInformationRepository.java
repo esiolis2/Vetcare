@@ -11,5 +11,6 @@ public interface PetInformationRepository {
     public List<PetInformation> findAll();
     public PetInformation addPetInformation(PetInformation petInformation);
     public PetInformation findPetById(Long id);
+    public List<PetInformation> findPetsByOwnerId(Long id);
 
 }

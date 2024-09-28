@@ -41,6 +41,7 @@ public class UserController {
             // storing user info in the session to maintain login state
             request.getSession().setAttribute("loggedInUser", user);
             request.getSession().setAttribute("userEmail", email);
+            request.getSession().setAttribute("userId", user.getId());
 
             // added logged-in user to the model to pass data to the view
             model.addAttribute("loggedInUser", user);
@@ -73,9 +74,7 @@ public class UserController {
     public String registerPet(@ModelAttribute PetInformation petInformation, HttpServletRequest request) {
         User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
         if (loggedInUser != null) {
-            petInformation.setOwnerName(loggedInUser.getName());
-            petInformation.setOwnerContact(loggedInUser.getPhone());
-            petInfoService.createPetInformation(petInformation);
+            petInformation.setOwnerId(loggedInUser.getId());
             System.out.println("Pet registered successfully!!!!");
         }
         return "redirect:/";

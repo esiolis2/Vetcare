@@ -11,11 +11,12 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userR;
-
+    private final PetInformationService petInformationService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository){
+    public UserServiceImpl(UserRepository userRepository, PetInformationService petInformationService){
         this.userR = userRepository;
+        this.petInformationService = petInformationService;
     }
 
     @Override
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean verifyUser(String email, String password){
         User u= userR.findByEmail(email);
-//        after getting the email checking the password
+//      after getting the email checking the password
         return u!=null && u.getPassword().equals(password);
     }
 
@@ -39,6 +40,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public User updateUser(User user) {
         return userR.updateUser(user);
+    }
+    @Override
+    public User findByUser(Long id) {
+        return userR.findUserById(id);
     }
 
 }

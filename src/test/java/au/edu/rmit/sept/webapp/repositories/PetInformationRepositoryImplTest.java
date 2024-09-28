@@ -62,8 +62,7 @@ public class PetInformationRepositoryImplTest {
 
 
         PetInformation newPet = new PetInformation(
-                11L, "Bella", 3, "Female", 15.5, "Beagle", LocalDate.of(2020, 5, 1), "Alice", "9876543210"
-        );
+                11L, "Bella", 3, "Female", 15.5, "Beagle", LocalDate.of(2020, 5, 1), 1L);
 
         repository.addPetInformation(newPet);
 

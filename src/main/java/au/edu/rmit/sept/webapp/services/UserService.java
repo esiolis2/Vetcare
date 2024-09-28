@@ -7,6 +7,7 @@ public interface UserService {
     public User createUser (User u);
     public boolean verifyUser(String email, String password);
     public User findByEmail(String email);
+    public User findByUser(Long id);
     public User updateUser(User user);
 
 }

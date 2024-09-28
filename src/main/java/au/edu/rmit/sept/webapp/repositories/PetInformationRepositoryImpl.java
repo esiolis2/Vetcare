@@ -44,8 +44,7 @@ public class PetInformationRepositoryImpl implements PetInformationRepository {
                         rs.getDouble("Weight"),
                         rs.getString("Breed"),
                         rs.getDate("BirthDate").toLocalDate(),
-                        rs.getString("OwnerName"),
-                        rs.getString("OwnerContact")
+                        rs.getLong("OwnerId")
                 );
                 PET_INFO.add(petInformation);
             }
@@ -58,8 +57,8 @@ public class PetInformationRepositoryImpl implements PetInformationRepository {
 
     @Override
     public PetInformation addPetInformation(PetInformation petInformation) {
-        String insertQuery = "INSERT INTO PET_INFO (Name, Age, Gender, Weight, Breed, BirthDate, OwnerName, OwnerContact) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO PET_INFO (Name, Age, Gender, Weight, Breed, BirthDate, OwnerId) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = this.dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(insertQuery)) {
 
@@ -69,14 +68,12 @@ public class PetInformationRepositoryImpl implements PetInformationRepository {
             stmt.setDouble(4, petInformation.getWeight());
             stmt.setString(5, petInformation.getBreed());
             stmt.setDate(6, java.sql.Date.valueOf(petInformation.getBirthDate()));
-            stmt.setString(7, petInformation.getOwnerName());
-            stmt.setString(8, petInformation.getOwnerContact());
+            stmt.setLong(7, petInformation.getOwnerId());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new UncategorizedScriptException("Error inserting pet information", e);
         }
-
         return petInformation;
     }
 
@@ -97,15 +94,41 @@ public class PetInformationRepositoryImpl implements PetInformationRepository {
                         rs.getDouble("Weight"),
                         rs.getString("Breed"),
                         rs.getDate("BirthDate").toLocalDate(),
-                        rs.getString("OwnerName"),
-                        rs.getString("OwnerContact")
+                        rs.getLong("OwnerId")
                 );
             }
-
         } catch (SQLException e) {
             throw new UncategorizedScriptException("Error fetching pet by ID", e);
         }
 
         return null;
+    }
+
+    @Override
+    public List<PetInformation> findPetsByOwnerId(Long id) {
+        try {
+            Connection connection = this.dataSource.getConnection();
+            PreparedStatement stm = connection.prepareStatement("SELECT * FROM PET_INFO WHERE OwnerId = ?;");
+            List<PetInformation> PET_INFO = new ArrayList<>();
+            stm.setLong(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                PetInformation petInformation = new PetInformation(
+                        rs.getLong("PetID"),
+                        rs.getString("Name"),
+                        rs.getInt("Age"),
+                        rs.getString("Gender"),
+                        rs.getDouble("Weight"),
+                        rs.getString("Breed"),
+                        rs.getDate("BirthDate").toLocalDate(),
+                        rs.getLong("OwnerId")
+                );
+                PET_INFO.add(petInformation);
+            }
+            connection.close();
+            return PET_INFO;
+        } catch (SQLException e) {
+            throw new UncategorizedScriptException("Error in findAll", e);
+        }
     }
 }

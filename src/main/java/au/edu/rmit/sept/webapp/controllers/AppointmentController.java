@@ -37,19 +37,24 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointments")
-    public String BookApp(Model model) {
-        List<Clinic> clinics = clinicService.getAllClinics();
-        model.addAttribute("clinics", clinics);
-        List<Veterinarian> veterinarians = veterinarianService.getAllVeterinarians();
-        model.addAttribute("veterinarians", veterinarians);
-        List<ClinicReasons> clinicReasons = clinicReasonsService.getAllClinicReasons();
-        model.addAttribute("clinicReasons", clinicReasons);
-        List<ClinicServicePricing> servicePricings = clinicServicePricingService.getAll();
-        model.addAttribute("servicePricings", servicePricings);
-        List<PetInformation> petInformation = petInformationService.getAllPets();
-        model.addAttribute("petInformation", petInformation);
+    public String BookApp(Model model,  HttpServletRequest request) {
+        String email = (String) request.getSession().getAttribute("userEmail");
+        if (email != null) {
+            User user = userService.findByEmail(email);
+            List<Clinic> clinics = clinicService.getAllClinics();
+            model.addAttribute("clinics", clinics);
+            List<Veterinarian> veterinarians = veterinarianService.getAllVeterinarians();
+            model.addAttribute("veterinarians", veterinarians);
+            List<ClinicReasons> clinicReasons = clinicReasonsService.getAllClinicReasons();
+            model.addAttribute("clinicReasons", clinicReasons);
+            List<ClinicServicePricing> servicePricings = clinicServicePricingService.getAll();
+            model.addAttribute("servicePricings", servicePricings);
+            List<PetInformation> petInformation = petInformationService.getPetByUserId(user.getId());
+            model.addAttribute("petInformation", petInformation);
+            return "BookApp";
+        }
+        return  "redirect:/login";
 
-        return "BookApp";
     }
 
     @PostMapping("/add")
@@ -73,7 +78,7 @@ public class AppointmentController {
 
     @GetMapping ("/dashboard/appointment-management")
     public String AppointmentList(Model model, HttpServletRequest request){
-        String email = (String) request.getSession().getAttribute("userEmail"); // Or however you're storing it
+        String email = (String) request.getSession().getAttribute("userEmail");
         if (email != null) {
             User user = userService.findByEmail(email);
             List<Clinic> clinics = clinicService.getAllClinics();

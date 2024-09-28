@@ -1,4 +1,4 @@
-INSERT INTO MedicalHistory (PetID, LastVisitDate, LastDiagnosis, TreatmentProvided, MedicationsPrescribed, OngoingConditions, NextScheduledVisit) 
+INSERT INTO MedicalHistory (PetID, LastVisitDate, LastDiagnosis, TreatmentProvided, MedicationsPrescribed, OngoingConditions, NextScheduledVisit)
 VALUES
     (1, '2023-08-15', 'Good health, no issues', 'Vaccination update', 'None', 'None', '2024-02-15'),
     (2, '2023-09-10', 'Mild skin allergy', 'Antihistamine treatment', 'Antihistamine tablets', 'Skin allergy', '2024-03-10'),
