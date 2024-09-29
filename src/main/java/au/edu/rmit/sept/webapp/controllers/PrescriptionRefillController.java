@@ -1,3 +1,4 @@
+
 package au.edu.rmit.sept.webapp.controllers;
 
 import au.edu.rmit.sept.webapp.models.PrescriptionRefillRequest;
@@ -5,6 +6,7 @@ import au.edu.rmit.sept.webapp.services.PrescriptionRefillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,30 +23,30 @@ public class PrescriptionRefillController {
     }
 
     @PostMapping("/prescription/refill")
-    public String requestRefill(@RequestParam Long petId,
-                                @RequestParam List<String> medications,
-                                @RequestParam String address,
-                                @RequestParam String city,
-                                @RequestParam String state,
-                                @RequestParam String postcode,
-                                @RequestParam(required = false) String notes,
-                                Model model) {
+    public String requestRefill(@RequestParam Long petId, @RequestParam List<String> medications, @RequestParam String address, @RequestParam String city, @RequestParam String state, @RequestParam String postcode, @RequestParam(required = false) String notes, Model model) {
 
-        PrescriptionRefillRequest refillRequest = new PrescriptionRefillRequest(
-                petId,
-                String.join(", ", medications),
-                address,
-                city,
-                state,
-                postcode,
-                notes
+        PrescriptionRefillRequest refillRequest = new PrescriptionRefillRequest(petId, String.join(", ", medications), address, city, state, postcode, notes
         );
 
         prescriptionRefillService.saveRefillRequest(refillRequest);
 
         model.addAttribute("successMessage", "Your prescription refill request has been submitted successfully.");
-
         return "prescription";
     }
+
+
+    @GetMapping("/prescription/orders")
+    public String getRefillOrders(Model model) {
+        List<PrescriptionRefillRequest> orders = prescriptionRefillService.getAllRefillRequests();
+
+        System.out.println("Orders fetched: " + orders.size());
+        for (PrescriptionRefillRequest order : orders) {
+            System.out.println("Order details: " + order.getMedications() + ", " + order.getAddress());
+        }
+
+        model.addAttribute("orders", orders);
+        return "prescription";
+    }
+
 }
 

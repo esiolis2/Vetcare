@@ -1,5 +1,7 @@
 package au.edu.rmit.sept.webapp.models;
 
+import java.time.LocalDateTime;
+
 public class PrescriptionRefillRequest {
 
     private Long requestID;
@@ -10,9 +12,12 @@ public class PrescriptionRefillRequest {
     private String state;
     private String postcode;
     private String notes;
+    private LocalDateTime requestDate;
 
-
-    public PrescriptionRefillRequest(Long petID, String medications, String address, String city, String state, String postcode, String notes) {
+    // Full constructor (with requestID and requestDate)
+    public PrescriptionRefillRequest(Long requestID, Long petID, String medications, String address,
+                                     String city, String state, String postcode, String notes, LocalDateTime requestDate) {
+        this.requestID = requestID;
         this.petID = petID;
         this.medications = medications;
         this.address = address;
@@ -20,7 +25,21 @@ public class PrescriptionRefillRequest {
         this.state = state;
         this.postcode = postcode;
         this.notes = notes;
+        this.requestDate = requestDate;
     }
+
+    public PrescriptionRefillRequest(Long petID, String medications, String address, String city,
+                                     String state, String postcode, String notes) {
+        this.petID = petID;
+        this.medications = medications;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.postcode = postcode;
+        this.notes = notes;
+
+    }
+
 
     public Long getRequestID() {
         return requestID;
@@ -84,5 +103,13 @@ public class PrescriptionRefillRequest {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public LocalDateTime getRequestDate() {
+        return requestDate;
+    }
+
+    public void setRequestDate(LocalDateTime requestDate) {
+        this.requestDate = requestDate;
     }
 }
