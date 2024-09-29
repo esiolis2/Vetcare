@@ -47,9 +47,6 @@ public class PrescriptionRepositoryImpl implements PrescriptionRepository {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Prescription prescription = mapSetToPrescription(rs);
-                System.out.println("Fetched prescription: " + prescription.getPrescriptionID() +
-                        ", Medication: " + prescription.getMedicationName() +
-                        ", Dosage: " + prescription.getDosage());
                 prescriptions.add(prescription);
             }
         } catch (SQLException e) {
@@ -83,16 +80,6 @@ public class PrescriptionRepositoryImpl implements PrescriptionRepository {
 
 
     private Prescription mapSetToPrescription(ResultSet rs) throws SQLException {
-
-        System.out.println("Mapping prescription: " + rs.getLong("PrescriptionID"));
-        System.out.println("Medication Name: " + rs.getString("MedicationName"));
-        System.out.println("Dosage: " + rs.getString("Dosage"));
-        System.out.println("Instructions: " + rs.getString("Instructions"));
-        System.out.println("Next Refill Date: " + rs.getDate("NextRefillDate"));
-        System.out.println("Quantity Prescribed: " + rs.getInt("QuantityPrescribed"));
-        System.out.println("Refill Count: " + rs.getInt("RefillCount"));
-        System.out.println("Expiry Date: " + rs.getDate("ExpiryDate"));
-        System.out.println("Updated At: " + rs.getTimestamp("UpdatedAt"));
 
         return new Prescription(
                 rs.getLong("PrescriptionID"),
