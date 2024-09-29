@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS Prescriptions (
+    PrescriptionID INT AUTO_INCREMENT PRIMARY KEY,
+    PetID INT NOT NULL,
+    MedicationName VARCHAR(255) NOT NULL,
+    Dosage VARCHAR(100) NOT NULL,
+    Instructions TEXT,
+    NextRefillDate DATE,
+    QuantityPrescribed INT NOT NULL,
+    RefillCount INT DEFAULT 0,
+    ExpiryDate DATE,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (PetID) REFERENCES pet_info(PetID) ON DELETE CASCADE
+);
