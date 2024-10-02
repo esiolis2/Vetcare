@@ -23,12 +23,13 @@ public class UserRepositoryImpl implements UserRepository {
     public User insertUserData(User u){
         try(
                 Connection connection = this.source.getConnection();
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO user (name, address, phoneNumber, email, password) VALUES (?, ?, ?, ?, ?)")){
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO user (name, address, phoneNumber, email, password, userType) VALUES (?, ?, ?, ?, ?, ?)")) {
             ps.setString(1, u.getName());
             ps.setString(2, u.getAddress());
             ps.setLong(3, u.getPhoneNumber());
             ps.setString(4, u.getEmail());
             ps.setString(5, u.getPassword());
+            ps.setString(6, u.getUserType());
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -58,7 +59,8 @@ public class UserRepositoryImpl implements UserRepository {
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getLong("phoneNumber"),
-                        rs.getString("address"));
+                        rs.getString("address"),
+                        rs.getString("userType"));
             }
         } catch (SQLException e) {
             throw new UncategorizedScriptException("Failed to find user in the database", e);
@@ -82,7 +84,8 @@ public class UserRepositoryImpl implements UserRepository {
                         rs.getString("email"),
                         rs.getString("password"),
                         rs.getLong("phoneNumber"),
-                        rs.getString("address"));
+                        rs.getString("address"),
+                        rs.getString("userType"));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error fetching user by ID", e);
@@ -91,23 +94,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
 
-
-//    @Override
-//    public List<User> findAll() {
-//        List<User> users = new ArrayList<>();
-//        try (Connection connection = this.source.getConnection();
-//             PreparedStatement ps = connection.prepareStatement("SELECT * FROM user");
-//             ResultSet rs = ps.executeQuery()) {
-//
-//            while (rs.next()) {
-//                User user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
-//                users.add(user);
-//            }
-//        } catch (SQLException e) {
-//            throw new UncategorizedScriptException("Failed to retrieve users from the database", e);
-//        }
-//        return users;
-//    }
 
 
     @Override
