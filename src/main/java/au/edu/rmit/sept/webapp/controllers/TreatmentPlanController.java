@@ -2,6 +2,7 @@ package au.edu.rmit.sept.webapp.controllers;
 
 import au.edu.rmit.sept.webapp.models.PetInformation;
 import au.edu.rmit.sept.webapp.models.TreatmentPlan;
+import au.edu.rmit.sept.webapp.models.User;
 import au.edu.rmit.sept.webapp.services.PetInformationService;
 import au.edu.rmit.sept.webapp.services.TreatmentPlanService;
 import au.edu.rmit.sept.webapp.services.UserService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 // import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -93,5 +95,16 @@ public class TreatmentPlanController {
         }
         addPetSelectionToModel(model, request);
         return "ViewTreatmentPlan";
+    }
+
+    @ModelAttribute("loggedInUser")
+    public User getLoggedInUser(HttpServletRequest request) {
+        return (User) request.getSession().getAttribute("loggedInUser");
+    }
+
+    //  To ensure that these attributes are available in the model for the thyemleaf template to use these attributes for conditional rendering
+    @ModelAttribute("userType")
+    public String getUserType(HttpServletRequest request) {
+        return (String) request.getSession().getAttribute("userType");
     }
 }
