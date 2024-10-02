@@ -9,14 +9,16 @@ public class User {
     private Long phoneNumber;
     private String address;
     private Long id;
+    private String userType;
 
-    public User(Long id, String name, String email, String password, Long phoneNumber, String address) {
+    public User(Long id, String name, String email, String password, Long phoneNumber, String address, String userType) {
         this.id = id;
         this.name = name;
         this.email=email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.userType = userType;
     }
 
     public User() {}
@@ -65,6 +67,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getUserType() {
+        return userType;
     }
 
 }
