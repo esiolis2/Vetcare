@@ -31,7 +31,7 @@ public class PrescriptionRefillController {
         prescriptionRefillService.saveRefillRequest(refillRequest);
 
         model.addAttribute("successMessage", "Your prescription refill request has been submitted successfully.");
-        return "prescription";
+        return "Prescription";
     }
 
 
@@ -45,7 +45,7 @@ public class PrescriptionRefillController {
         }
 
         model.addAttribute("orders", orders);
-        return "prescription";
+        return "Prescription";
     }
 
 }

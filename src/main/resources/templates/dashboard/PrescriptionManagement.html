@@ -32,7 +32,7 @@
                 <li>
                     <a href="/dashboard/prescription-management" class="nav-link text-white">
                         <i class="bi bi-file-earmark-medical me-2"></i>
-                        Prescription Management
+                        Medical Management
                     </a>
                 </li>
                 <li>
@@ -75,9 +75,9 @@
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                                 <li class="breadcrumb-item" th:if="${loggedInUser != null}"><a
-                                        href="/dashboard/prescription-management">Prescription Management</a>
+                                        href="/dashboard/prescription-management">Medical Management</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">Prescription Management</li>
+                                <li class="breadcrumb-item active" aria-current="page">Medical Management</li>
                             </ol>
                         </nav>
                     </div>
@@ -85,120 +85,59 @@
                 <!-- Main Content -->
                 <div class="container">
                     <h2 class="prescription-header p-4 mb-4 align-items-center border-top border-bottom">
-                        Prescription Management</h2>
-                    <div class="prescription-refill">
-                        <h3 class="prescription-section-header">Request Prescription Refill</h3>
-                        <form id="refillForm">
-                            <div class="form-group">
-                                <!-- Pet Selection Dropdown -->
-                                <div class="pet-selection mb-4">
-                                    <form th:action="@{/viewMedicalRecord}" method="get">
-                                        <div class="form-group">
-                                            <label for="petSelect">Pet's Name</label>
-                                            <select class="form-select" id="petSelect" name="petId"
-                                                    onchange="this.form.submit()">
-                                                <option value="" selected>Select a Pet</option>
-                                                <option th:each="pet : ${pets}" th:value="${pet.petID}"
-                                                        th:text="${pet.name}"></option>
-                                            </select>
-                                        </div>
-                                    </form>
+                        Medical Management</h2>
+
+                    <!-- Display Modules -->
+                    <div class="row justify-content-center">
+                        <!-- Card 1: Access Medical Record -->
+                        <div class="col-md-5 m-4">
+                            <div class="card h-100">
+                                <div class="card-header">Access Medical Record</div>
+                                <div class="card-body">
+                                    <p class="card-text">View and manage your pet's medical records.</p>
+                                    <a href="/access-medical-records" class="btn btn-primary">Go to Medical Records</a>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="medication">Medication</label>
-                                <input type="text" id="medication" name="medication" class="form-control"
-                                       placeholder="Enter the medication name" required>
-                            </div>
-                            <!--                            <div class="form-group">-->
-                            <!--                                &lt;!&ndash;                                <label for="deliveryAddress">Delivery Address</label>&ndash;&gt;-->
-                            <!--                                &lt;!&ndash;                                <textarea id="deliveryAddress" name="deliveryAddress" class="form-control" placeholder="Enter delivery address" rows="4" required></textarea>&ndash;&gt;-->
-                            <!--                                <div data-mdb-input-init class="form-outline mb-4">-->
-                            <!--                                    <label class="form-label" for="deliveryAddress">Delivery Address</label>-->
-                            <!--                                    <textarea id="deliveryAddress" name="deliveryAddress"-->
-                            <!--                                              class="form-control form-control-lg" placeholder="Enter delivery address"-->
-                            <!--                                              rows="4" required></textarea>-->
+                        </div>
 
-                            <!--                                </div>-->
-
-                            <div class="form-group">
-                                <!-- Address input field -->
-                                <div data-mdb-input-init class="form-outline mb-4">
-                                    <label class="form-label" for="deliveryAddress">Delivery Address</label>
-                                    <input type="text" id="deliveryAddress" name="deliveryAddress"
-                                           class="form-control form-control-lg" placeholder="Enter delivery address"
-                                           required/>
-                                </div>
-
-                                <!-- State, City, and Postcode in one row -->
-                                <div class="row">
-                                    <!-- State dropdown -->
-                                    <div class="col-md-4 mb-4">
-                                        <label class="form-label" for="state">State</label>
-                                        <select id="state" name="state" class="form-control form-control-lg" required>
-                                            <option disabled selected>Select State</option>
-                                            <option value="VIC">VIC</option>
-                                            <option value="NSW">NSW</option>
-                                            <option value="QLD">QLD</option>
-                                            <option value="SA">SA</option>
-                                            <option value="WA">WA</option>
-                                            <option value="TAS">TAS</option>
-                                            <option value="ACT">ACT</option>
-                                            <option value="NT">NT</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- City input field -->
-                                    <div class="col-md-4 mb-4">
-                                        <div data-mdb-input-init class="form-outline">
-                                            <label class="form-label" for="city">City</label>
-                                            <input type="text" id="city" name="city"
-                                                   class="form-control form-control-lg" placeholder="Enter city"
-                                                   required/>
-                                        </div>
-                                    </div>
-
-                                    <!-- Postcode input field -->
-                                    <div class="col-md-4 mb-4">
-                                        <div data-mdb-input-init class="form-outline">
-                                            <label class="form-label" for="postcode">Postcode</label>
-                                            <input type="number" id="postcode" name="postcode"
-                                                   class="form-control form-control-lg" placeholder="Enter postcode"
-                                                   required/>
-                                        </div>
-                                    </div>
+                        <!-- Card 2: View Vaccination Records -->
+                        <div class="col-md-5 m-4">
+                            <div class="card h-100">
+                                <div class="card-header">View Vaccination Records</div>
+                                <div class="card-body">
+                                    <p class="card-text">Check your pet's vaccination history.</p>
+                                    <a href="/view-vaccination-records" class="btn btn-primary">Go to Vaccination Records</a>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <!--                                <div data-mdb-input-init class="form-outline mb-4">-->
-                            <!--                                    <label class="form-label" for="zip">Zip</label>-->
-                            <!--                                    <input type="text" id="zip" class="form-control form-control-lg"/>-->
-                            <!--                                </div>-->
+                    <div class="row justify-content-center">
+                        <!-- Card 3: View Treatment Plan -->
+                        <div class="col-md-5 m-4">
+                            <div class="card h-100">
+                                <div class="card-header">View Treatment Plan</div>
+                                <div class="card-body">
+                                    <p class="card-text">Review the treatment plan for your pet.</p>
+                                    <a href="view-treatment-plan" class="btn btn-primary">Go to Treatment Plan</a>
+                                </div>
+                            </div>
+                        </div>
 
-                            <!--                            </div>-->
-                            <button type="submit" class="btn-prescription-submit">Request Refill</button>
-                        </form>
+                        <!-- Card 4: Prescription Management -->
+                        <div class="col-md-5 m-4">
+                            <div class="card h-100">
+                                <div class="card-header">Prescription Management</div>
+                                <div class="card-body">
+                                    <p class="card-text">Manage prescriptions and request refills for your pet.</p>
+                                    <a href="/prescription-management" class="btn btn-primary">Go to Prescription Management</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="prescription-medication-info">
-                        <h3>Your Pet's Medication Details</h3>
-                        <p><span>Medication Name:</span> Fidozol 50mg</p>
-                        <p><span>Dosage:</span> 1 tablet twice a day</p>
-                        <p><span>Instructions:</span> Give with food. Avoid breaking the tablet. Ensure your pet drinks
-                            plenty of water after taking the medication.</p>
-                        <p><span>Next Refill Available:</span> 2024-10-15</p>
-                    </div>
-                    <div class="prescription-tracking-map">
-                        <h3>Track Your Prescription Delivery</h3>
-                        <div id="map"></div>
-                    </div>
-                    <div class="text-center">
-                        <a href="/" class="btn-back">Back to Home Page</a>
-                    </div>
+
+
                 </div>
-
-                <script async defer
-                        src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap"></script>
-
             </div>
         </div>
     </div>

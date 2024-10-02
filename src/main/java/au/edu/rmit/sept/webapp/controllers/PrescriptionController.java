@@ -49,19 +49,19 @@ public class PrescriptionController {
         if (userId == null) {
             model.addAttribute("errorMessage", "No prescriptions available for the user.");
             System.out.println("No prescriptions available for the user.");
-            return "prescription";
+            return "Prescription";
         }
         List<PetInformation> pets = petInformationService.getPetByUserId(userId);
 
         if (pets == null || pets.isEmpty()) {
             model.addAttribute("errorMessage", "No prescriptions found for the logged-in user.");
             System.out.println("No prescriptions found for the logged-in user.");
-            return "prescription";
+            return "Prescription";
         } else {
             model.addAttribute("pets", pets);
         }
 
-        return "prescription";
+        return "Prescription";
     }
 
     @GetMapping("/prescription")
@@ -70,7 +70,7 @@ public class PrescriptionController {
         if (userId == null) {
             model.addAttribute("errorMessage", "You must be logged in to view prescriptions.");
             addPetSelectionToModel(model, request);
-            return "prescription";
+            return "Prescription";
         }
 
         PetInformation pet = petInformationService.getPetById(petId);
@@ -91,6 +91,6 @@ public class PrescriptionController {
             model.addAttribute("errorMessage", "Pet not found.");
         }
         addPetSelectionToModel(model, request);
-        return "prescription";
+        return "Prescription";
     }
 }
