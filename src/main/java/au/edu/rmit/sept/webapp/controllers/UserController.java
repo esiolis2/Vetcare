@@ -44,7 +44,7 @@ public class UserController {
             model.addAttribute("loggedInUser", user);
             model.addAttribute("userType", user.getUserType());
             System.out.println("Logged in successfully!!!!");
-            return "redirect:/account";
+            return "redirect:/";
         } else {
             model.addAttribute("error", "Invalid email or password");
             return "login";
