@@ -1,6 +1,7 @@
 package au.edu.rmit.sept.webapp.services;
 
 import au.edu.rmit.sept.webapp.models.TreatmentPlan;
+import au.edu.rmit.sept.webapp.models.User;
 import au.edu.rmit.sept.webapp.repositories.TreatmentPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,20 @@ public class TreatmentPlanServiceImpl implements TreatmentPlanService {
     }
 
     @Override
+    public List<TreatmentPlan> getTreatmentPlansByUserId(Long userId) {
+        return treatmentPlanRepository.findByUserId(userId);
+    }
+
+    @Override
     public void createTreatmentPlan(TreatmentPlan treatmentPlan) {
         treatmentPlanRepository.addTreatmentPlan(treatmentPlan);
+    }
+    @Override
+    public void updateTreatmentPlan(TreatmentPlan treatmentPlan, User loggedInUser){
+        if (!"Vet".equals(loggedInUser.getUserType())) {
+            treatmentPlan.setPet(null);
+        }
+
+        treatmentPlanRepository.updateTreatmentPlan(treatmentPlan);
     }
 }
