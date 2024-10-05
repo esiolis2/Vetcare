@@ -4,48 +4,60 @@
     <meta charset="UTF-8">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/assets/css/BookApp.css}">
+
 </head>
 <body>
 <!-- Modal -->
-<div class="modal fade" id="newPetModal" tabindex="-1" role="dialog" aria-labelledby="newPetModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="addPetModal" tabindex="-1" aria-labelledby="addPetModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="newPetModalLabel">Register New Pet</h5>
+                <h5 class="modal-title" id="addPetModalLabel">Add New Pet</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/pets/register" method="post"> <!-- Adjust action as needed -->
+                <form th:action="@{/pets/register}" method="post" id="add-pet-form">
                     <div class="form-group">
                         <label for="petName">Pet Name:</label>
-                        <input name="name" type="text" class="form-control" id="petName" placeholder="Enter your pet's name" required>
+                        <input type="text" class="form-control" id="petName" name="name"
+                               placeholder="Enter pet name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="petType">Pet Type:</label>
+                        <input type="text" class="form-control" id="petType" name="type"
+                               placeholder="Enter pet type" required>
                     </div>
                     <div class="form-group">
                         <label for="petAge">Pet Age:</label>
-                        <input name="age" type="number" class="form-control" id="petAge" placeholder="Enter your pet's age" required>
+                        <input type="number" class="form-control" id="petAge" name="age"
+                               placeholder="Enter pet age" required>
                     </div>
                     <div class="form-group">
                         <label for="petGender">Pet Gender:</label>
-                        <select name="gender" class="form-control" id="petGender" required>
-                            <option value="">Select Gender</option>
+                        <select class="form-control" id="petGender" name="gender" required>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="petWeight">Pet Weight (kg):</label>
-                        <input name="weight" type="number" class="form-control" id="petWeight" placeholder="Enter your pet's weight" required>
+                        <label for="petWeight">Pet Weight:</label>
+                        <input type="text" class="form-control" id="petWeight" name="weight"
+                               placeholder="Enter pet weight" required>
                     </div>
                     <div class="form-group">
                         <label for="petBreed">Pet Breed:</label>
-                        <input name="breed" type="text" class="form-control" id="petBreed" placeholder="Enter your pet's breed" required>
+                        <input type="text" class="form-control" id="petBreed" name="breed"
+                               placeholder="Enter pet breed" required>
                     </div>
                     <div class="form-group">
-                        <label for="birthDate">Birth Date:</label>
-                        <input name="birthDate" type="date" class="form-control" id="birthDate" required>
+                        <label for="petBirthDate">Birth Date:</label>
+                        <input type="date" class="form-control" id="petBirthDate"
+                               name="birthDate" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Register Pet</button>
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
                 </form>
             </div>
         </div>

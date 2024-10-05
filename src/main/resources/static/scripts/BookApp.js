@@ -119,7 +119,7 @@ document.getElementById('reason').addEventListener('change', function() {
 
 function showNewPetModal() {
     $('#petModalContainer').load('/pets/register', function() {
-        $('#newPetModal').modal('show');
+        $('#addPetModal').modal('show');
     });
 }
 

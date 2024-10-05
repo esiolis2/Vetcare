@@ -20,7 +20,7 @@
         <div id="step-1" class="form-step">
             <div class="form-group text-center">
                 <h5>Is this a new pet or an existing pet?</h5>
-                <button type="button" class="btn btn-primary mx-2" id="newPetButton" onclick="showNewPetModal()">Register New Pet</button>
+                <button class="btn btn-primary" id="add-pet-button" data-bs-toggle="modal" data-bs-target="#addPetModal" onclick="showNewPetModal()">Add New Pet</button>
                 <button type="button" class="btn btn-secondary mx-2" id="existingPetButton" onclick="showExistingPets()">Choose Existing Pet</button>
             </div>
 
@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <select required name=petId id="petDropdown" class="form-control">
-                            <option value="placeholder">-- Select a Pet --</option>
+                            <option disabled selected value="placeholder">-- Select a Pet --</option>
                             <option th:each="pet : ${petInformation}" th:value="${pet.petID}" th:text="${pet.name}"></option>
                         </select>
                     </div>
@@ -43,7 +43,7 @@
             <div class="form-group">
                 <label for="reason">Reason for Appointment:</label>
                 <select name="reason" class="form-control" id="reason" required>
-                    <option value="placeholder">Select a reason</option>
+                    <option disabled selected value="placeholder">Select a reason</option>
                     <option th:each="clinicReason : ${clinicReasons}" th:value="${clinicReason.id}" th:text="${clinicReason.serviceName}"></option>
                 </select>
 
@@ -56,7 +56,7 @@
                 <div>
                     <label for="clinic">Available Clinics:</label>
                     <select class="form-control" id="clinic" required name="clinicId">
-                        <option value="placeholder">Select a clinic</option>
+                        <option  disabled selected value="placeholder">Select a clinic</option>
                         <option th:each="clinic : ${clinics}" th:value="${clinic.id}" th:text="${clinic.name}">Clinic Name</option>
                     </select>
                 </div>
@@ -64,7 +64,7 @@
                 <div class="form-group vetBook" id="veterinarianForm">
                     <label for="vetId">Choose your Veterinarian:</label>
                     <select name="veterinarianId" class="form-control" id="vetId" required>
-                        <option value="placeholder">Select a Veterinarian</option>
+                        <option  disabled selected value="placeholder">Select a Veterinarian</option>
                         <option th:each="veterinarian : ${veterinarians}" th:value="${veterinarian.id}" th:text="${veterinarian.name}" th:attr="data-clinic-id=${veterinarian.clinicId}">Veterinarian Name</option>
                     </select>
                 </div>

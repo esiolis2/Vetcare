@@ -73,12 +73,8 @@ public class AppointmentController {
             System.out.print("An error occured while booking appointment with user.");
             return "redirect:/";
         }
-
-
         return "redirect:/";
     }
-
-
 
     @GetMapping ("/dashboard/appointment-management")
     public String AppointmentList(Model model, HttpServletRequest request){
