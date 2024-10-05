@@ -107,13 +107,23 @@
                 </li>
                 <!-- Conditional rendering based on userType and loggedInUser -->
                 <li class="nav-item dropdown" th:if="${loggedInUser != null && userType == 'User'}">
-                    <button class="nav-link dropdown-toggle" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="nav-link dropdown-toggle" id="dropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Medical Access
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <li><a class="dropdown-item" href="/access-medical-records">Access Medical Record</a></li>
                         <li><a class="dropdown-item" href="/view-vaccination-records">View Vaccination Records</a></li>
                         <li><a class="dropdown-item" href="/view-treatment-plan">View Treatment Plan</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown" th:if="${loggedInUser != null && userType == 'Vet'}">
+                    <button class="nav-link dropdown-toggle" id="dropdownMenuLink2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Medical Access
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="/access-medical-records">Access Medical Record</a></li>
+                        <li><a class="dropdown-item" href="/view-vaccination-records">View Vaccination Records</a></li>
+                        <li><a class="dropdown-item" href="/edit-treatment-plan">Upload Treatment Plan</a></li>
                     </ul>
                 </li>
                 <li class="nav-item" th:if="${loggedInUser != null}">

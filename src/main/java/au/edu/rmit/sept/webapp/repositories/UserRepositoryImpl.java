@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -119,4 +121,33 @@ public class UserRepositoryImpl implements UserRepository {
 
         return u;
     }
+
+    @Override
+    public List<User> findAllUsers() {
+        String query = "SELECT * FROM user";
+        List<User> users = new ArrayList<>();
+
+        try (Connection connection = this.source.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                User user = new User(
+                        rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getLong("phoneNumber"),
+                        rs.getString("address"),
+                        rs.getString("userType")
+                );
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new UncategorizedScriptException("Error fetching all users", e);
+        }
+
+        return users;
+    }
+
 }
