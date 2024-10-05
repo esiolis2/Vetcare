@@ -94,6 +94,33 @@ public class VaccinationRecordRepositoryImpl implements VaccinationRecordReposit
         vaccinationRecord.setAdditionalNotes(rs.getString("AdditionalNotes"));
         return vaccinationRecord;
     }
+
+    @Override
+    public void updateVaccinationRecord(VaccinationRecord vaccinationRecord) {
+        String query = "UPDATE VaccinationRecords SET VaccineName = ?, AdministeredDate = ?, NextDueDate = ?, " +
+                "BoosterRequired = ?, Dosage = ?, VeterinarianName = ?, ClinicName = ?, Status = ?, " +
+                "AdditionalNotes = ? WHERE VaccinationRecordID = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setString(1, vaccinationRecord.getVaccineName());
+            stmt.setDate(2, java.sql.Date.valueOf(vaccinationRecord.getAdministeredDate()));
+            stmt.setDate(3, vaccinationRecord.getNextDueDate() != null ? java.sql.Date.valueOf(vaccinationRecord.getNextDueDate()) : null);
+            stmt.setString(4, vaccinationRecord.getBoosterRequired());
+            stmt.setBigDecimal(5, vaccinationRecord.getDosage());
+            stmt.setString(6, vaccinationRecord.getVeterinarianName());
+            stmt.setString(7, vaccinationRecord.getClinicName());
+            stmt.setString(8, vaccinationRecord.getStatus());
+            stmt.setString(9, vaccinationRecord.getAdditionalNotes());
+            stmt.setLong(10, vaccinationRecord.getVaccinationRecordID());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error updating vaccination record", e);
+        }
+    }
+
 }
 
 
