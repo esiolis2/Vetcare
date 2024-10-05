@@ -75,6 +75,7 @@ public class UserController {
         User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
         if (loggedInUser != null) {
             petInformation.setOwnerId(loggedInUser.getId());
+            petInfoService.createPetInformation(petInformation);
             System.out.println("Pet registered successfully!!!!");
         }
         return "redirect:/";
