@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Treatment Plan</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container py-5">
+    <h1 class="text-center mb-4">Add Treatment Plan</h1>
+
+    <div class="alert alert-danger" th:if="${errorMessage != null}">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <!-- Step 1: Select a User -->
+    <form th:action="@{/treatment/selectUser}" method="get">
+        <div class="mb-3">
+            <label for="userSelect" class="form-label">Select a User:</label>
+            <select class="form-select" id="userSelect" name="userId" onchange="this.form.submit()" required>
+                <option value="" disabled selected>Select a User</option>
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+            </select>
+        </div>
+    </form>
+
+    <!-- Step 2: Select a Pet (Visible after User selection) -->
+    <form th:if="${pets != null}" th:action="@{/treatment/selectPet}" method="get">
+        <div class="mb-3">
+            <label for="petSelect" class="form-label">Select a Pet:</label>
+            <select class="form-select" id="petSelect" name="petId" onchange="this.form.submit()" required>
+                <option value="" disabled selected>Select a Pet</option>
+                <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"></option>
+            </select>
+        </div>
+    </form>
+
+    <!-- Step 3: Fill Treatment Plan Details (Visible after Pet selection) -->
+    <form th:if="${selectedPet != null}" th:action="@{/save-treatment-plan}" method="post" th:object="${treatmentPlan}">
+        <input type="hidden" name="petId" th:value="${selectedPet.petID}" />
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Treatment Plan Details for <span th:text="${selectedPet.name}"></span></h5>
+
+                <!-- Diagnosis -->
+                <div class="mb-3">
+                    <label for="diagnosis" class="form-label">Diagnosis:</label>
+                    <input type="text" class="form-control" id="diagnosis" th:field="*{diagnosis}" placeholder="Enter diagnosis" required>
+                </div>
+
+                <!-- Treatment Type -->
+                <div class="mb-3">
+                    <label for="treatmentType" class="form-label">Treatment Type:</label>
+                    <input type="text" class="form-control" id="treatmentType" th:field="*{treatmentType}" placeholder="Enter treatment type">
+                </div>
+
+                <!-- Treatment Description -->
+                <div class="mb-3">
+                    <label for="treatmentDescription" class="form-label">Treatment Description:</label>
+                    <input type="text" class="form-control" id="treatmentDescription" th:field="*{treatmentDescription}" placeholder="Enter treatment description" required>
+                </div>
+
+                <!-- Pet Condition -->
+                <div class="mb-3">
+                    <label for="petCondition" class="form-label">Pet Condition:</label>
+                    <input type="text" class="form-control" id="petCondition" th:field="*{petCondition}" placeholder="Enter pet condition">
+                </div>
+
+                <!-- Emergency Status -->
+                <div class="mb-3">
+                    <label for="isEmergency" class="form-label">Is Emergency?</label>
+                    <input type="checkbox" class="form-check-input" id="isEmergency" th:field="*{isEmergency}">
+                </div>
+
+                <!-- Start Date -->
+                <div class="mb-3">
+                    <label for="startDate" class="form-label">Start Date:</label>
+                    <input type="date" class="form-control" id="startDate" th:field="*{startDate}" required>
+                </div>
+
+                <!-- End Date -->
+                <div class="mb-3">
+                    <label for="endDate" class="form-label">End Date:</label>
+                    <input type="date" class="form-control" id="endDate" th:field="*{endDate}">
+                </div>
+
+                <!-- Prescribed Medications -->
+                <div class="mb-3">
+                    <label for="prescribedMedications" class="form-label">Prescribed Medications:</label>
+                    <input type="text" class="form-control" id="prescribedMedications" th:field="*{prescribedMedications}" placeholder="Enter prescribed medications">
+                </div>
+
+                <!-- Treatment Duration -->
+                <div class="mb-3">
+                    <label for="treatmentDuration" class="form-label">Treatment Duration:</label>
+                    <input type="text" class="form-control" id="treatmentDuration" th:field="*{treatmentDuration}" placeholder="Enter treatment duration">
+                </div>
+
+                <!-- Next Steps -->
+                <div class="mb-3">
+                    <label for="nextSteps" class="form-label">Next Steps:</label>
+                    <input type="text" class="form-control" id="nextSteps" th:field="*{nextSteps}" placeholder="Enter next steps">
+                </div>
+
+                <!-- Vet Name -->
+                <div class="mb-3">
+                    <label for="vetName" class="form-label">Vet Name:</label>
+                    <input type="text" class="form-control" id="vetName" th:field="*{vetName}" placeholder="Enter vet name">
+                </div>
+
+                <!-- Follow-Up Date -->
+                <div class="mb-3">
+                    <label for="followUpDate" class="form-label">Follow-Up Date:</label>
+                    <input type="date" class="form-control" id="followUpDate" th:field="*{followUpDate}">
+                </div>
+
+                <!-- Cost Estimate -->
+                <div class="mb-3">
+                    <label for="costEstimate" class="form-label">Cost Estimate:</label>
+                    <input type="number" class="form-control" id="costEstimate" th:field="*{costEstimate}" placeholder="Enter cost estimate">
+                </div>
+
+                <!-- Treatment Outcome -->
+                <div class="mb-3">
+                    <label for="treatmentOutcome" class="form-label">Treatment Outcome:</label>
+                    <input type="text" class="form-control" id="treatmentOutcome" th:field="*{treatmentOutcome}" placeholder="Enter treatment outcome">
+                </div>
+
+                <!-- Treatment Notes -->
+                <div class="mb-3">
+                    <label for="treatmentNotes" class="form-label">Treatment Notes:</label>
+                    <textarea class="form-control" id="treatmentNotes" th:field="*{treatmentNotes}" placeholder="Enter treatment notes"></textarea>
+                </div>
+
+                <!-- Clinic Location -->
+                <div class="mb-3">
+                    <label for="clinicLocation" class="form-label">Clinic Location:</label>
+                    <input type="text" class="form-control" id="clinicLocation" th:field="*{clinicLocation}" placeholder="Enter clinic location">
+                </div>
+
+                <!-- Is Insured -->
+                <div class="mb-3">
+                    <label for="isInsured" class="form-label">Is Insured?</label>
+                    <input type="checkbox" class="form-check-input" id="isInsured" th:field="*{isInsured}">
+                </div>
+
+                <!-- Insurance Details -->
+                <div class="mb-3">
+                    <label for="insuranceDetails" class="form-label">Insurance Details:</label>
+                    <input type="text" class="form-control" id="insuranceDetails" th:field="*{insuranceDetails}" placeholder="Enter insurance details">
+                </div>
+
+                <!-- Payment Status -->
+                <div class="mb-3">
+                    <label for="paymentStatus" class="form-label">Payment Status:</label>
+                    <input type="text" class="form-control" id="paymentStatus" th:field="*{paymentStatus}" placeholder="Enter payment status">
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Save Treatment Plan</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Go Back Button -->
+    <div class="d-grid mt-4">
+        <a th:href="@{/}" class="btn btn-secondary">Go Back</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layout.html}">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Edit Treatment Plan</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" th:href="@{/assets/css/treatmentPlan.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="content">-->
+<!--    <div class="container petTreatmentPlanContainer">-->
+<!--        <div class="text-center mb-4">-->
+<!--            <h2>Edit Treatment Plan</h2>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Form for editing the treatment plan &ndash;&gt;-->
+<!--        <div class="upload-form">-->
+<!--            <form th:action="@{/save-treatment-plan}" method="post" enctype="multipart/form-data" th:object="${treatmentPlan}">-->
+<!--                &lt;!&ndash; Pet selection (for all users) &ndash;&gt;-->
+<!--                <div class="form-group" th:if="${canEditPet}">-->
+<!--                    <label for="userSelect">Choose a User</label>-->
+<!--                    <select class="form-select" id="userSelect" name="userId" onchange="this.form.submit()">-->
+<!--                        <option value="" selected>Select a User</option>-->
+<!--                        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>-->
+<!--                    </select>-->
+
+<!--                    <label for="petSelect">Choose the Pet</label>-->
+<!--                    <select class="form-select" id="petSelect" name="petId" required>-->
+<!--                        <option value="" selected>Select a Pet</option>-->
+<!--                        <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"></option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; Diagnosis &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="diagnosis">Diagnosis:</label>-->
+<!--                    <input type="text" class="form-control" id="diagnosis" th:field="*{diagnosis}" placeholder="Enter diagnosis" required>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Treatment Type &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="treatmentType">Treatment Type</label>-->
+<!--                    <input type="text" class="form-control" id="treatmentType" th:field="*{treatmentType}" placeholder="Enter treatment type">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Treatment Description &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="treatmentDescription">Treatment Description</label>-->
+<!--                    <input type="text" class="form-control" id="treatmentDescription" th:field="*{treatmentDescription}" placeholder="Enter treatment description" required>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Pet Condition &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="petCondition">Pet Condition</label>-->
+<!--                    <input type="text" class="form-control" id="petCondition" th:field="*{petCondition}" placeholder="Enter pet condition">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Emergency Status &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="isEmergency">Is Emergency?</label>-->
+<!--                    <input type="checkbox" class="form-check-input" id="isEmergency" th:field="*{isEmergency}">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Start Date &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="startDate">Start Date</label>-->
+<!--                    <input type="date" class="form-control" id="startDate" th:field="*{startDate}" required>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; End Date &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="endDate">End Date</label>-->
+<!--                    <input type="date" class="form-control" id="endDate" th:field="*{endDate}">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Prescribed Medications &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="prescribedMedications">Prescribed Medications</label>-->
+<!--                    <input type="text" class="form-control" id="prescribedMedications" th:field="*{prescribedMedications}" placeholder="Enter prescribed medications">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Treatment Duration &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="treatmentDuration">Treatment Duration</label>-->
+<!--                    <input type="text" class="form-control" id="treatmentDuration" th:field="*{treatmentDuration}" placeholder="Enter treatment duration">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Next Steps &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="nextSteps">Next Steps</label>-->
+<!--                    <input type="text" class="form-control" id="nextSteps" th:field="*{nextSteps}" placeholder="Enter next steps">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Vet Name &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="vetName">Vet Name</label>-->
+<!--                    <input type="text" class="form-control" id="vetName" th:field="*{vetName}" placeholder="Enter vet name">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Follow-Up Date &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="followUpDate">Follow-Up Date</label>-->
+<!--                    <input type="date" class="form-control" id="followUpDate" th:field="*{followUpDate}">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Cost Estimate &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="costEstimate">Cost Estimate</label>-->
+<!--                    <input type="number" class="form-control" id="costEstimate" th:field="*{costEstimate}" placeholder="Enter cost estimate">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Treatment Outcome &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="treatmentOutcome">Treatment Outcome</label>-->
+<!--                    <input type="text" class="form-control" id="treatmentOutcome" th:field="*{treatmentOutcome}" placeholder="Enter treatment outcome">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Treatment Notes &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="treatmentNotes">Treatment Notes</label>-->
+<!--                    <textarea class="form-control" id="treatmentNotes" th:field="*{treatmentNotes}" placeholder="Enter treatment notes"></textarea>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Clinic Location &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="clinicLocation">Clinic Location</label>-->
+<!--                    <input type="text" class="form-control" id="clinicLocation" th:field="*{clinicLocation}" placeholder="Enter clinic location">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Is Insured &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="isInsured">Is Insured?</label>-->
+<!--                    <input type="checkbox" class="form-check-input" id="isInsured" th:field="*{isInsured}">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Insurance Details &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="insuranceDetails">Insurance Details</label>-->
+<!--                    <input type="text" class="form-control" id="insuranceDetails" th:field="*{insuranceDetails}" placeholder="Enter insurance details">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Payment Status &ndash;&gt;-->
+<!--                <div class="form-group mb-3">-->
+<!--                    <label for="paymentStatus">Payment Status</label>-->
+<!--                    <input type="text" class="form-control" id="paymentStatus" th:field="*{paymentStatus}" placeholder="Enter payment status">-->
+<!--                </div>-->
+
+<!--                <button type="submit" class="btn btn-primary">Save Treatment Plan</button>-->
+<!--            </form>-->
+<!--        </div>-->
+
+<!--        <a href="/" class="btn-common btn-back">Back to Home Page</a>-->
+<!--    </div>-->
+
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
