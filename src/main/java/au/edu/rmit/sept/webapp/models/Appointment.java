@@ -11,12 +11,12 @@ public class Appointment {
     private Long userId;
     private LocalTime appointmentTime;
     private LocalDate appointmentDate;
-    private String reason;
+    private Long reason;
     private Long petId;
 
     // Constructors, getters, and setters...
 
-    public Appointment(Long id, Long veterinarianId, Long clinicId, Long userId, LocalTime appointmentTime, LocalDate appointmentDate, String reason, Long petId) {
+    public Appointment(Long id, Long veterinarianId, Long clinicId, Long userId, LocalTime appointmentTime, LocalDate appointmentDate, Long reason, Long petId) {
         this.id = id;
 
         this.veterinarianId = veterinarianId;
@@ -77,11 +77,11 @@ public class Appointment {
         this.appointmentDate = appointmentDate;
     }
 
-    public String getReason() {
+    public Long getReason() {
         return reason;
     }
 
-    public void setReason(String reason) {
+    public void setReason(Long reason) {
         this.reason = reason;
     }
 

@@ -52,7 +52,7 @@ public class AppointmentServiceImplTest {
         newAppointment.setClinicId(1L);
         newAppointment.setUserId(1L);
         newAppointment.setPetId(1L);
-        newAppointment.setReason("Routine checkup");
+        newAppointment.setReason(1L);
         newAppointment.setAppointmentDate(LocalDate.now().plusDays(1));
         newAppointment.setAppointmentTime(LocalTime.of(10, 0));
 
@@ -72,7 +72,7 @@ public class AppointmentServiceImplTest {
         // Arrange
         Appointment existingAppointment = new Appointment();
         existingAppointment.setId(1L);
-        existingAppointment.setReason("Initial reason");
+        existingAppointment.setReason(1L);
 
         when(appointmentRepository.updateAppointment(existingAppointment)).thenReturn(existingAppointment);
 

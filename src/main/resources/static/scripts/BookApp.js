@@ -123,9 +123,5 @@ function showNewPetModal() {
     });
 }
 
-function showExistingPets() {
-    document.getElementById('existingPetsGrid').style.display = 'block';
-}
-
 
 

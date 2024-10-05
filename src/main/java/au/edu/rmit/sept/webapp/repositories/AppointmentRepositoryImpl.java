@@ -45,7 +45,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
                         rs.getLong("ownerId"),
                         appointmentTime,
                         appointmentDate,
-                        rs.getString("reason"),
+                        rs.getLong("reason"),
                         rs.getLong("petId")); // petAge)
                 appointments.add(appointment);
             }
@@ -68,7 +68,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
             stmt.setLong(2, appointment.getClinicId());
             stmt.setLong(3, appointment.getUserId());
             stmt.setLong(4, appointment.getPetId());
-            stmt.setString(5, appointment.getReason());
+            stmt.setLong(5, appointment.getReason());
             stmt.setTime(6, java.sql.Time.valueOf(appointment.getAppointmentTime())); // LocalTime to Time
             stmt.setDate(7, java.sql.Date.valueOf(appointment.getAppointmentDate())); // LocalDate to Date
             int rowsAffected = stmt.executeUpdate();
@@ -123,7 +123,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
                 appointment.setClinicId(rs.getLong("clinicId"));
                 appointment.setUserId(rs.getLong("ownerId"));
                 appointment.setPetId(rs.getLong("petId"));
-                appointment.setReason(rs.getString("reason"));
+                appointment.setReason(rs.getLong("reason"));
                 appointment.setAppointmentTime(rs.getTime("appointmentTime").toLocalTime()); // Time to LocalTime
                 appointment.setAppointmentDate(rs.getDate("appointmentDate").toLocalDate()); // Date to LocalDate
             }

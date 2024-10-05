@@ -5,7 +5,7 @@ CREATE TABLE APPOINTMENT (
     ownerId BIGINT NOT NULL,
     appointmentTime TIME(6) NOT NULL,
     appointmentDate DATE NOT NULL,
-    reason TEXT,
+    reason BIGINT,
     petId BIGINT NOT NULL,
     PRIMARY KEY (id)
 );

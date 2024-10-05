@@ -85,7 +85,7 @@ public class AppointmentRepositoryImplTest {
         newAppointment.setClinicId(1L);
         newAppointment.setUserId(1L);
         newAppointment.setPetId(1L);
-        newAppointment.setReason("Routine checkup");
+        newAppointment.setReason(1L);
         newAppointment.setAppointmentDate(LocalDate.now().plusDays(1));
         newAppointment.setAppointmentTime(LocalTime.of(10, 0));
 
