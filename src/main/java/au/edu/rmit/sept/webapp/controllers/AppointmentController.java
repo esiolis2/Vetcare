@@ -119,12 +119,14 @@ public class AppointmentController {
     }
 
     @PostMapping("/reschedule")
-    public String rescheduleAppointment(Model model, LocalDate date, LocalTime time, Long veterinarianId, @RequestParam Long id, HttpServletRequest request){
+    public String rescheduleAppointment(Model model, LocalDate date, String time, Long veterinarianId, @RequestParam Long id, HttpServletRequest request){
         String email = (String) request.getSession().getAttribute("userEmail"); // Or however you're storing it
         if (email != null) {
             User user = userService.findByEmail(email);
             Appointment appointment = appointmentService.findAppointmentById(id);
-            appointment.setAppointmentTime(time);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");
+            LocalTime localTime = LocalTime.parse(time, formatter);
+            appointment.setAppointmentTime(localTime);
             appointment.setAppointmentDate(date);
             appointment.setVeterinarianId(veterinarianId);
             appointment.setUserId(user.getId());
