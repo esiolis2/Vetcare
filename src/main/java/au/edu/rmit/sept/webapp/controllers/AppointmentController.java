@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -62,12 +63,16 @@ public class AppointmentController {
     }
 
     @PostMapping("/add")
-    public String createAppointment(@ModelAttribute Appointment appointment, HttpServletRequest request){
+    public String createAppointment(@ModelAttribute Appointment appointment, HttpServletRequest request, String time){
         String email = (String) request.getSession().getAttribute("userEmail");
         if (email != null) {
             User user = userService.findByEmail(email);
             appointment.setUserId(user.getId());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");
+            LocalTime localTime = LocalTime.parse(time, formatter);
+            appointment.setAppointmentTime(localTime);
             appointmentService.createAppointment(appointment);
+
         }
         else{
             System.out.print("An error occured while booking appointment with user.");

@@ -124,4 +124,27 @@ function showNewPetModal() {
 }
 
 
+$(document).ready(function() {
+    $('#appointmentDate').datepicker({
+        startDate: new Date(),
+        format: 'yyyy-mm-dd',
+        daysOfWeekDisabled: [0, 6],
+        autoclose: true,
+        todayHighlight: true
+    });
+});
+
+ $(document).ready(function() {
+        $('#appointment-time').timepicker({
+            timeFormat: 'h:i a',
+            minTime: '9:00am',
+            maxTime: '6:00pm',
+            interval: 30
+        });
+    });
+
+
+
+
+
 
