@@ -127,6 +127,9 @@ public class TreatmentPlanRepositoryImpl implements TreatmentPlanRepository {
         );
     }
 
+
+
+
     @Override
     public void updateTreatmentPlan(TreatmentPlan treatmentPlan) {
         String query = "UPDATE TreatmentPlans SET Diagnosis = ?, TreatmentType = ?, PetCondition = ?, " +
@@ -184,3 +187,113 @@ public class TreatmentPlanRepositoryImpl implements TreatmentPlanRepository {
         return treatmentPlans;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    @Override
+//    public void updateTreatmentPlan(TreatmentPlan treatmentPlan) {
+//        StringBuilder queryBuilder = new StringBuilder("UPDATE TreatmentPlans SET ");
+//        List<Object> parameters = new ArrayList<>();
+//
+//        if (treatmentPlan.getDiagnosis() != null) {
+//            queryBuilder.append("Diagnosis = ?, ");
+//            parameters.add(treatmentPlan.getDiagnosis());
+//        }
+//        if (treatmentPlan.getTreatmentType() != null) {
+//            queryBuilder.append("TreatmentType = ?, ");
+//            parameters.add(treatmentPlan.getTreatmentType());
+//        }
+//        if (treatmentPlan.getPetCondition() != null) {
+//            queryBuilder.append("PetCondition = ?, ");
+//            parameters.add(treatmentPlan.getPetCondition());
+//        }
+//        if (treatmentPlan.getIsEmergency() != null) {
+//            queryBuilder.append("IsEmergency = ?, ");
+//            parameters.add(treatmentPlan.getIsEmergency());
+//        }
+//        if (treatmentPlan.getStartDate() != null) {
+//            queryBuilder.append("StartDate = ?, ");
+//            parameters.add(java.sql.Date.valueOf(treatmentPlan.getStartDate()));
+//        }
+//        if (treatmentPlan.getEndDate() != null) {
+//            queryBuilder.append("EndDate = ?, ");
+//            parameters.add(java.sql.Date.valueOf(treatmentPlan.getEndDate()));
+//        }
+//        if (treatmentPlan.getPrescribedMedications() != null) {
+//            queryBuilder.append("PrescribedMedications = ?, ");
+//            parameters.add(treatmentPlan.getPrescribedMedications());
+//        }
+//        if (treatmentPlan.getTreatmentDuration() != null) {
+//            queryBuilder.append("TreatmentDuration = ?, ");
+//            parameters.add(treatmentPlan.getTreatmentDuration());
+//        }
+//        if (treatmentPlan.getNextSteps() != null) {
+//            queryBuilder.append("NextSteps = ?, ");
+//            parameters.add(treatmentPlan.getNextSteps());
+//        }
+//        if (treatmentPlan.getVetName() != null) {
+//            queryBuilder.append("VetName = ?, ");
+//            parameters.add(treatmentPlan.getVetName());
+//        }
+//        if (treatmentPlan.getFollowUpDate() != null) {
+//            queryBuilder.append("FollowUpDate = ?, ");
+//            parameters.add(java.sql.Date.valueOf(treatmentPlan.getFollowUpDate()));
+//        }
+//        if (treatmentPlan.getCostEstimate() != null) {
+//            queryBuilder.append("CostEstimate = ?, ");
+//            parameters.add(treatmentPlan.getCostEstimate());
+//        }
+//        if (treatmentPlan.getTreatmentOutcome() != null) {
+//            queryBuilder.append("TreatmentOutcome = ?, ");
+//            parameters.add(treatmentPlan.getTreatmentOutcome());
+//        }
+//        if (treatmentPlan.getClinicLocation() != null) {
+//            queryBuilder.append("ClinicLocation = ?, ");
+//            parameters.add(treatmentPlan.getClinicLocation());
+//        }
+//        if (treatmentPlan.getIsInsured() != null) {
+//            queryBuilder.append("IsInsured = ?, ");
+//            parameters.add(treatmentPlan.getIsInsured());
+//        }
+//        if (treatmentPlan.getInsuranceDetails() != null) {
+//            queryBuilder.append("InsuranceDetails = ?, ");
+//            parameters.add(treatmentPlan.getInsuranceDetails());
+//        }
+//        if (treatmentPlan.getPaymentStatus() != null) {
+//            queryBuilder.append("PaymentStatus = ?, ");
+//            parameters.add(treatmentPlan.getPaymentStatus());
+//        }
+//
+//        // Remove the last comma and space from the query string
+//        queryBuilder.setLength(queryBuilder.length() - 2);
+//        queryBuilder.append(" WHERE TreatmentPlanID = ?");
+//
+//        parameters.add(treatmentPlan.getTreatmentPlanID());
+//
+//        try (Connection connection = dataSource.getConnection();
+//             PreparedStatement stmt = connection.prepareStatement(queryBuilder.toString())) {
+//
+//            // Set the parameters for the prepared statement
+//            for (int i = 0; i < parameters.size(); i++) {
+//                stmt.setObject(i + 1, parameters.get(i));
+//            }
+//
+//            stmt.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error updating treatment plan", e);
+//        }
+//    }

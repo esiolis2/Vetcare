@@ -133,17 +133,20 @@ public class TreatmentPlanController {
             return "treatmentForm";
         }
 
-        if (treatmentPlan.getTreatmentPlanID() == null) {
+        List<TreatmentPlan> existingPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
 
+        if (existingPlans == null || existingPlans.isEmpty()) {
             treatmentPlanService.createTreatmentPlan(treatmentPlan);
+            model.addAttribute("successMessage", "New treatment plan created successfully.");
         } else {
+            TreatmentPlan existingPlan = existingPlans.get(0);
+            treatmentPlan.setTreatmentPlanID(existingPlan.getTreatmentPlanID()); 
             treatmentPlanService.updateTreatmentPlan(treatmentPlan, loggedInUser);
+            model.addAttribute("successMessage", "Treatment plan updated successfully.");
         }
 
-        model.addAttribute("successMessage", "Treatment plan saved successfully.");
         return "HomePage";
     }
-
 
 
 
