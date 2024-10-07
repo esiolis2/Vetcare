@@ -21,16 +21,17 @@ public class MedicalRecordController {
     private final MedicalHistoryService medicalHistoryService;
     private final VaccinationRecordService vaccinationRecordService;
     private final TreatmentPlanService treatmentPlanService;
+    private final PrescriptionService prescriptionService;
     private final UserService userService;
 
     @Autowired
-    public MedicalRecordController(PetInformationService petInformationService, MedicalHistoryService medicalHistoryService, VaccinationRecordService vaccinationRecordService, TreatmentPlanService treatmentPlanService, UserService userService){// userService userService) {
+    public MedicalRecordController(PetInformationService petInformationService, MedicalHistoryService medicalHistoryService, VaccinationRecordService vaccinationRecordService, TreatmentPlanService treatmentPlanService, UserService userService, PrescriptionService prescriptionService){// userService userService) {
         this.petInformationService = petInformationService;
         this.medicalHistoryService = medicalHistoryService;
         this.vaccinationRecordService = vaccinationRecordService;
         this.treatmentPlanService = treatmentPlanService;
         this.userService = userService;
-
+        this.prescriptionService = prescriptionService;
     }
 
     private void addPetSelectionToModel(Model model, HttpServletRequest request) {
@@ -141,6 +142,27 @@ public class MedicalRecordController {
         addPetSelectionToModel(model, request);
         return "ViewVaccinationRecords";
     }
+
+    @GetMapping("/prescriptions")
+    public String showPrescriptionDetails(@RequestParam("petId") Long petId, Model model, HttpServletRequest request) {
+        PetInformation pet = petInformationService.getPetById(petId);
+        if (pet != null) {
+            List<Prescription> prescriptions = prescriptionService.getPrescriptionsByPetId(petId);
+            if (prescriptions.isEmpty()) {
+                model.addAttribute("errorMessage", "No prescription records found for the selected pet.");
+            } else {
+                model.addAttribute("prescriptions", prescriptions);
+            }
+            model.addAttribute("pet", pet);
+        } else {
+            model.addAttribute("errorMessage", "Pet not found.");
+        }
+
+        addPetSelectionToModel(model, request);
+        return "viewPrescription";
+    }
+
+
 
     @GetMapping("/vtreatmentPlan")
     public String showTreatmentPlanDetails(@RequestParam("petId") Long petId, Model model, HttpServletRequest request) {

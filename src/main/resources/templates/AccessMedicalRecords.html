@@ -117,6 +117,21 @@
             </tbody>
         </table>
     </div>
+
+    <div class="summary-section" th:if="${pet != null}">
+        <h3>Prescription Summary</h3>
+        <table class="table table-striped">
+            <tbody th:each="prescription : ${prescriptions}">
+            <tr>
+                <th scope="row" th:text="${prescription.medicationName}">Medication Name</th>
+                <td th:text="'Instructions: ' + (prescription.instructions != null ? prescription.instructions : 'N/A') + ', Dosage: ' + (prescription.dosage != null ? prescription.dosage : 'N/A')">Prescription Details</td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/prescription(petId=${pet.petID})}" class="btn btn-primary">View Full Prescription Records</a>
+    </div>
+
+
     <div  class="summary-section" th:if="${pet != null}">
         <h3>Vaccination Summary</h3>
         <table class="table table-striped">
