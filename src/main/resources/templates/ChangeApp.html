@@ -34,7 +34,7 @@
         <div class="form-group" id="rescheduleForm">
             <label for="id" >Choose the Appointment you want to reschedule:</label>
             <select name="id" class="form-control" id="id"  required>
-                <option>Select a Appointment</option>
+                <option selected disabled >Select a Appointment</option>
                 <option th:each="appointment : ${appointments}"
                         th:value="${appointment.id}"
                         th:text="${#temporals.format(appointment.appointmentDate, 'dd MMMM yyyy')}">
@@ -47,7 +47,7 @@
         <div class="form-group" id="veterinarianForm" >
             <label for="vetId" >Choose your Veterinarian:</label>
             <select  name="veterinarianId" class="form-control" id="vetId"  required>
-                <option>Select a Veterinarian</option>
+                <option  selected disabled>Select a Veterinarian</option>
                 <option th:each="veterinarian : ${veterinarians}" th:value="${veterinarian.id}" th:text="${veterinarian.name}" th:attr="data-clinic-id=${veterinarian.clinicId}">Veterinarian Name </option>
             </select>
         </div>
@@ -63,7 +63,6 @@
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-secondary" onclick="previousChangeStep(2)">Previous</button>
             <button type="submit" class="btn btn-primary" >Reschedule</button>
 
     </form>
