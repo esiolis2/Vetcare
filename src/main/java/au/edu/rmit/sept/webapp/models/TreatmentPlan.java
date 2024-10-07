@@ -60,6 +60,10 @@ public class TreatmentPlan {
         this.updatedAt = updatedAt;
     }
 
+    public TreatmentPlan() {
+
+    }
+
     public PetInformation getPet() {
         return pet;
     }
