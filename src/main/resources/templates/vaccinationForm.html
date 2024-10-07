@@ -20,7 +20,8 @@
             <label for="userSelect" class="form-label">Select a User:</label>
             <select class="form-select" id="userSelect" name="userId" onchange="this.form.submit()" required>
                 <option value="" disabled selected>Select a User</option>
-                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"
+                        th:selected="${selectedUser != null && selectedUser.id == user.id}"></option>
             </select>
         </div>
     </form>
@@ -31,7 +32,8 @@
             <label for="petSelect" class="form-label">Select a Pet:</label>
             <select class="form-select" id="petSelect" name="petId" onchange="this.form.submit()" required>
                 <option value="" disabled selected>Select a Pet</option>
-                <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"></option>
+                <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"
+                        th:selected="${selectedPet != null && selectedPet.petID == pet.petID}"></option>
             </select>
         </div>
     </form>

@@ -108,12 +108,48 @@ public class TreatmentPlanController {
                 .collect(Collectors.toList());
         model.addAttribute("users", users);
 
-        List<PetInformation>pets =petInformationService.getPetByUserId(userId);
-        model.addAttribute("pets", pets);
-
+        model.addAttribute("selectedUser", null);
+        model.addAttribute("pets", null);
         model.addAttribute("treatmentPlan", new TreatmentPlan());
 
         model.addAttribute("canEditPet", "Vet".equals(userType));
+
+        return "treatmentForm";
+    }
+
+    @GetMapping("/treatment/selectUser")
+    public String selectUser(@RequestParam("userId") Long userId, Model model) {
+        User selectedUser = userService.findByUser(userId);
+        List<PetInformation> pets = petInformationService.getPetByUserId(userId);
+
+        if (pets.isEmpty()) {
+            model.addAttribute("errorMessage", "No pets found for this user.");
+        }
+
+        model.addAttribute("selectedUser", selectedUser);
+        model.addAttribute("pets", pets);
+        model.addAttribute("users", List.of(selectedUser));
+        model.addAttribute("treatmentPlan", new TreatmentPlan());
+
+        return "treatmentForm";
+    }
+
+
+    @GetMapping("/treatment/selectPet")
+    public String selectPet(@RequestParam("petId") Long petId, Model model) {
+        PetInformation selectedPet = petInformationService.getPetById(petId);
+        User selectedUser = userService.findByUser(selectedPet.getOwnerId());
+
+        if (selectedPet == null) {
+            model.addAttribute("errorMessage", "Pet not found.");
+        }
+
+        model.addAttribute("selectedPet", selectedPet);
+        model.addAttribute("selectedUser", selectedUser);
+//        model.addAttribute("pets", petInformationService.getPetByUserId(selectedUser.getId()));
+        model.addAttribute("pets", List.of(selectedPet));
+        model.addAttribute("users", List.of(selectedUser));
+        model.addAttribute("treatmentPlan", new TreatmentPlan());
 
         return "treatmentForm";
     }
@@ -138,45 +174,18 @@ public class TreatmentPlanController {
         if (existingPlans == null || existingPlans.isEmpty()) {
             treatmentPlanService.createTreatmentPlan(treatmentPlan);
             model.addAttribute("successMessage", "New treatment plan created successfully.");
-        } else {
-            TreatmentPlan existingPlan = existingPlans.get(0);
-            treatmentPlan.setTreatmentPlanID(existingPlan.getTreatmentPlanID()); 
-            treatmentPlanService.updateTreatmentPlan(treatmentPlan, loggedInUser);
-            model.addAttribute("successMessage", "Treatment plan updated successfully.");
         }
+
+//        else {
+//            TreatmentPlan existingPlan = existingPlans.get(0);
+//            treatmentPlan.setTreatmentPlanID(existingPlan.getTreatmentPlanID());
+//            treatmentPlanService.updateTreatmentPlan(treatmentPlan, loggedInUser);
+//            model.addAttribute("successMessage", "Treatment plan updated successfully.");
+//        }
 
         return "HomePage";
     }
 
-
-
-    @GetMapping("/treatment/selectUser")
-    public String selectUser(@RequestParam("userId") Long userId, Model model) {
-        List<PetInformation> pets = petInformationService.getPetByUserId(userId);
-        if (pets.isEmpty()) {
-            model.addAttribute("errorMessage", "No pets found for this user.");
-        }
-        model.addAttribute("pets", pets);
-        model.addAttribute("users", userService.getAllUsers());
-        return "treatmentForm";
-    }
-
-    @GetMapping("/treatment/selectPet")
-    public String selectPet(@RequestParam("petId") Long petId, Model model) {
-
-        PetInformation selectedPet = petInformationService.getPetById(petId);
-        if (selectedPet == null) {
-            model.addAttribute("errorMessage", "Pet not found.");
-        }
-
-        model.addAttribute("selectedPet", selectedPet);
-        model.addAttribute("treatmentPlan", new TreatmentPlan());
-
-
-        model.addAttribute("pets", petInformationService.getPetByUserId(selectedPet.getOwnerId()));
-        model.addAttribute("users", userService.getAllUsers());
-        return "treatmentForm";
-    }
     @ModelAttribute("loggedInUser")
     public User getLoggedInUser(HttpServletRequest request) {
         return (User) request.getSession().getAttribute("loggedInUser");

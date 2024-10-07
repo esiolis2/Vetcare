@@ -122,12 +122,16 @@ public class VaccinationRecordController {
 
     @GetMapping("/vaccination/selectUser")
     public String selectUser(@RequestParam("userId") Long userId, Model model) {
+        User selectedUser = userService.findByUser(userId);
         List<PetInformation> pets = petInformationService.getPetByUserId(userId);
         if (pets.isEmpty()) {
             model.addAttribute("errorMessage", "No pets found for this user.");
         }
+        model.addAttribute("selectedUser", selectedUser);
         model.addAttribute("pets", pets);
-        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("users", List.of(selectedUser));
+        model.addAttribute("vaccinationRecord", new VaccinationRecord());
+
         return "VaccinationForm";
     }
 
@@ -135,14 +139,15 @@ public class VaccinationRecordController {
     @GetMapping("/vaccination/selectPet")
     public String selectPet(@RequestParam("petId") Long petId, Model model) {
         PetInformation selectedPet = petInformationService.getPetById(petId);
+        User selectedUser = userService.findByUser(selectedPet.getOwnerId());
         if (selectedPet == null) {
             model.addAttribute("errorMessage", "Pet not found.");
         }
-
         model.addAttribute("selectedPet", selectedPet);
+        model.addAttribute("selectedUser", selectedUser);
+        model.addAttribute("pets", List.of(selectedPet));
+        model.addAttribute("users", List.of(selectedUser));
         model.addAttribute("vaccinationRecord", new VaccinationRecord());
-        model.addAttribute("pets", petInformationService.getPetByUserId(selectedPet.getOwnerId()));
-        model.addAttribute("users", userService.getAllUsers());
 
         return "VaccinationForm";
     }

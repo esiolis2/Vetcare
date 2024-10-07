@@ -1,6 +1,5 @@
 package au.edu.rmit.sept.webapp.services;
 
-import au.edu.rmit.sept.webapp.models.User;
 import au.edu.rmit.sept.webapp.models.VaccinationRecord;
 import au.edu.rmit.sept.webapp.repositories.VaccinationRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +32,16 @@ public class VaccinationRecordServiceImpl implements VaccinationRecordService {
         return vaccinationRecordRepository.findAllVaccinationRecords();
     }
 
-    @Override
-    public void updateVaccinationRecord(VaccinationRecord vaccinationRecord, User loggedInUser) {
-
-        if (!"Vet".equals(loggedInUser.getUserType())) {
-            vaccinationRecord.setPet(null);
-        }
-
-        vaccinationRecordRepository.updateVaccinationRecord(vaccinationRecord);
-    }
-
 }
+
+//    @Override
+//    public void updateVaccinationRecord(VaccinationRecord vaccinationRecord, User loggedInUser) {
+//
+//        if (!"Vet".equals(loggedInUser.getUserType())) {
+//            vaccinationRecord.setPet(null);
+//        }
+//        vaccinationRecordRepository.updateVaccinationRecord(vaccinationRecord);
+//    }
 
 
 
