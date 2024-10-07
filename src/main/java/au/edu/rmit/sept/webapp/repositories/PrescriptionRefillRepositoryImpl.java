@@ -28,7 +28,7 @@ public class PrescriptionRefillRepositoryImpl implements PrescriptionRefillRepos
              PreparedStatement stmt = connection.prepareStatement(query)) {
 
             stmt.setLong(1, refillRequest.getPetID());
-            stmt.setString(2, refillRequest.getMedications());
+            stmt.setString(2, String.join(",", refillRequest.getMedications())); // Convert List<String> to comma-separated string
             stmt.setString(3, refillRequest.getAddress());
             stmt.setString(4, refillRequest.getCity());
             stmt.setString(5, refillRequest.getState());
@@ -50,13 +50,14 @@ public class PrescriptionRefillRepositoryImpl implements PrescriptionRefillRepos
              PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
-
             while (rs.next()) {
+                // Convert comma-separated string back to List<String>
+                List<String> medications = List.of(rs.getString("Medications").split(","));
 
                 PrescriptionRefillRequest request = new PrescriptionRefillRequest(
                         rs.getLong("RefillRequestID"),
                         rs.getLong("PetID"),
-                        rs.getString("Medications"),
+                        medications, // List<String> of medications
                         rs.getString("Address"),
                         rs.getString("City"),
                         rs.getString("State"),
@@ -76,5 +77,6 @@ public class PrescriptionRefillRepositoryImpl implements PrescriptionRefillRepos
 
         return requests;
     }
+
 }
 
