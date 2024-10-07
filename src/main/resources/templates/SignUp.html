@@ -16,11 +16,11 @@
             <div id="step-1" class="form-step">
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input name="name" type="text" class="form-control" id="name" placeholder="Enter your name" required>
+                    <input name="name" type="text" class="form-control" id="name" placeholder="Enter your name" required pattern="[a-zA-Z\s]+" title="Name should only contain letters.">
                 </div>
                 <div class="form-group">
                     <label for="email">Email Address:</label>
-                    <input name="email" type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                    <input name="email" type="email" class="form-control" id="email" placeholder="Enter your email" >
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group">
                     <label for="phoneNumber">Phone Number:</label>
-                    <input name="phoneNumber" type="number" class="form-control" id="phoneNumber" placeholder="Enter your Phone Number" required>
+                    <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="Enter your phone number" required pattern="\d+" title="Phone number must be in digits.">
                 </div>
                 <div class="form-group">
                     <label for="address">Address:</label>
@@ -67,4 +67,3 @@
 <footer class="container-fluid text-center py-3">
 </footer>
 </html>
-
