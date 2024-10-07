@@ -30,6 +30,9 @@ public class Prescription {
         this.updatedAt = updatedAt;
     }
 
+    public Prescription() {
+
+    }
 
 
     public Long getPrescriptionID() {
@@ -109,6 +112,6 @@ public class Prescription {
     }
 
     public void setUpdatedAt(LocalDate updatedAt) {
-        this.updatedAt = updatedAt;
+        this.updatedAt = updatedAt != null ? updatedAt : LocalDate.now();
     }
 }

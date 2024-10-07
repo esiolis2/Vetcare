@@ -5,17 +5,17 @@ import java.util.List;
 
 public class PrescriptionRefillRequest {
 
-    private Long requestID; // Unique identifier for the refill request
-    private Long petID; // ID of the pet associated with the request
-    private List<String> medications; // List of medications requested for refill
-    private String address; // Delivery address for the refill request
-    private String city; // City of the delivery address
-    private String state; // State of the delivery address
-    private String postcode; // Postcode of the delivery address
-    private String notes; // Additional notes or instructions for the refill request
-    private LocalDateTime requestDate; // Date and time when the refill request was made
+    private Long requestID;
+    private Long petID;
+    private List<String> medications;
+    private String address;
+    private String city;
+    private String state;
+    private String postcode;
+    private String notes;
+    private LocalDateTime requestDate;
 
-    // Full constructor (with requestID and requestDate)
+
     public PrescriptionRefillRequest(Long requestID, Long petID, List<String> medications, String address,
                                      String city, String state, String postcode, String notes, LocalDateTime requestDate) {
         this.requestID = requestID;
@@ -28,13 +28,6 @@ public class PrescriptionRefillRequest {
         this.notes = notes;
         this.requestDate = requestDate;
     }
-
-    // Default constructor
-    public PrescriptionRefillRequest() {
-        // Default constructor for initialization
-    }
-
-    // Getter and Setter methods
 
     public Long getRequestID() {
         return requestID;

@@ -20,7 +20,6 @@
             <table class="table table-striped" th:if="${orders != null && !#lists.isEmpty(orders)}">
                 <thead>
                 <tr>
-                    <th>Pet ID</th>
                     <th>Medications</th>
                     <th>Address</th>
                     <th>City</th>
@@ -31,7 +30,6 @@
                 </thead>
                 <tbody>
                 <tr th:each="order : ${orders}">
-                    <td th:text="${order.petID}"></td>
                     <td>
                         <ul>
                             <li th:each="medication : ${order.medications}" th:text="${medication}"></li>

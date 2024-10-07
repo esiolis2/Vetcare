@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,8 +61,14 @@ public class PrescriptionRepositoryImpl implements PrescriptionRepository {
         String query = "INSERT INTO Prescriptions (PetID, MedicationName, Dosage, Instructions, NextRefillDate, " +
                 "QuantityPrescribed, RefillCount, ExpiryDate, UpdatedAt) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            if (prescription.getUpdatedAt() == null) {
+                prescription.setUpdatedAt(LocalDate.now());
+            }
+
             stmt.setLong(1, prescription.getPet().getPetID());
             stmt.setString(2, prescription.getMedicationName());
             stmt.setString(3, prescription.getDosage());
@@ -77,6 +84,7 @@ public class PrescriptionRepositoryImpl implements PrescriptionRepository {
             throw new UncategorizedScriptException("Error inserting new prescription", e);
         }
     }
+
 
 
     private Prescription mapSetToPrescription(ResultSet rs) throws SQLException {

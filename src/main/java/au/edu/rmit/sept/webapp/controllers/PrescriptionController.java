@@ -3,6 +3,7 @@ package au.edu.rmit.sept.webapp.controllers;
 import au.edu.rmit.sept.webapp.models.PetInformation;
 import au.edu.rmit.sept.webapp.models.Prescription;
 import au.edu.rmit.sept.webapp.models.PrescriptionRefillRequest;
+import au.edu.rmit.sept.webapp.models.User;
 import au.edu.rmit.sept.webapp.services.PetInformationService;
 import au.edu.rmit.sept.webapp.services.PrescriptionRefillService;
 import au.edu.rmit.sept.webapp.services.PrescriptionService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class PrescriptionController {
@@ -147,7 +149,7 @@ public class PrescriptionController {
                 .stream()
                 .map(PetInformation::getPetID)
                 .toList();
-        
+
         List<PrescriptionRefillRequest> allOrders = prescriptionRefillService.getAllRefillRequests();
         List<PrescriptionRefillRequest> userOrders = allOrders.stream()
                 .filter(order -> userPetIds.contains(order.getPetID()))
@@ -168,10 +170,85 @@ public class PrescriptionController {
     }
 
 
+    @GetMapping("/edit-prescription")
+    public String editPrescriptionForm(Model model, HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        String userType = (String) request.getSession().getAttribute("userType");
+
+        List<User> users = userService.getAllUsers().stream()
+                .filter(user -> "User".equals(user.getUserType()))
+                .collect(Collectors.toList());
+        model.addAttribute("users", users);
+
+        model.addAttribute("selectedUser", null);
+        model.addAttribute("pets", null);
+        model.addAttribute("prescription", new Prescription());
+
+        return "prescriptionForm";
+    }
 
 
+    @GetMapping("/prescription/selectUser")
+    public String selectUserForPrescription(@RequestParam("userId") Long userId, Model model) {
+        User selectedUser = userService.findByUser(userId);
+        List<PetInformation> pets = petInformationService.getPetByUserId(userId);
+
+        if (pets.isEmpty()) {
+            model.addAttribute("errorMessage", "No pets found for this user.");
+        }
+
+        model.addAttribute("selectedUser", selectedUser);
+        model.addAttribute("pets", pets);
+        model.addAttribute("users", List.of(selectedUser));
+        model.addAttribute("prescription", new Prescription());
+
+        return "prescriptionForm";
+    }
+
+
+    @GetMapping("/prescription/selectPet")
+    public String selectPetForPrescription(@RequestParam("petId") Long petId, Model model) {
+        PetInformation selectedPet = petInformationService.getPetById(petId);
+        User selectedUser = userService.findByUser(selectedPet.getOwnerId());
+
+        if (selectedPet == null) {
+            model.addAttribute("errorMessage", "Pet not found.");
+        }
+
+        model.addAttribute("selectedPet", selectedPet);
+        model.addAttribute("selectedUser", selectedUser);
+        model.addAttribute("pets", List.of(selectedPet));
+        model.addAttribute("users", List.of(selectedUser));
+        model.addAttribute("prescription", new Prescription());
+
+        return "prescriptionForm";
+    }
+
+    @PostMapping("/save-prescription")
+    public String savePrescription(@ModelAttribute("prescription") Prescription prescription,
+                                   @RequestParam("petId") Long petId, HttpServletRequest request, Model model) {
+
+        PetInformation pet = petInformationService.getPetById(petId);
+
+        if (pet != null) {
+            prescription.setPet(pet);
+
+            if (prescription.getPrescriptionID() == null) {
+                prescriptionService.createPrescription(prescription);
+            }
+
+            model.addAttribute("successMessage", "Prescription saved successfully.");
+        } else {
+            model.addAttribute("errorMessage", "Pet not found.");
+            return "prescriptionForm";
+        }
+
+        return "HomePage";
+    }
 
 }
+
+
 
 
 
