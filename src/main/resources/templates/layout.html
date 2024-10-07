@@ -1,50 +1,15 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Layout page</title>
-    <!-- Layout -->
     <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet" />
     <link th:href="@{/assets/css/main.css}" rel="stylesheet">
-    <link th:href="@{/assets/css/notification.css}" rel="stylesheet">
-
     <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>
-    <!-- Optional: Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <!-- Font Awesome 4.7.0 (if you want to keep this version) -->
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
-
-    <!-- / Layout -->
 </head>
-
 <body>
-<!-- Navbar -->
-<!--<nav class="navbar navbar-expand-lg navbar-light px-2">-->
-<!--    <a class="navbar-brand" href="#">VetCare</a>-->
-<!--    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--        <span class="navbar-toggler-icon"></span>-->
-<!--    </button>-->
-<!--    <div class="collapse navbar-collapse" id="navbarNav">-->
-<!--        <ul class="navbar-nav ms-auto"> &lt;!&ndash; Use ms-auto class here for right alignment &ndash;&gt;-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link active" aria-current="page" href="/">Home</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="/resources">Resources</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="/signup">Signup</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="/login">Login</a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--</nav>-->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
     <div class="container">
         <a class="navbar-brand" href="/">VetCare</a>
@@ -59,45 +24,40 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/resources">Resources</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/signup">Signup</a>
+                <li class="nav-item dropdown" th:if="${loggedInUser != null}">
+                    <button class="nav-link dropdown-toggle" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Medical Access
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="/access-medical-records">Access Medical Record</a></li>
+                        <li><a class="dropdown-item" href="/view-vaccination-records">View Vaccination Records</a></li>
+                        <li><a class="dropdown-item" href="/view-treatment-plan">View Treatment Plan</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" th:if="${loggedInUser != null}">
+                    <a class="nav-link" href="/account">Dashboard</a>
+                </li>
+                <li class="nav-item" th:if="${loggedInUser != null}">
+                    <form th:action="@{/logout}" method="post" style="display: inline;">
+                        <button type="submit" class="nav-link btn btn-link">Logout</button>
+                    </form>
+                </li>
+                <li class="nav-item" th:if="${loggedInUser == null}">
                     <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item dropdown notification-ui">
-                    <a class="nav-link dropdown-toggle notification-ui_icon" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-bell"></i>
-                        <span class="unread-notification"></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-md-end" aria-labelledby="navbarDropdown" style="width: 400px;">
-                        <div class="notification-ui_dd-header">
-                            <h3 class="text-center">Notifications</h3>
-                        </div>
-                        <div class="notification-ui_dd-content">
-                        <!-- Add your notifications here -->
-                            <a href="/" style="text-decoration: none;"><div class="px-4 notification-clickable" style="font-size: 1rem">
-                                <b>Prescription for Fluffy is ready for pickup</b><br>
-                                <small>10 mins ago</small>
-                            </div></a>
-                            <a href="/" style="text-decoration: none;"><div class="px-4 notification-clickable" style="font-size: 1rem">
-                                <b>Bentley's script for Metronidazole is about to expire</b><br>
-                                <small>15 mins ago</small>
-                            </div></a>
-                        </div>
-                    </div>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<!--Page Content-->
-    <div layout:fragment="content">
-        Page content goes here
+<div id="content">
+    <div class="main-content">
+        <div layout:fragment="content">
+            <!-- content -->
+        </div>
     </div>
+</div>
 
-<!-- Footer -->
 <footer class="container-fluid text-center py-3 mt-5 footer-style">
     <div class="row">
         <div class="col-md-4">
@@ -115,6 +75,7 @@
         </div>
     </div>
 </footer>
-</body>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
 </html>
