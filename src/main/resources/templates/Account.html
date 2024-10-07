@@ -237,6 +237,14 @@
                                                 <input type="text" class="form-control" id="address" name="address"
                                                        th:value="${user.address}"  >
                                             </div>
+                                            <div class="mb-3">
+                                                <label for="userType" class="form-label">User Type</label>
+                                                <select class="form-control" id="userType" name="userType" required disabled>
+                                                    <option value="User" th:selected="${user.userType == 'User'}">User</option>
+                                                    <option value="Vet" th:selected="${user.userType == 'Vet'}">Vet</option>
+                                                </select>
+                                            </div>
+
                                             <button type="submit" class="btn btn-primary">Save changes</button>
                                         </form>
                                     </div>

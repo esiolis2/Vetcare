@@ -86,10 +86,8 @@ public class UserController {
             user.setId(loggedInUser.getId());
             User u = userService.updateUser(user);
             request.getSession().setAttribute("loggedInUser", u);
-            request.getSession().setAttribute("userType", u.getUserType());
             // added updated user to the model to pass updated data to the view
             model.addAttribute("loggedInUser", u);
-            model.addAttribute("userType", u.getUserType());
             System.out.println("Account updated successfully!!!!");
             return "redirect:/";
         }
