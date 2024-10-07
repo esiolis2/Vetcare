@@ -6,10 +6,7 @@ import org.springframework.jdbc.datasource.init.UncategorizedScriptException;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +31,12 @@ public class MedicalHistoryRepositoryImpl implements MedicalHistoryRepository {
             while (rs.next()) {
                 MedicalHistory history = new MedicalHistory(
                         rs.getLong("PetID"),
-                        rs.getDate("LastVisitDate") != null ? new java.util.Date(rs.getDate("LastVisitDate").getTime()) : null,
+                        rs.getDate("LastVisitDate") != null ? rs.getDate("LastVisitDate").toLocalDate() : null,
                         rs.getString("LastDiagnosis"),
                         rs.getString("TreatmentProvided"),
                         rs.getString("MedicationsPrescribed"),
                         rs.getString("OngoingConditions"),
-                        rs.getDate("NextScheduledVisit") != null ? new java.util.Date(rs.getDate("NextScheduledVisit").getTime()) : null
+                        rs.getDate("NextScheduledVisit") != null ? rs.getDate("NextScheduledVisit").toLocalDate() : null
                 );
                 medicalHistories.add(history);
             }
@@ -49,6 +46,7 @@ public class MedicalHistoryRepositoryImpl implements MedicalHistoryRepository {
         return medicalHistories;
     }
 
+
     @Override
     public void addMedicalHistory(MedicalHistory medicalHistory) {
         String query = "INSERT INTO MedicalHistory (PetID, LastVisitDate, LastDiagnosis, TreatmentProvided, MedicationsPrescribed, OngoingConditions, NextScheduledVisit) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -57,7 +55,7 @@ public class MedicalHistoryRepositoryImpl implements MedicalHistoryRepository {
             stmt.setLong(1, medicalHistory.getPetID());
 
             if (medicalHistory.getLastVisitDate() != null) {
-                stmt.setDate(2, new java.sql.Date(medicalHistory.getLastVisitDate().getTime()));
+                stmt.setDate(2, Date.valueOf(medicalHistory.getLastVisitDate()));
             } else {
                 stmt.setNull(2, java.sql.Types.DATE);
             }
@@ -68,7 +66,7 @@ public class MedicalHistoryRepositoryImpl implements MedicalHistoryRepository {
             stmt.setString(6, medicalHistory.getOngoingConditions());
 
             if (medicalHistory.getNextScheduledVisit() != null) {
-                stmt.setDate(7, new java.sql.Date(medicalHistory.getNextScheduledVisit().getTime()));
+                stmt.setDate(7, Date.valueOf(medicalHistory.getNextScheduledVisit()));
             } else {
                 stmt.setNull(7, java.sql.Types.DATE);
             }
@@ -89,12 +87,12 @@ public class MedicalHistoryRepositoryImpl implements MedicalHistoryRepository {
             while (rs.next()) {
                 MedicalHistory history = new MedicalHistory(
                         rs.getLong("PetID"),
-                        rs.getDate("LastVisitDate"),
+                        rs.getDate("LastVisitDate") != null ? rs.getDate("LastVisitDate").toLocalDate() : null,
                         rs.getString("LastDiagnosis"),
                         rs.getString("TreatmentProvided"),
                         rs.getString("MedicationsPrescribed"),
                         rs.getString("OngoingConditions"),
-                        rs.getDate("NextScheduledVisit")
+                        rs.getDate("NextScheduledVisit") != null ? rs.getDate("NextScheduledVisit").toLocalDate() : null
                 );
                 medicalHistories.add(history);
             }
@@ -103,4 +101,39 @@ public class MedicalHistoryRepositoryImpl implements MedicalHistoryRepository {
         }
         return medicalHistories;
     }
+
+    @Override
+    public void updateMedicalHistory(MedicalHistory medicalHistory) {
+        String query = "UPDATE MedicalHistory SET LastVisitDate = ?, LastDiagnosis = ?, TreatmentProvided = ?, MedicationsPrescribed = ?, OngoingConditions = ?, NextScheduledVisit = ? WHERE HistoryID = ?";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            // Set LastVisitDate
+            if (medicalHistory.getLastVisitDate() != null) {
+                stmt.setDate(1, java.sql.Date.valueOf(medicalHistory.getLastVisitDate()));
+            } else {
+                stmt.setNull(1, java.sql.Types.DATE);
+            }
+
+            stmt.setString(2, medicalHistory.getLastDiagnosis());
+            stmt.setString(3, medicalHistory.getTreatmentProvided());
+            stmt.setString(4, medicalHistory.getMedicationsPrescribed());
+            stmt.setString(5, medicalHistory.getOngoingConditions());
+
+            if (medicalHistory.getNextScheduledVisit() != null) {
+                stmt.setDate(6, java.sql.Date.valueOf(medicalHistory.getNextScheduledVisit()));
+            } else {
+                stmt.setNull(6, java.sql.Types.DATE);
+            }
+
+            stmt.setLong(7, medicalHistory.getHistoryID());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error updating medical history", e);
+        }
+    }
+
+
 }
