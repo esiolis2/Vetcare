@@ -5,8 +5,11 @@ import au.edu.rmit.sept.webapp.repositories.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -42,5 +45,19 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public boolean deleteAppointment(Long appointmentId) {
         return appointmentRepository.removeAppointment(appointmentId);
+    }
+
+    public List<Appointment> getUpcomingAppointments(Long userId) {
+        LocalDate now = LocalDate.now();
+        LocalDate nextWeek = now.plusDays(7);
+
+        List<Appointment> allAppointments = appointmentRepository.findAll(userId);
+        List<Appointment> upcomingAppointments = new ArrayList<>();
+        for (Appointment appointment : allAppointments) {
+            if (appointment.getAppointmentDate().isAfter(now) && appointment.getAppointmentDate().isBefore(nextWeek)) {
+                upcomingAppointments.add(appointment);
+            }
+        }
+        return upcomingAppointments;
     }
 }

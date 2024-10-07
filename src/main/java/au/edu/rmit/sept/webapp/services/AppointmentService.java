@@ -10,6 +10,7 @@ public interface AppointmentService {
     public Appointment rescheduleAppointment (Appointment appointment);
     public Appointment findAppointmentById(Long appointmentId);
     public boolean deleteAppointment (Long appointmentId);
+    public List<Appointment> getUpcomingAppointments(Long userId);
 
 
 }
