@@ -160,25 +160,6 @@ public class MedicalRecordController {
         addPetSelectionToModel(model, request);
         return "ViewTreatmentPlan";
     }
-//    @GetMapping("/edit-medical-record")
-//    public String editMedicalRecordForm(Model model, HttpServletRequest request) {
-//        Long userId = (Long) request.getSession().getAttribute("userId");
-//        String userType = (String) request.getSession().getAttribute("userType");
-//
-//        List<User> users = userService.getAllUsers().stream()
-//                .filter(user -> "User".equals(user.getUserType()))
-//                .collect(Collectors.toList());
-//        model.addAttribute("users", users);
-//
-//        List<PetInformation> pets = petInformationService.getPetByUserId(userId);
-//        model.addAttribute("pets", pets);
-//
-//        model.addAttribute("medicalRecord", new MedicalHistory());
-//
-//        model.addAttribute("canEditPet", "Vet".equals(userType));
-//
-//        return "medicalRecordForm";
-//    }
 
     @GetMapping("/edit-medical-record")
     public String editMedicalRecordForm(Model model, HttpServletRequest request) {
@@ -207,107 +188,82 @@ public class MedicalRecordController {
     }
 
 
-    @PostMapping("/save-medical-record")
-    public String saveMedicalRecord(@ModelAttribute("medicalRecord") MedicalHistory medicalHistory,
-                                    @RequestParam("petId") Long petId, HttpServletRequest request, Model model) {
-        User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
-
-        PetInformation pet = petInformationService.getPetById(petId);
-
-        if (pet != null) {
-            medicalHistory.setPetID(petId);
-            medicalHistory.setPet(pet);
-        } else {
-            model.addAttribute("errorMessage", "Pet not found.");
-            return "medicalRecordForm";
-        }
-
-        List<MedicalHistory> existingRecords = medicalHistoryService.getMedicalHistoryByPetId(petId);
-
-        if (existingRecords == null || existingRecords.isEmpty()) {
-
-            medicalHistoryService.createMedicalHistory(medicalHistory);
-            model.addAttribute("successMessage", "New medical record created successfully.");
-        } else {
-
-            MedicalHistory existingRecord = existingRecords.get(0);
-            if (existingRecord != null && existingRecord.getHistoryID() != null) {
-                medicalHistory.setHistoryID(existingRecord.getHistoryID());
-                medicalHistoryService.updateMedicalHistory(medicalHistory, loggedInUser);
-                model.addAttribute("successMessage", "Medical record updated successfully.");
-            } else {
-                model.addAttribute("errorMessage", "Error updating medical record: Record not found or History ID is null.");
-                return "medicalRecordForm";
-            }
-        }
-
-        return "HomePage";
-    }
-
-
-
     @GetMapping("/medical/selectUser")
     public String selectUserForMedicalRecord(@RequestParam("userId") Long userId, Model model) {
+        User selectedUser = userService.findByUser(userId);
         List<PetInformation> pets = petInformationService.getPetByUserId(userId);
+
         if (pets.isEmpty()) {
             model.addAttribute("errorMessage", "No pets found for this user.");
         }
+
+        model.addAttribute("selectedUser", selectedUser);
         model.addAttribute("pets", pets);
-        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("users", List.of(selectedUser));
+        model.addAttribute("medicalRecord", new MedicalHistory());
+
         return "medicalRecordForm";
     }
 
     @GetMapping("/medical/selectPet")
     public String selectPetForMedicalRecord(@RequestParam("petId") Long petId, Model model) {
         PetInformation selectedPet = petInformationService.getPetById(petId);
+        User selectedUser = userService.findByUser(selectedPet.getOwnerId());
+
         if (selectedPet == null) {
             model.addAttribute("errorMessage", "Pet not found.");
-        } else {
-            User user = userService.findByUser(selectedPet.getOwnerId());
-            model.addAttribute("user", user);
-            model.addAttribute("selectedPet", selectedPet);
         }
 
+        model.addAttribute("selectedPet", selectedPet);
+        model.addAttribute("selectedUser", selectedUser);
+        model.addAttribute("pets", List.of(selectedPet));
+        model.addAttribute("users", List.of(selectedUser));
         model.addAttribute("medicalRecord", new MedicalHistory());
-        model.addAttribute("pets", petInformationService.getPetByUserId(selectedPet.getOwnerId()));
-        model.addAttribute("users", userService.getAllUsers());
+
         return "medicalRecordForm";
     }
 
-//    @PostMapping("/save-medical-history")
-//    public String saveMedicalHistory(@ModelAttribute("medicalHistory") MedicalHistory medicalHistory,
-//                                     @RequestParam("petId") Long petId, Model model) {
-//        PetInformation pet = petInformationService.getPetById(petId);
-//
-//        if (pet != null) {
-//            medicalHistory.setPet(pet);
-//            medicalHistoryService.createMedicalHistory(medicalHistory);
-//            model.addAttribute("successMessage", "Medical history record saved successfully.");
-//        } else {
-//            model.addAttribute("errorMessage", "Pet not found.");
-//        }
-//        return "medicalHistoryForm";
-//    }
-//
-//
 
-//    @GetMapping("/add-treatment-plan")
-//    public String showTreatmentPlanForm(@RequestParam("petId") Long petId, Model model) {
-//        PetInformation pet = petInformationService.getPetById(petId);
-//        model.addAttribute("selectedPet", pet);
-//        model.addAttribute("treatmentPlan", new TreatmentPlan());
-//        model.addAttribute("showTreatmentForm", true);
-//        return "medicalRecordSummary";
-//    }
-//
-//    @GetMapping("/add-vaccination-record")
-//    public String showVaccinationRecordForm(@RequestParam("petId") Long petId, Model model) {
-//        PetInformation pet = petInformationService.getPetById(petId);
-//        model.addAttribute("selectedPet", pet);
-//        model.addAttribute("vaccinationRecord", new VaccinationRecord());
-//        model.addAttribute("showVaccinationForm", true);
-//        return "medicalRecordSummary";
-//    }
+
+    @PostMapping("/save-medical-record")
+    public String saveMedicalRecord(@ModelAttribute("medicalRecord") MedicalHistory medicalHistory,
+                                    @RequestParam("petId") Long petId, HttpServletRequest request, Model model) {
+        User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
+
+        PetInformation pet = petInformationService.getPetById(petId);
+        if (pet == null) {
+            model.addAttribute("errorMessage", "Pet not found.");
+            return "medicalRecordForm";
+        }
+
+        medicalHistory.setPet(pet);
+        medicalHistory.setPetID(petId);
+
+        List<MedicalHistory> existingRecords = medicalHistoryService.getMedicalHistoryByPetId(petId);
+
+        if (existingRecords == null || existingRecords.isEmpty()) {
+            medicalHistoryService.createMedicalHistory(medicalHistory);
+            model.addAttribute("successMessage", "New medical record created successfully.");
+        }else {
+            MedicalHistory existingRecord = existingRecords.get(0);
+
+            if (existingRecord != null && existingRecord.getHistoryID() != null) {
+                System.out.println("Debug: Existing record's History ID is " + existingRecord.getHistoryID());
+
+                medicalHistory.setHistoryID(existingRecord.getHistoryID());
+
+                medicalHistoryService.updateMedicalHistory(medicalHistory, loggedInUser);
+                model.addAttribute("successMessage", "Medical record updated successfully.");
+            } else {
+
+                model.addAttribute("errorMessage", "Error updating medical record: Record not found or History ID is null.");
+                System.out.println("Debug: Error - History ID is null or existing record is not valid for update.");
+                return "medicalRecordForm";
+            }
+        }
+
+        return "HomePage";
+    }
 
 
     @ModelAttribute("loggedInUser")

@@ -176,12 +176,12 @@ public class TreatmentPlanController {
             model.addAttribute("successMessage", "New treatment plan created successfully.");
         }
 
-//        else {
-//            TreatmentPlan existingPlan = existingPlans.get(0);
-//            treatmentPlan.setTreatmentPlanID(existingPlan.getTreatmentPlanID());
-//            treatmentPlanService.updateTreatmentPlan(treatmentPlan, loggedInUser);
-//            model.addAttribute("successMessage", "Treatment plan updated successfully.");
-//        }
+        else {
+            TreatmentPlan existingPlan = existingPlans.get(0);
+            treatmentPlan.setTreatmentPlanID(existingPlan.getTreatmentPlanID());
+            treatmentPlanService.updateTreatmentPlan(treatmentPlan, loggedInUser);
+            model.addAttribute("successMessage", "Treatment plan updated successfully.");
+        }
 
         return "HomePage";
     }

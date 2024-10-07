@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container py-5">
-    <h1 class="text-center mb-4">Manage Medical Records</h1>
+    <h1 class="text-center mb-4">Update Medical Records</h1>
 
     <!-- Error Message Display -->
     <div class="alert alert-danger" th:if="${errorMessage != null}">
@@ -21,7 +21,8 @@
             <label for="userSelect" class="form-label">Select a User:</label>
             <select class="form-select" id="userSelect" name="userId" onchange="this.form.submit()" required>
                 <option value="" disabled selected>Select a User</option>
-                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"
+                        th:selected="${selectedUser != null && selectedUser.id == user.id}"></option>
             </select>
         </div>
     </form>
@@ -32,10 +33,12 @@
             <label for="petSelect" class="form-label">Select a Pet:</label>
             <select class="form-select" id="petSelect" name="petId" onchange="this.form.submit()" required>
                 <option value="" disabled selected>Select a Pet</option>
-                <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"></option>
+                <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"
+                        th:selected="${selectedPet != null && selectedPet.petID == pet.petID}"></option>
             </select>
         </div>
     </form>
+
 
     <!-- Pet Information Summary -->
     <div class="summary-section" th:if="${selectedPet != null}">
@@ -47,7 +50,7 @@
             <tr><th>Breed</th><td th:text="${selectedPet.breed}">-</td></tr>
             <tr><th>Gender</th><td th:text="${selectedPet.gender}">-</td></tr>
             <tr><th>Birth Date</th><td th:text="${selectedPet.birthDate}">-</td></tr>
-            <tr><th>Owner Name</th><td th:text="${user != null ? user.name : 'Unknown User'}">-</td></tr>
+            <tr><th>Owner Name</th><td th:text="${selectedUser != null ? selectedUser.name : 'Unknown User'}">-</td></tr>
             </tbody>
         </table>
     </div>
