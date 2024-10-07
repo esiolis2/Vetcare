@@ -1,23 +1,25 @@
 package au.edu.rmit.sept.webapp.models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class MedicalHistory {
 
     private Long historyID;
     private Long petID;
-    private Date lastVisitDate;
+    private LocalDate lastVisitDate;
+
     private String lastDiagnosis;
     private String treatmentProvided;
     private String medicationsPrescribed;
     private String ongoingConditions;
-    private Date nextScheduledVisit;
+    private  LocalDate nextScheduledVisit;
+    private PetInformation pet;
 
     // Default constructor
     public MedicalHistory() {}
 
     // Parameterized constructor
-    public MedicalHistory(Long petID, Date lastVisitDate, String lastDiagnosis, String treatmentProvided, String medicationsPrescribed, String ongoingConditions, Date nextScheduledVisit) {
+    public MedicalHistory(Long petID, LocalDate lastVisitDate, String lastDiagnosis, String treatmentProvided, String medicationsPrescribed, String ongoingConditions, LocalDate nextScheduledVisit) {
         this.petID = petID;
         this.lastVisitDate = lastVisitDate;
         this.lastDiagnosis = lastDiagnosis;
@@ -34,8 +36,8 @@ public class MedicalHistory {
     public Long getPetID() { return petID; }
     public void setPetID(Long petID) { this.petID = petID; }
 
-    public Date getLastVisitDate() { return lastVisitDate; }
-    public void setLastVisitDate(Date lastVisitDate) { this.lastVisitDate = lastVisitDate; }
+    public LocalDate getLastVisitDate() { return lastVisitDate; }
+    public void setLastVisitDate(LocalDate lastVisitDate) { this.lastVisitDate = lastVisitDate; }
 
     public String getLastDiagnosis() { return lastDiagnosis; }
     public void setLastDiagnosis(String lastDiagnosis) { this.lastDiagnosis = lastDiagnosis; }
@@ -49,6 +51,10 @@ public class MedicalHistory {
     public String getOngoingConditions() { return ongoingConditions; }
     public void setOngoingConditions(String ongoingConditions) { this.ongoingConditions = ongoingConditions; }
 
-    public Date getNextScheduledVisit() { return nextScheduledVisit; }
-    public void setNextScheduledVisit(Date nextScheduledVisit) { this.nextScheduledVisit = nextScheduledVisit; }
+    public LocalDate getNextScheduledVisit() { return nextScheduledVisit; }
+    public void setNextScheduledVisit(LocalDate nextScheduledVisit) { this.nextScheduledVisit = nextScheduledVisit; }
+
+    public void setPet(PetInformation pet) {
+        this.pet = pet;
+    }
 }
