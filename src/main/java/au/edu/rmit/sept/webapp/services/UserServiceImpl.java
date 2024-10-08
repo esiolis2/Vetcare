@@ -5,6 +5,8 @@ import au.edu.rmit.sept.webapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 // Specifies the METHODS' functionalities
 @Service
@@ -44,6 +46,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findByUser(Long id) {
         return userR.findUserById(id);
+    }
+
+    public List<User> getAllUsers() {
+        return userR.findAllUsers();
     }
 
 }

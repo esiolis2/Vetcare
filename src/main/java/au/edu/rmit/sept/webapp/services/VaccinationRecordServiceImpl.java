@@ -31,7 +31,17 @@ public class VaccinationRecordServiceImpl implements VaccinationRecordService {
     public List<VaccinationRecord> getAllVaccinationRecords() {
         return vaccinationRecordRepository.findAllVaccinationRecords();
     }
+
 }
+
+//    @Override
+//    public void updateVaccinationRecord(VaccinationRecord vaccinationRecord, User loggedInUser) {
+//
+//        if (!"Vet".equals(loggedInUser.getUserType())) {
+//            vaccinationRecord.setPet(null);
+//        }
+//        vaccinationRecordRepository.updateVaccinationRecord(vaccinationRecord);
+//    }
 
 
 

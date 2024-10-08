@@ -1,18 +1,22 @@
 package au.edu.rmit.sept.webapp.controllers;
 
 import au.edu.rmit.sept.webapp.models.PetInformation;
+import au.edu.rmit.sept.webapp.models.User;
 import au.edu.rmit.sept.webapp.models.VaccinationRecord;
 import au.edu.rmit.sept.webapp.services.PetInformationService;
-import au.edu.rmit.sept.webapp.services.VaccinationRecordService;
 import au.edu.rmit.sept.webapp.services.UserService;
+import au.edu.rmit.sept.webapp.services.VaccinationRecordService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class VaccinationRecordController {
@@ -91,5 +95,96 @@ public class VaccinationRecordController {
         }
         addPetSelectionToModel(model, request);
         return "ViewVaccinationRecords";
+    }
+
+
+
+    @GetMapping("/edit-vaccination-record")
+    public String editVaccinationRecordForm(Model model, HttpServletRequest request) {
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        String userType = (String) request.getSession().getAttribute("userType");
+
+        List<User> users = userService.getAllUsers().stream()
+                .filter(user -> "User".equals(user.getUserType()))
+                .collect(Collectors.toList());
+        model.addAttribute("users", users);
+
+        List<PetInformation> pets = petInformationService.getPetByUserId(userId);
+        model.addAttribute("pets", pets);
+
+        model.addAttribute("vaccinationRecord", new VaccinationRecord());
+
+        model.addAttribute("canEditPet", "Vet".equals(userType));
+
+        return "VaccinationForm";
+    }
+
+
+    @GetMapping("/vaccination/selectUser")
+    public String selectUser(@RequestParam("userId") Long userId, Model model) {
+        User selectedUser = userService.findByUser(userId);
+        List<PetInformation> pets = petInformationService.getPetByUserId(userId);
+        if (pets.isEmpty()) {
+            model.addAttribute("errorMessage", "No pets found for this user.");
+        }
+        model.addAttribute("selectedUser", selectedUser);
+        model.addAttribute("pets", pets);
+        model.addAttribute("users", List.of(selectedUser));
+        model.addAttribute("vaccinationRecord", new VaccinationRecord());
+
+        return "VaccinationForm";
+    }
+
+
+    @GetMapping("/vaccination/selectPet")
+    public String selectPet(@RequestParam("petId") Long petId, Model model) {
+        PetInformation selectedPet = petInformationService.getPetById(petId);
+        User selectedUser = userService.findByUser(selectedPet.getOwnerId());
+        if (selectedPet == null) {
+            model.addAttribute("errorMessage", "Pet not found.");
+        }
+        model.addAttribute("selectedPet", selectedPet);
+        model.addAttribute("selectedUser", selectedUser);
+        model.addAttribute("pets", List.of(selectedPet));
+        model.addAttribute("users", List.of(selectedUser));
+        model.addAttribute("vaccinationRecord", new VaccinationRecord());
+
+        return "VaccinationForm";
+    }
+
+    @PostMapping("/save-vaccination")
+    public String saveVaccination(@ModelAttribute("vaccinationRecord") VaccinationRecord vaccinationRecord,
+                                  @RequestParam("petId") Long petId, HttpServletRequest request, Model model) {
+
+        User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
+        PetInformation pet = petInformationService.getPetById(petId);
+        if (pet != null) {
+            vaccinationRecord.setPet(pet);
+
+            if (vaccinationRecord.getVaccinationID() == null) {
+                vaccinationRecordService.createVaccinationRecord(vaccinationRecord);
+            }
+//            else {
+//                vaccinationRecordService.updateVaccinationRecord(vaccinationRecord, loggedInUser);
+//            }
+
+            model.addAttribute("successMessage", "Vaccination record saved successfully.");
+        } else {
+            model.addAttribute("errorMessage", "Pet not found.");
+            return "VaccinationForm";
+        }
+        return "HomePage";
+    }
+
+    
+    @ModelAttribute("loggedInUser")
+    public User getLoggedInUser(HttpServletRequest request) {
+        return (User) request.getSession().getAttribute("loggedInUser");
+    }
+
+    //  To ensure that these attributes are available in the model for the thyemleaf template to use these attributes for conditional rendering
+    @ModelAttribute("userType")
+    public String getUserType(HttpServletRequest request) {
+        return (String) request.getSession().getAttribute("userType");
     }
 }

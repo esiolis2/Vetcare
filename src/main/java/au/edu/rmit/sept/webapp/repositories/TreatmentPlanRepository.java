@@ -13,5 +13,7 @@ public interface TreatmentPlanRepository {
 
     void addTreatmentPlan(TreatmentPlan treatmentPlan);
 
+    void updateTreatmentPlan(TreatmentPlan treatmentPlan);
 
+    public List<TreatmentPlan> findByUserId(Long userId);
 }

@@ -10,11 +10,11 @@ public interface VaccinationRecordRepository {
 
     List<VaccinationRecord> findVaccinationRecordByPetId(Long petId);
     void addVaccinationRecord(VaccinationRecord vaccinationRecord);
-
     List<VaccinationRecord> findAllVaccinationRecords();
+
 }
 
-
+//    void updateVaccinationRecord(VaccinationRecord vaccinationRecord);
 
 
 

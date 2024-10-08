@@ -1,6 +1,8 @@
 package au.edu.rmit.sept.webapp.controllers;
 
+import au.edu.rmit.sept.webapp.models.PetInformation;
 import au.edu.rmit.sept.webapp.models.User;
+import au.edu.rmit.sept.webapp.services.PetInformationService;
 import au.edu.rmit.sept.webapp.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,11 +25,14 @@ public class UserControllerTest {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private PetInformationService petInfoService;
+
     private User user;
 
     @BeforeEach
     public void setUp() {
-        user = new User(1L, "Mark", "test@example.com", "password", 1234567890L, "123 Example St");
+        user = new User(1L, "Mark", "test@example.com", "password", 1234567890L, "123 Example St", "User");
     }
 
     @Test
@@ -48,9 +53,8 @@ public class UserControllerTest {
         mockMvc.perform(post("/login")
                         .param("email", "test@example.com")
                         .param("password", "password"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.message").value("Login successful"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
     }
 
     @Test
@@ -61,8 +65,8 @@ public class UserControllerTest {
                         .param("email", "test@example.com")
                         .param("password", "wrongPassword"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success").value(false))
-                .andExpect(jsonPath("$.message").value("Invalid email or password"));
+                .andExpect(view().name("login"))
+                .andExpect(model().attribute("error", "Invalid email or password"));
     }
 
     @Test
@@ -70,7 +74,7 @@ public class UserControllerTest {
         Mockito.when(userService.findByEmail("test@example.com")).thenReturn(user);
 
         mockMvc.perform(get("/account")
-                        .sessionAttr("userEmail", "test@example.com"))
+                        .sessionAttr("loggedInUser", user))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("user"))
                 .andExpect(model().attribute("user", user))
@@ -78,8 +82,23 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetUserProfile_NotLoggedIn() throws Exception {
-        mockMvc.perform(get("/account"))
+    public void testLogout() throws Exception {
+        mockMvc.perform(post("/logout")
+                        .sessionAttr("loggedInUser", user))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
+    }
+
+
+
+    @Test
+    public void testEditUser_Success() throws Exception {
+        User updatedUser = new User(1L, "Mark Updated", "test@example.com", "password", 1234567890L, "123 Example St", "User");
+        Mockito.when(userService.updateUser(Mockito.any(User.class))).thenReturn(updatedUser);
+
+        mockMvc.perform(post("/account/edit")
+                        .sessionAttr("loggedInUser", user)
+                        .flashAttr("user", updatedUser))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
     }

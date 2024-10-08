@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
@@ -17,11 +16,11 @@
             <div id="step-1" class="form-step">
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input name="name" type="text" class="form-control" id="name" placeholder="Enter your name" required>
+                    <input name="name" type="text" class="form-control" id="name" placeholder="Enter your name" required pattern="[a-zA-Z\s]+" title="Name should only contain letters.">
                 </div>
-                <div class="form-group"></div>
+                <div class="form-group">
                     <label for="email">Email Address:</label>
-                    <input name="email" type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                    <input name="email" type="email" class="form-control" id="email" placeholder="Enter your email" >
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
@@ -29,33 +28,34 @@
                 </div>
                 <div class="form-group">
                     <label for="phoneNumber">Phone Number:</label>
-                    <input name="phoneNumber" type="number" class="form-control" id="phoneNumber" placeholder="Enter your Phone Number" required>
+                    <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="Enter your phone number" required pattern="\d+" title="Phone number must be in digits.">
                 </div>
                 <div class="form-group">
                     <label for="address">Address:</label>
                     <input name="address" type="text" class="form-control" id="address" placeholder="Enter your address" required>
                 </div>
+                <div class="form-group">
+                    <label for="userType">User Type:</label>
+                    <select name="userType" class="form-control" id="userType" required>
+                        <option value="User">User</option>
+                        <option value="Vet">Vet</option>
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
-
     </div>
 
     <div>
-        <a href="/" class="btn-common btn-back" >Back to Home Page</a>
+        <a href="/" class="btn-common btn-back">Back to Home Page</a>
     </div>
-
 
     <script>
         function signUp() {
-
             alert("SignUp successful!");
             location.reload();
         }
-
     </script>
-
-
 </div>
 
 <script th:src="@{/scripts/SignUp.js}"></script>

@@ -17,7 +17,7 @@ public class VaccinationRecord {
     private String status;
     private String additionalNotes;
 
-    public VaccinationRecord(Long vaccinationID, Long petID, String vaccineName, LocalDate administeredDate, LocalDate nextDueDate, String boosterRequired, BigDecimal  dosage, String veterinarianName, String clinicName, String status, String additionalNotes) {
+    public VaccinationRecord(Long vaccinationID, Long petID, String vaccineName, LocalDate administeredDate, LocalDate nextDueDate, String boosterRequired, BigDecimal dosage, String veterinarianName, String clinicName, String status, String additionalNotes) {
         this.vaccinationID = vaccinationID;
         this.petID = petID;
         this.vaccineName = vaccineName;
@@ -30,6 +30,7 @@ public class VaccinationRecord {
         this.status = status;
         this.additionalNotes = additionalNotes;
     }
+
 
     public VaccinationRecord() {
     }
@@ -121,4 +122,17 @@ public class VaccinationRecord {
     public void setAdditionalNotes(String additionalNotes) {
         this.additionalNotes = additionalNotes;
     }
+
+    public void setPet(PetInformation pet) {
+        if (pet != null) {
+            this.petID = pet.getPetID();
+        }
+    }
+
+    public Long getVaccinationRecordID() {
+        return vaccinationID;
+    }
+
+
+
 }
