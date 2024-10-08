@@ -58,7 +58,6 @@
                                 <p class="text-center">No upcoming appointments</p>
                             </div>
                             <div th:each="appointment : ${upcomingAppointments}">
-                                <a href="/" style="text-decoration: none;">
                                     <div class="px-4 notification" style="font-size: 1rem">
                                         <b>Upcoming Appointment for </b>
                                             <span th:each="pet : ${pets}"
@@ -68,7 +67,6 @@
                                         <br>
                                         <small th:text="${appointment.appointmentDate}"></small> at <small th:text="${appointment.appointmentTime}"></small>
                                     </div>
-                                </a>
                             </div>
                         </div>
                     </div>
