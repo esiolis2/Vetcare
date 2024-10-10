@@ -150,4 +150,17 @@ public class UserRepositoryImpl implements UserRepository {
         return users;
     }
 
+    @Override
+    public boolean removeUser(String email) {
+        try (Connection connection = this.source.getConnection();
+
+             PreparedStatement ps = connection.prepareStatement("DELETE FROM user WHERE email = ?")) {
+            ps.setString(1, email);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to remove user", e);
+        }
+    }
+
 }

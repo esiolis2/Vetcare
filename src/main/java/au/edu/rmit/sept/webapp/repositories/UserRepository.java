@@ -14,4 +14,5 @@ public interface UserRepository {
 //    public List<User> findAll();
     public User updateUser(User user);
     public List<User> findAllUsers();
+    public boolean removeUser(String email);
 }
