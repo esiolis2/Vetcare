@@ -52,4 +52,9 @@ public class UserServiceImpl implements UserService{
         return userR.findAllUsers();
     }
 
+    @Override
+    public boolean deleteUser(String email) {
+        return userR.removeUser(email);
+    }
+
 }

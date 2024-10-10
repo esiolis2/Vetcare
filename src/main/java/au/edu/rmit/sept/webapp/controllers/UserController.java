@@ -93,4 +93,23 @@ public class UserController {
         }
         return "redirect:/account";
     }
+
+
+
+    @PostMapping("/account/delete")
+    public String deleteUser(HttpServletRequest request, Model model) {
+        User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
+        if (loggedInUser != null) {
+            userService.deleteUser(loggedInUser.getEmail());
+            request.getSession().invalidate();
+            System.out.println("Account deleted successfully!!!!");
+            model.addAttribute("loggedInUser", null);
+            model.addAttribute("userType", null);
+
+            return "redirect:/";
+        }
+        return "redirect:/account";
+    }
+
+
 }

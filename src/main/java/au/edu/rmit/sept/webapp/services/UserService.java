@@ -12,6 +12,6 @@ public interface UserService {
     public User findByUser(Long id);
     public User updateUser(User user);
     public List<User> getAllUsers();
-
+    public boolean deleteUser(String email);
 }
 
