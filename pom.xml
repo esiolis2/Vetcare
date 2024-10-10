@@ -99,8 +99,8 @@
 				<configuration>
 					<url>jdbc:mysql://localhost:3306/vetcare?allowPublicKeyRetrieval=true&amp;useSSL=false</url>
 
-					<user>rooot</user>
-					<password>ethan1</password>
+					<user>VetCare_DB</user>
+					<password>Password@123</password>
 
 					<driver>com.mysql.cj.jdbc.Driver</driver>
 					<schemas>vetcare</schemas>

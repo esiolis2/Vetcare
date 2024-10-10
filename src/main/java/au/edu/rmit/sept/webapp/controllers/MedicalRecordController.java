@@ -77,6 +77,7 @@ public class MedicalRecordController {
             List<MedicalHistory> fullMedicalHistory = medicalHistoryService.getMedicalHistoryByPetId(petId);
             List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
             List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
+            List<Prescription> prescriptions = prescriptionService.getPrescriptionsByPetId(petId);
 
             if (fullMedicalHistory == null || fullMedicalHistory.isEmpty()) {
                 model.addAttribute("medicalHistoryMessage", "No medical history found for this pet.");
@@ -96,6 +97,12 @@ public class MedicalRecordController {
                 model.addAttribute("treatmentPlans", treatmentPlans);
             }
 
+            if (prescriptions == null || prescriptions.isEmpty()) {
+                model.addAttribute("prescriptionMessage", "No prescriptions found for the selected pet.");
+            } else {
+                model.addAttribute("prescriptions", prescriptions);
+            }
+
             model.addAttribute("pet", pet);
         } else {
             model.addAttribute("errorMessage", "Pet not found.");
@@ -104,84 +111,6 @@ public class MedicalRecordController {
         return "AccessMedicalRecords";
     }
 
-
-    @GetMapping("/medicalHistory")
-    public String showFullMedicalRecords(@RequestParam("petId") Long petId, Model model, HttpServletRequest request) {
-        PetInformation pet = petInformationService.getPetById(petId);
-        if (pet != null) {
-            List<MedicalHistory> fullMedicalHistory = medicalHistoryService.getMedicalHistoryByPetId(petId);
-            if (fullMedicalHistory.isEmpty()) {
-                model.addAttribute("errorMessage", "No medical history found for the selected pet.");
-            } else {
-                model.addAttribute("medicalHistory", fullMedicalHistory);
-            }
-            model.addAttribute("pet", pet);
-        } else {
-            model.addAttribute("errorMessage", "Pet not found.");
-        }
-
-        addPetSelectionToModel(model, request);
-        return "FullMedicalRecords";
-    }
-
-    @GetMapping("/vaccination")
-    public String showVaccinationDetails(@RequestParam("petId") Long petId, Model model, HttpServletRequest request) {
-        PetInformation pet = petInformationService.getPetById(petId);
-        if (pet != null) {
-            List<VaccinationRecord> vaccinationRecords = vaccinationRecordService.getVaccinationRecordByPetId(petId);
-            if (vaccinationRecords.isEmpty()) {
-                model.addAttribute("errorMessage", "No vaccination records found for the selected pet.");
-            } else {
-                model.addAttribute("vaccinationRecords", vaccinationRecords);
-            }
-            model.addAttribute("pet", pet);
-        } else {
-            model.addAttribute("errorMessage", "Pet not found.");
-        }
-
-        addPetSelectionToModel(model, request);
-        return "ViewVaccinationRecords";
-    }
-
-    @GetMapping("/prescriptions")
-    public String showPrescriptionDetails(@RequestParam("petId") Long petId, Model model, HttpServletRequest request) {
-        PetInformation pet = petInformationService.getPetById(petId);
-        if (pet != null) {
-            List<Prescription> prescriptions = prescriptionService.getPrescriptionsByPetId(petId);
-            if (prescriptions.isEmpty()) {
-                model.addAttribute("errorMessage", "No prescription records found for the selected pet.");
-            } else {
-                model.addAttribute("prescriptions", prescriptions);
-            }
-            model.addAttribute("pet", pet);
-        } else {
-            model.addAttribute("errorMessage", "Pet not found.");
-        }
-
-        addPetSelectionToModel(model, request);
-        return "viewPrescription";
-    }
-
-
-
-    @GetMapping("/vtreatmentPlan")
-    public String showTreatmentPlanDetails(@RequestParam("petId") Long petId, Model model, HttpServletRequest request) {
-        PetInformation pet = petInformationService.getPetById(petId);
-        if (pet != null) {
-            List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlanByPetId(petId);
-            if (treatmentPlans.isEmpty()) {
-                model.addAttribute("errorMessage", "No treatment plans found for the selected pet.");
-            } else {
-                model.addAttribute("treatmentPlans", treatmentPlans);
-            }
-            model.addAttribute("pet", pet);
-        } else {
-            model.addAttribute("errorMessage", "Pet not found.");
-        }
-
-        addPetSelectionToModel(model, request);
-        return "ViewTreatmentPlan";
-    }
 
     @GetMapping("/edit-medical-record")
     public String editMedicalRecordForm(Model model, HttpServletRequest request) {

@@ -57,7 +57,7 @@ public class PrescriptionController {
 
         if (userId == null) {
             model.addAttribute("errorMessage", "You must be logged in to view prescriptions.");
-            return "ViewPrescription";
+            return "viewPrescription";
         }
         addPetSelectionToModel(model, request);
         return "viewPrescription";

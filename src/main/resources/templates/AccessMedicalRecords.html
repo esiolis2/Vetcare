@@ -118,16 +118,23 @@
         </table>
     </div>
 
+    <!-- Prescription Summary -->
     <div class="summary-section" th:if="${pet != null}">
         <h3>Prescription Summary</h3>
-        <table class="table table-striped">
+        <table class="table table-striped" th:if="${prescriptions != null && !prescriptions.isEmpty()}">
             <tbody th:each="prescription : ${prescriptions}">
             <tr>
                 <th scope="row" th:text="${prescription.medicationName}">Medication Name</th>
-                <td th:text="'Instructions: ' + (prescription.instructions != null ? prescription.instructions : 'N/A') + ', Dosage: ' + (prescription.dosage != null ? prescription.dosage : 'N/A')">Prescription Details</td>
+                <td>
+                    <span th:text="'Instructions: ' + ${prescription.instructions}"></span><br>
+                    <span th:text="'Dosage: ' + ${prescription.dosage}"></span>
+                </td>
             </tr>
             </tbody>
         </table>
+        <div th:if="${prescriptions == null || prescriptions.isEmpty()}" class="alert alert-warning">
+            No prescription records found for the selected pet.
+        </div>
         <a th:href="@{/prescription(petId=${pet.petID})}" class="btn btn-primary">View Full Prescription Records</a>
     </div>
 
