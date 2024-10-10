@@ -1,28 +1,77 @@
+/* Variables */
+:root {
+    --border-radius: 10px;
+    --border-width: 5px;
+}
+
+/* Reset and Box-Sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Body Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #eef2f7;
+    background-color: #c0e8c0;
     margin: 0;
     padding: 0;
+}
+
+/* Login Page Wrapper */
+.login-page {
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
+    justify-content: center;
+    min-height: 100vh;
 }
 
-.container {
-    max-width: 800px;
-    padding: 60px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Rainbow Container */
+.rainbow {
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    width: 100%;
+    max-width: 500px; /* Adjust as needed */
+    margin: auto;
 }
 
-.container:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+/* Animated Border */
+.rainbow-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: var(--border-radius);
+    background: linear-gradient(45deg, #388087, #f9f7f3, #ffffff, #388087);
+    background-size: 200% 200%;
+    animation: gradient-rotation 8s linear infinite;
+    z-index: -1;
 }
 
+/* Keyframes for Animation */
+@keyframes gradient-rotation {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Content Inside the Rainbow Border */
+.rainbow-content {
+    position: relative;
+    background: white;
+    border-radius: calc(var(--border-radius) - var(--border-width));
+    margin: var(--border-width);
+    padding: 20px; /* Adjust as needed */
+    z-index: 1;
+}
+
+/* Heading Styles */
 h2 {
     text-align: center;
     color: #2c3e50;
@@ -33,6 +82,7 @@ h2 {
     font-weight: bold;
 }
 
+/* Form Styles */
 .form-container {
     width: 100%;
 }
@@ -68,28 +118,7 @@ h2 {
     transition: box-shadow 0.3s ease;
 }
 
-.password-toggle {
-    position: relative;
-}
-
-.password-toggle input {
-    padding-right: 40px;
-}
-
-.password-toggle .toggle-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #888;
-    transition: color 0.3s ease;
-}
-
-.password-toggle .toggle-icon:hover {
-    color: #007bff;
-}
-
+/* Button Styles */
 .btn-primary {
     background-color: #2c3e50;
     border: none;
@@ -125,6 +154,7 @@ h2 {
     text-decoration: underline;
 }
 
+/* Alert Styles */
 .alert {
     border-radius: 5px;
     padding: 10px;
@@ -136,10 +166,48 @@ h2 {
     margin-top: 15px;
 }
 
+/* Back Button Styles */
+.btn-common {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #0d0238;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-align: center;
+    margin: 20px 10px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-common:hover {
+    background-color: #2980b9;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer Styles */
+footer {
+    background-color: #f1f1f1;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Media Queries */
 @media (max-width: 576px) {
-    .container {
-        width: 90%;
-        padding: 20px;
+    .rainbow-content {
+        padding: 15px;
     }
 
     h2 {
@@ -151,40 +219,3 @@ h2 {
         padding: 10px;
     }
 }
-
-footer {
-    background-color: #f1f1f1;
-    padding: 10px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-
-footer p {
-    margin: 0;
-    font-size: 14px;
-    color: #666;
-}
-
-
-.btn-common {
-            display: inline-block;
-            padding: 12px 25px;
-            background-color: #0d0238;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            text-align: center;
-            margin: 20px 10px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .btn-common:hover {
-            background-color: #2980b9;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-        }
