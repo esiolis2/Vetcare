@@ -78,4 +78,53 @@ public class UserRepositoryImplTest {
         User foundUser = userRepository.findByEmail("nonexistent@example.com");
         assertNull(foundUser);
     }
+
+    @Test
+    public void testFindById_shouldReturnCorrectUser(){
+        User user = new User();
+
+        user.setName("Mark Smith");
+        user.setEmail("mark.121@example.com");
+        user.setPassword("anotherpassword");
+        user.setAddress("");
+        user.setPhoneNumber(123456L);
+        user.setUserType("User");
+        userRepository.insertUserData(user);
+
+        User found = userRepository.findUserById(1L);
+
+        assertNotNull(found);
+        assertEquals("Mark Smith", found.getName());
+    }
+
+
+
+    // UserRepositoryImplTest.java
+    @Test
+    public void testUpdateUser_shouldReturnCorrectUser() {
+        User user = new User();
+        user.setId(100L);
+        user.setName("Mark Smith");
+        user.setEmail("mark.smith@example.com");
+        user.setPassword("anotherpassword");
+        user.setAddress("");
+        user.setPhoneNumber(123456L);
+        user.setUserType("User");
+
+
+        User insertedUser = userRepository.insertUserData(user);
+
+
+        insertedUser.setName("Mark Updated");
+        insertedUser.setId(100L);
+
+        User updated = userRepository.updateUser(insertedUser);
+
+        assertNotNull(updated);
+        assertEquals("Mark Updated", updated.getName());
+        assertEquals("mark.smith@example.com", updated.getEmail());
+    }
+
+
+
 }

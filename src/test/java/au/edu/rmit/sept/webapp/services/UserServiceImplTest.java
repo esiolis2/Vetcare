@@ -100,4 +100,43 @@ public class UserServiceImplTest {
         assertNull(foundUser);
         verify(userRepository, times(1)).findByEmail("nonexistent@example.com");
     }
+
+    @Test
+    public void testFindById_ShouldReturnCorrectUser() {
+        User user = new User();
+        user.setId(1L);
+        user.setName("Mark");
+
+        when(userRepository.findUserById(1L)).thenReturn(user);
+
+        User found = userService.findByUser(1L);
+
+        assertNotNull(found);
+        assertEquals("Mark", found.getName());
+        verify(userRepository, times(1)).findUserById(1L);
+    }
+
+    @Test
+    public void testUpdateUser_shouldReturnCorrect() {
+        User user = new User();
+        user.setId(1L);
+        user.setName("Mark");
+
+        when(userRepository.findUserById(1L)).thenReturn(user);
+        when(userRepository.updateUser(user)).thenReturn(user);
+
+        User found = userService.findByUser(1L);
+        assertNotNull(found);
+        assertEquals("Mark", found.getName());
+        verify(userRepository, times(1)).findUserById(1L);
+
+        // Update user details
+        found.setName("Mark Updated");
+        User updatedUser = userService.updateUser(found);
+
+        assertNotNull(updatedUser);
+        assertEquals("Mark Updated", updatedUser.getName());
+        verify(userRepository, times(1)).updateUser(found);
+    }
+
 }
