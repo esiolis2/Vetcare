@@ -44,6 +44,7 @@ public class UserRepositoryImplTest {
         user.setPassword("securepassword");
         user.setAddress("");
         user.setPhoneNumber(123446L);
+        user.setUserType("User");
 
         User result = userRepository.insertUserData(user);
 
@@ -58,11 +59,11 @@ public class UserRepositoryImplTest {
 
         User user = new User();
         user.setName("Mark Smith");
-//        user.setUsername("mark.smith");
         user.setEmail("mark.smith@example.com");
         user.setPassword("anotherpassword");
         user.setAddress("");
         user.setPhoneNumber(123456L);
+        user.setUserType("User");
         userRepository.insertUserData(user);
 
         User foundUser = userRepository.findByEmail("mark.smith@example.com");

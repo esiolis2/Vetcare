@@ -38,7 +38,6 @@ public class UserControllerTest {
     @Test
     public void testCreateUser_Success() throws Exception {
         Mockito.when(userService.createUser(Mockito.any(User.class))).thenReturn(user);
-
         mockMvc.perform(post("/signup")
                         .flashAttr("user", user))
                 .andExpect(status().is3xxRedirection())
@@ -49,7 +48,6 @@ public class UserControllerTest {
     public void testLogin_Success() throws Exception {
         Mockito.when(userService.verifyUser("test@example.com", "password")).thenReturn(true);
         Mockito.when(userService.findByEmail("test@example.com")).thenReturn(user);
-
         mockMvc.perform(post("/login")
                         .param("email", "test@example.com")
                         .param("password", "password"))
@@ -60,7 +58,6 @@ public class UserControllerTest {
     @Test
     public void testLogin_Failure() throws Exception {
         Mockito.when(userService.verifyUser("test@example.com", "wrongPassword")).thenReturn(false);
-
         mockMvc.perform(post("/login")
                         .param("email", "test@example.com")
                         .param("password", "wrongPassword"))
@@ -72,7 +69,6 @@ public class UserControllerTest {
     @Test
     public void testGetUserProfile_Success() throws Exception {
         Mockito.when(userService.findByEmail("test@example.com")).thenReturn(user);
-
         mockMvc.perform(get("/account")
                         .sessionAttr("loggedInUser", user))
                 .andExpect(status().isOk())
@@ -89,13 +85,10 @@ public class UserControllerTest {
                 .andExpect(redirectedUrl("/"));
     }
 
-
-
     @Test
     public void testEditUser_Success() throws Exception {
         User updatedUser = new User(1L, "Mark Updated", "test@example.com", "password", 1234567890L, "123 Example St", "User");
         Mockito.when(userService.updateUser(Mockito.any(User.class))).thenReturn(updatedUser);
-
         mockMvc.perform(post("/account/edit")
                         .sessionAttr("loggedInUser", user)
                         .flashAttr("user", updatedUser))
