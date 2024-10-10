@@ -139,4 +139,19 @@ public class UserServiceImplTest {
         verify(userRepository, times(1)).updateUser(found);
     }
 
+
+    @Test
+    public void testDeleteUser_ShouldReturnTrue() {
+        String email = "mark.smith@example.com";
+
+        when(userRepository.removeUser(email)).thenReturn(true);
+
+        boolean result = userService.deleteUser(email);
+
+        assertTrue(result);
+        verify(userRepository, times(1)).removeUser(email);
+    }
+
+
+
 }

@@ -125,6 +125,23 @@ public class UserRepositoryImplTest {
         assertEquals("mark.smith@example.com", updated.getEmail());
     }
 
+    @Test
+    public void testRemoveUser_ShouldReturnTrue() {
+        User user = new User();
+        user.setName("Mark Smith");
+        user.setEmail("mark.smith@example.com");
+        user.setPassword("securepassword");
+        user.setAddress("");
+        user.setPhoneNumber(123456L);
+        user.setUserType("User");
+
+        userRepository.insertUserData(user);
+
+        boolean result = userRepository.removeUser("mark.smith@example.com");
+
+        assertTrue(result);
+    }
+
 
 
 }
