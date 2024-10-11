@@ -29,6 +29,10 @@ public class PrescriptionRefillRequest {
         this.requestDate = requestDate;
     }
 
+    public PrescriptionRefillRequest() {
+
+    }
+
     public Long getRequestID() {
         return requestID;
     }
