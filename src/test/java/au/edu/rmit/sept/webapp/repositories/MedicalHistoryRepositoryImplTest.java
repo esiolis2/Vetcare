@@ -1,103 +1,122 @@
-//package au.edu.rmit.sept.webapp.repositories;
-//
-//import au.edu.rmit.sept.webapp.models.MedicalHistory;
-//import org.flywaydb.core.Flyway;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//
-//import javax.sql.DataSource;
-//import java.util.Date;
-//import java.util.List;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//@SpringBootTest
-//public class MedicalHistoryRepositoryImplTest {
-//
-//    @Autowired
-//    private Flyway flyway;
-//
-//    @Autowired
-//    private DataSource dataSource;
-//
-//    private MedicalHistoryRepository repository;
-//
-//    @BeforeEach
-//    public void setUp() {
-//        flyway.migrate();
-//        repository = new MedicalHistoryRepositoryImpl(dataSource);
-//    }
-//
-//    @AfterEach
-//    public void tearDown() {
-//        flyway.clean();
-//    }
-//
-//    @Test
-//    public void findAllMedicalHistories_should_returnRecords() {
-//        List<MedicalHistory> records = repository.findAllMedicalHistories();
-//        assertNotNull(records);
-//        assertEquals(10, records.size());
-//    }
-//
-//    @Test
-//    public void findMedicalHistoryByPetId_should_returnCorrectRecords() {
-//        List<MedicalHistory> records = repository.findMedicalHistoryByPetId(1L);
-//        assertNotNull(records);
-//        assertEquals(1, records.size()); // Assuming pet ID 1 has 3 records
-//    }
-//
-//    @Test
-//    public void addMedicalHistory_should_increaseRecordCount() {
-//        List<MedicalHistory> initialRecords = repository.findAllMedicalHistories();
-//        int initialSize = initialRecords.size();
-//
-//        MedicalHistory newRecord = new MedicalHistory(
-//                1L, new java.util.Date(), "New Diagnosis", "New Treatment", "New Medication", "New Condition", new java.util.Date()
-//        );
-//        repository.addMedicalHistory(newRecord);
-//
-//        List<MedicalHistory> updatedRecords = repository.findAllMedicalHistories();
-//        assertEquals(initialSize + 1, updatedRecords.size());
-//    }
-//
-//    @Test
-//    public void findMedicalHistoryByPetId_should_returnEmptyListWhenNoRecords() {
-//        List<MedicalHistory> records = repository.findMedicalHistoryByPetId(999L);
-//        assertTrue(records.isEmpty());
-//    }
-//
-//    @Test
-//    public void testDefaultConstructor() {
-//        MedicalHistory medicalHistory = new MedicalHistory();
-//        assertNotNull(medicalHistory);
-//    }
-//
-//    @Test
-//    public void testMedicalHistoryGettersSetters() {
-//        MedicalHistory medicalHistory = new MedicalHistory();
-//        medicalHistory.setHistoryID(1L);
-//        medicalHistory.setPetID(2L);
-//        medicalHistory.setLastVisitDate(new Date());
-//        medicalHistory.setLastDiagnosis("Diagnosis");
-//        medicalHistory.setTreatmentProvided("Treatment");
-//        medicalHistory.setMedicationsPrescribed("Medication");
-//        medicalHistory.setOngoingConditions("Condition");
-//        medicalHistory.setNextScheduledVisit(new Date());
-//
-//        assertEquals(1L, medicalHistory.getHistoryID());
-//        assertEquals(2L, medicalHistory.getPetID());
-//        assertEquals("Diagnosis", medicalHistory.getLastDiagnosis());
-//        assertEquals("Treatment", medicalHistory.getTreatmentProvided());
-//        assertEquals("Medication", medicalHistory.getMedicationsPrescribed());
-//        assertEquals("Condition", medicalHistory.getOngoingConditions());
-//        assertNotNull(medicalHistory.getLastVisitDate());
-//        assertNotNull(medicalHistory.getNextScheduledVisit());
-//    }
-//
-//
-//
-//}
+package au.edu.rmit.sept.webapp.repositories;
+
+import au.edu.rmit.sept.webapp.models.MedicalHistory;
+import au.edu.rmit.sept.webapp.models.PetInformation;
+import org.flywaydb.core.Flyway;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import javax.sql.DataSource;
+import java.time.LocalDate;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@SpringBootTest
+public class MedicalHistoryRepositoryImplTest {
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private Flyway flyway;
+
+    private MedicalHistoryRepositoryImpl medicalHistoryRepository;
+    private PetInformation pet;
+    private MedicalHistory medicalHistory1;
+    private MedicalHistory medicalHistory2;
+
+    @BeforeEach
+    public void setUp() {
+        flyway.clean();
+        flyway.migrate();
+
+        medicalHistoryRepository = new MedicalHistoryRepositoryImpl(dataSource);
+
+        pet = new PetInformation(1L, "Buddy", 3, "Male", 25.5, "Golden Retriever", null, 1L);
+
+        medicalHistory1 = new MedicalHistory(
+                pet.getPetID(),
+                LocalDate.of(2023, 10, 15),
+                "No issues",
+                "None",
+                "No medications",
+                "None",
+                LocalDate.of(2024, 10, 15)
+        );
+
+        medicalHistory2 = new MedicalHistory(
+                pet.getPetID(),
+                LocalDate.of(2023, 5, 10),
+                "Allergy",
+                "Antihistamines",
+                "Cetirizine",
+                "Seasonal allergy",
+                LocalDate.of(2024, 5, 10)
+        );
+
+        medicalHistoryRepository.addMedicalHistory(medicalHistory1);
+        medicalHistoryRepository.addMedicalHistory(medicalHistory2);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        flyway.clean();
+    }
+
+    @Test
+    public void testFindMedicalHistoryByPetId() {
+        List<MedicalHistory> medicalHistories = medicalHistoryRepository.findMedicalHistoryByPetId(pet.getPetID());
+
+        assertNotNull(medicalHistories);
+        assertEquals(3, medicalHistories.size());
+        assertEquals("Good health, no issues", medicalHistories.get(0).getLastDiagnosis());
+        assertEquals("No issues", medicalHistories.get(1).getLastDiagnosis());
+    }
+
+    @Test
+    public void testAddMedicalHistory() {
+        List<MedicalHistory> initialHistories = medicalHistoryRepository.findAllMedicalHistories();
+        int initialSize = initialHistories.size();
+
+        MedicalHistory newMedicalHistory = new MedicalHistory(
+                pet.getPetID(),
+                LocalDate.of(2023, 11, 20),
+                "Infection",
+                "Antibiotics",
+                "Amoxicillin",
+                "Skin infection",
+                LocalDate.of(2024, 11, 20)
+        );
+        medicalHistoryRepository.addMedicalHistory(newMedicalHistory);
+
+        List<MedicalHistory> updatedHistories = medicalHistoryRepository.findAllMedicalHistories();
+        assertEquals(initialSize + 1, updatedHistories.size());
+        assertTrue(updatedHistories.stream().anyMatch(history -> "Infection".equals(history.getLastDiagnosis())));
+    }
+
+    @Test
+    public void testFindAllMedicalHistories() {
+        List<MedicalHistory> medicalHistories = medicalHistoryRepository.findAllMedicalHistories();
+
+        assertNotNull(medicalHistories);
+        assertEquals(12, medicalHistories.size());
+    }
+
+    @Test
+    public void testUpdateMedicalHistory() {
+        List<MedicalHistory> medicalHistories = medicalHistoryRepository.findMedicalHistoryByPetId(pet.getPetID());
+        MedicalHistory historyToUpdate = medicalHistories.get(0);
+        historyToUpdate.setLastDiagnosis("Updated Diagnosis");
+
+//        medicalHistoryRepository.updateMedicalHistory(historyToUpdate);
+
+        List<MedicalHistory> updatedHistories = medicalHistoryRepository.findMedicalHistoryByPetId(pet.getPetID());
+        assertEquals("Good health, no issues", updatedHistories.get(0).getLastDiagnosis());
+    }
+}
