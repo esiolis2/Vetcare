@@ -1,54 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout.html}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  layout:decorate="~{layout.html}">>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book an Appointment with a Veterinarian</title>
-<!--    <link href="/static/assets/css/BookApp.css" rel="stylesheet">-->
+    <link href="/static/assets/css/BookApp.css" rel="stylesheet">
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.18/jquery.timepicker.min.css">
+
+
+
+
     <link th:href="@{/assets/css/BookApp.css}" rel="stylesheet">
 </head>
 <body>
-
 <div layout:fragment="content">
+
 <div class="container mt-5">
     <h2 class="text-center">Book an Appointment with a Vet</h2>
     <form  th:action="@{/add}" method="post" id="appointmentForm" class="mx-auto form-container">
-        <!-- Step 1: Pet Information -->
+<!--        Step 1 - Choose the pet -->
+
         <div id="step-1" class="form-step">
             <div class="form-group text-center">
                 <h5>Is this a new pet or an existing pet?</h5>
-                <button type="button" class="btn btn-primary mx-2" id="newPetButton" onclick="showNewPetModal()">Register New Pet</button>
-                <button type="button" class="btn btn-secondary mx-2" id="existingPetButton" onclick="showExistingPets()">Choose Existing Pet</button>
+                <button class="btn btn-primary" id="add-pet-button" data-bs-toggle="modal" data-bs-target="#addPetModal" onclick="showNewPetModal()">Add New Pet</button>
             </div>
 
-            <div id="existingPetsGrid" style="display: none;">
-                <h5>Choose your existing pet:</h5>
+            <div id="existingPetsGrid">
+                <h5>Choose a pet:</h5>
                 <div class="row">
                     <div class="col-md-12">
-                        <select name=petId id="petDropdown" class="form-control">
-                            <option value="">-- Select a Pet --</option>
+                        <select required name=petId id="petDropdown" class="form-control">
+                            <option disabled selected value="placeholder">-- Select a Pet --</option>
                             <option th:each="pet : ${petInformation}" th:value="${pet.petID}" th:text="${pet.name}"></option>
                         </select>
                     </div>
                 </div>
             </div>
             <div id="petModalContainer"></div>
-            <script>
-                function showNewPetModal() {
-                    $('#petModalContainer').load('/pets/register', function() {
-                        // Show the modal after loading
-                        $('#newPetModal').modal('show');
-                    });
-                }
-
-                function showExistingPets() {
-                    document.getElementById('existingPetsGrid').style.display = 'block'; // Show the existing pets dropdown
-                }
-            </script>
-
             <button type="button" class="btn btn-primary mt-3" onclick="nextStep(2)">Next</button>
         </div>
         <!-- Step 2: Reason for Appointment and Clinic Pricing -->
@@ -56,11 +48,11 @@
             <div class="form-group">
                 <label for="reason">Reason for Appointment:</label>
                 <select name="reason" class="form-control" id="reason" required>
-                    <option value="">Select a reason</option>
+                    <option disabled selected value="placeholder">Select a reason</option>
                     <option th:each="clinicReason : ${clinicReasons}" th:value="${clinicReason.id}" th:text="${clinicReason.serviceName}"></option>
                 </select>
 
-                <div class="pricing-box mt-3" id="pricingBox">
+                <div class="pricing-box mt-3" id="pricingBox" style="display: none;">
                     <ul class="list-group" id="prices">
                         <li th:each="pricing : ${servicePricings}" th:attr="data-service-id=${pricing.serviceId}" th:text="${pricing.price} + ' - ' + ${pricing.clinicName}" style="display: none;"></li>
                     </ul>
@@ -69,7 +61,7 @@
                 <div>
                     <label for="clinic">Available Clinics:</label>
                     <select class="form-control" id="clinic" required name="clinicId">
-                        <option>Select a clinic</option>
+                        <option  disabled selected value="placeholder">Select a clinic</option>
                         <option th:each="clinic : ${clinics}" th:value="${clinic.id}" th:text="${clinic.name}">Clinic Name</option>
                     </select>
                 </div>
@@ -77,298 +69,44 @@
                 <div class="form-group vetBook" id="veterinarianForm">
                     <label for="vetId">Choose your Veterinarian:</label>
                     <select name="veterinarianId" class="form-control" id="vetId" required>
-                        <option value="placeholder">Select a Veterinarian</option>
+                        <option  disabled selected value="placeholder">Select a Veterinarian</option>
                         <option th:each="veterinarian : ${veterinarians}" th:value="${veterinarian.id}" th:text="${veterinarian.name}" th:attr="data-clinic-id=${veterinarian.clinicId}">Veterinarian Name</option>
                     </select>
                 </div>
             </div>
-            <script>
-                let currentStep = 2;
-
-      // Prevent moving between steps unless validated
-      function validateStep2() {
-          // Get the values of the select inputs
-          const reason = document.getElementById('reason').value;
-          const clinic = document.getElementById('clinic').value;
-
-          // Check if 'reason' is selected
-          if (!reason || reason === "") {
-              alert('Please select a reason for the appointment.');
-              document.getElementById('reason').focus();
-              return false; // Stop here if validation fails
-          }
-
-          // Check if 'clinic' is selected
-          if (!clinic || clinic === "" || clinic === "Select a clinic") {
-              alert('Please select a clinic.');
-              document.getElementById('clinic').focus();
-              return false; // Stop here if validation fails
-          }
-
-          // If all validations pass, proceed to the next step
-          nextStep(3);
-      }
-
-      // Only allow moving between steps in sequence
-      function nextStep(stepNumber) {
-          if (stepNumber !== currentStep + 1) {
-              return false; // Disallow moving between steps directly
-          }
-
-          // Hide all steps
-          document.querySelectorAll('.form-step').forEach(step => {
-              step.style.display = 'none';
-          });
-
-          // Show the desired step
-          document.getElementById('step-' + stepNumber).style.display = 'block';
-
-          // Update the current step to the next one
-          currentStep = stepNumber;
-      }
-
-      function previousStep(stepNumber) {
-          if (stepNumber !== currentStep - 1) {
-              return false; // Disallow moving back out of sequence
-          }
-
-          // Hide all steps
-          document.querySelectorAll('.form-step').forEach(step => {
-              step.style.display = 'none';
-          });
-
-          // Show the desired step
-          document.getElementById('step-' + stepNumber).style.display = 'block';
-
-          // Update the current step to the previous one
-          currentStep = stepNumber;
-      }
-
-      // Disable form submission if moving between steps incorrectly
-      document.getElementById('appointmentForm').addEventListener('submit', function(event) {
-          if (currentStep !== 3) {
-              alert('Please complete all steps before submitting.');
-              event.preventDefault(); // Stop submission
-          }
-      });
-                                 document.getElementById('reason').addEventListener('change', function() {
-                                     var selectedServiceId = this.value;
-                                     var prices = document.getElementById('prices');
-                                     var priceItems = prices.querySelectorAll('li');
-
-                                     // Show or hide pricing based on the selected service ID
-                                     priceItems.forEach(function(item) {
-                                         if (item.getAttribute('data-service-id') === selectedServiceId || selectedServiceId === "") {
-                                             item.style.display = 'block'; // Show item if it matches or if no reason is selected
-                                         } else {
-                                             item.style.display = 'none'; // Hide item otherwise
-                                         }
-                                     });
-                                 });
-            </script>
             <button type="button" class="btn btn-secondary" onclick="previousStep(1)">Previous</button>
-            <button type="button" class="btn btn-primary" onclick="validateStep2()">Next</button>
+            <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next</button>
         </div>
-
 
         <!-- Step 3: Appointment Date and Time -->
         <div id="step-3" class="form-step" style="display: none;">
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="appointment-date">Appointment Date:</label>
-                    <input name="appointmentDate" type="date" class="form-control" id="appointment-date" required>
+                    <label for="appointmentDate">Appointment Date:</label>
+                    <input placeholder="Choose a date" name="appointmentDate" type="text" class="form-control" id="appointmentDate" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="appointment-time">Appointment Time:</label>
-                    <input name="appointmentTime" type="time" class="form-control" id="appointment-time" required>
+                    <input name="time" type="text" class="form-control" id="appointment-time" required placeholder="Select Time">
                 </div>
             </div>
 
             <button type="button" class="btn btn-secondary" onclick="previousStep(2)">Previous</button>
-            <button type="submit" class="btn btn-primary" onclick="validateFinalStep()">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-        <script>
-            function validateFinalStep() {
-                    const appointmentDate = document.getElementById('appointment-date').value;
-                    const appointmentTime = document.getElementById('appointment-time').value;
 
-                    // Check if 'appointmentDate' is selected
-                    if (!appointmentDate || appointmentDate === "") {
-                        alert('Please select an appointment date.');
-                        document.getElementById('appointment-date').focus();
-                        return false; // Stop if validation fails
-                    }
-
-                    // Check if 'appointmentTime' is selected
-                    if (!appointmentTime || appointmentTime === "") {
-                        alert('Please select an appointment time.');
-                        document.getElementById('appointment-time').focus();
-                        return false; // Stop if validation fails
-                    }
-
-                    // If both date and time are valid, submit the form
-                    document.getElementById('appointmentForm').submit();
-                }
-
-                function nextStep(stepNumber) {
-                    if (stepNumber !== currentStep + 1) {
-                        return false; // Disallow moving between steps directly
-                    }
-
-                    // Hide all steps
-                    document.querySelectorAll('.form-step').forEach(step => {
-                        step.style.display = 'none';
-                    });
-
-                    // Show the desired step
-                    document.getElementById('step-' + stepNumber).style.display = 'block';
-
-                    // Update the current step to the next one
-                    currentStep = stepNumber;
-                }
-
-                function previousStep(stepNumber) {
-                    if (stepNumber !== currentStep - 1) {
-                        return false; // Disallow moving back out of sequence
-                    }
-
-                    // Hide all steps
-                    document.querySelectorAll('.form-step').forEach(step => {
-                        step.style.display = 'none';
-                    });
-
-                    // Show the desired step
-                    document.getElementById('step-' + stepNumber).style.display = 'block';
-
-                    // Update the current step to the previous one
-                    currentStep = stepNumber;
-                }
-                        document.getElementById('reason').addEventListener('change', function() {
-                            var selectedServiceId = this.value;
-                            var prices = document.getElementById('prices');
-                            var priceItems = prices.querySelectorAll('li');
-
-                            // Show or hide pricing based on the selected service ID
-                            priceItems.forEach(function(item) {
-                                if (item.getAttribute('data-service-id') === selectedServiceId || selectedServiceId === "") {
-                                    item.style.display = 'block'; // Show item if it matches or if no reason is selected
-                                } else {
-                                    item.style.display = 'none'; // Hide item otherwise
-                                }
-                            });
-
-
-                        });
-        </script>
     </form>
-
-    <!-- Confirmation Modal -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            </div>
-            <div class="modal-body">
-                <p>Your appointment has been successfully booked!</p>
-                <ul>
-                    <li>Reason: <span id="confirmReason"></span></li>
-                    <li>Clinic: <span id="confirmClinic"></span></li>
-                    <li>Appointment Date: <span id="confirmDate"></span></li>
-                    <li>Appointment Time: <span id="confirmTime"></span></li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-
-                <script>
-                    function showPricing() {
-                        const reason = document.getElementById('petQuery').value;
-                        const pricingBox = document.getElementById('pricingBox');
-                        if (reason) {
-                            pricingBox.style.display = 'block'; // Show the pricing box
-                        } else {
-                            pricingBox.style.display = 'none';  // Hide the pricing box if no reason is selected
-                        }
-                    }
-                    function nextStep(stepNumber) {
-                        document.querySelectorAll('.form-step').forEach(step => step.style.display = 'none');
-                        document.getElementById('step-' + stepNumber).style.display = 'block';
-                    }
-                    function previousStep(stepNumber) {
-                        nextStep(stepNumber);
-                    }
-                    let selectedPet = null;
-                    function selectPet(button, petName) {
-                        // Reset all button styles
-                        document.querySelectorAll('.pet-button').forEach(btn => {
-                            btn.classList.remove('btn-primary');
-                            btn.classList.add('btn-outline-primary');
-                        });
-                        // Highlight the selected button
-                        button.classList.remove('btn-outline-primary');
-                        button.classList.add('btn-primary');
-                        // Store the selected pet
-                        selectedPet = petName;
-                        console.log('Selected Pet:', selectedPet);
-                    }
-                    function togglePetSelection() {
-                        const selection = document.getElementById('newOrExisting').value;
-                        const existingPetsGrid = document.getElementById('existingPetsGrid');
-                        const newPetForm = document.getElementById('newPetForm');
-                        if (selection === 'existing') {
-                            existingPetsGrid.style.display = 'block'; // Show existing pets grid
-                            newPetForm.style.display = 'none'; // Hide new pet form
-                        } else if (selection === 'new') {
-                            existingPetsGrid.style.display = 'none'; // Hide existing pets grid
-                            newPetForm.style.display = 'block'; // Show new pet form
-                        } else {
-                            existingPetsGrid.style.display = 'none'; // Hide both if no selection
-                            newPetForm.style.display = 'none';
-                        }
-                    }
-                    function handleSubmit(event) {
-                        event.preventDefault(); // Prevent the form from submitting normally
-                        const selection = document.getElementById('newOrExisting').value;
-                        if (selection === 'existing' && selectedPet === null) {
-                            alert('Please select an existing pet.');
-                            return; // Exit if no existing pet is selected
-                        }
-                        if (selection === 'new') {
-                            const petName = document.getElementById('petName').value;
-                            const petType = document.getElementById('petType').value;
-                            const petAge = document.getElementById('petAge').value;
-                            if (!petName || !petType || !petAge) {
-                                alert('Please fill out all new pet details.');
-                                return; // Exit if new pet details are incomplete
-                            }
-                            console.log('New Pet Submitted:', { petName, petType, petAge });
-                        }
-                        // Gather other form data
-                        const reason = document.getElementById('petQuery').value;
-                        const clinic = document.querySelector('.pricing-box ul li').innerText; // Assuming it's Clinic A, B, or C
-                        const appointmentDate = document.getElementById('appointment-date').value;
-                        const appointmentTime = document.getElementById('appointment-time').value;
-                        // Populate modal fields
-                        document.getElementById('confirmReason').innerText = reason;
-                        document.getElementById('confirmClinic').innerText = clinic;
-                        document.getElementById('confirmDate').innerText = appointmentDate;
-                        document.getElementById('confirmTime').innerText = appointmentTime;
-
-                        // Show the confirmation modal
-                        $('#confirmationModal').modal('show');
-                    }
-                </script>
-            </div>
-        </div>
-
-        <link th:href="@{/script/BookApp.js}" rel="script">
-
-    </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
 </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.18/jquery.timepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="/scripts/BookApp.js"></script>
+
+
 </div>
 </body>
 
