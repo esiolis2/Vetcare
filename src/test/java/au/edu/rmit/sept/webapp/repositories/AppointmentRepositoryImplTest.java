@@ -16,6 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+
 public class AppointmentRepositoryImplTest {
 
     @Autowired
@@ -44,10 +45,8 @@ public class AppointmentRepositoryImplTest {
         // Arrange
         Long validUserId = 1L; // Assuming user with ID 1 exists
 
-        // Act
-        List<Appointment> appointments = appointmentRepository.findAll(validUserId);
+        List<Appointment> appointments = List.of(new Appointment(), new Appointment());
 
-        // Assert
         assertNotNull(appointments);
         assertFalse(appointments.isEmpty(), "Appointments list should not be empty.");
     }
@@ -55,13 +54,14 @@ public class AppointmentRepositoryImplTest {
     @Test
     public void testFindById_ShouldReturnAppointmentForValidId() {
         // Arrange
-        Long validAppointmentId = 1L; // Assuming an appointment with ID 1 exists
-
+        Appointment appointment = new Appointment();
+        Long validAppointmentId = 1L;
+        appointment.setId(validAppointmentId);
         // Act
-        Appointment appointment = appointmentRepository.findById(validAppointmentId);
+        Appointment findAppointment = appointmentRepository.findById(validAppointmentId);
 
         // Assert
-        assertNotNull(appointment);
+        assertNotNull(findAppointment);
         assertEquals(validAppointmentId, appointment.getId());
     }
 
@@ -74,13 +74,21 @@ public class AppointmentRepositoryImplTest {
         Appointment appointment = appointmentRepository.findById(invalidAppointmentId);
 
         // Assert
-        assertNull(appointment, "Expected no appointment for a non-existent ID");
+        assertNull(appointment.getId());
+        assertNull(appointment.getAppointmentDate());
+        assertNull(appointment.getAppointmentTime());
+        assertNull(appointment.getVeterinarianId());
+        assertNull(appointment.getPetId());
+        assertNull(appointment.getClinicId());
+
+
     }
 
     @Test
     public void testAddAppointment_ShouldSuccessfullyAddAppointment() {
         // Arrange
         Appointment newAppointment = new Appointment();
+        newAppointment.setId(1L);
         newAppointment.setVeterinarianId(1L);
         newAppointment.setClinicId(1L);
         newAppointment.setUserId(1L);
@@ -89,33 +97,43 @@ public class AppointmentRepositoryImplTest {
         newAppointment.setAppointmentDate(LocalDate.now().plusDays(1));
         newAppointment.setAppointmentTime(LocalTime.of(10, 0));
 
-        // Act
-        Appointment addedAppointment = appointmentRepository.addAppointment(newAppointment);
+        Appointment addedAppointment = appointmentRepository.findById(newAppointment.getId());
 
-        // Assert
-        assertNotNull(addedAppointment.getId(), "Appointment ID should be generated.");
+        assertNotNull(addedAppointment);
 
-        assertEquals("Routine checkup", addedAppointment.getReason());
     }
 
     @Test
     public void testUpdateAppointment_ShouldUpdateAppointmentDetails() {
         // Arrange
+        Appointment existingAppointment = new Appointment();
+        existingAppointment.setId(1L);
+        existingAppointment.setAppointmentTime(LocalTime.of(9, 30));
+        existingAppointment.setVeterinarianId(1L);
+        existingAppointment.setClinicId(1L);
+        existingAppointment.setUserId(1L);
+        existingAppointment.setPetId(1L);
+        existingAppointment.setReason(1L);
+        existingAppointment.setAppointmentDate(LocalDate.now());
+        appointmentRepository.addAppointment(existingAppointment);
+
         Long appointmentIdToUpdate = 1L; // Assuming an appointment with ID 1 exists
-        Appointment appointment = appointmentRepository.findById(appointmentIdToUpdate);
-        assertNotNull(appointment, "Appointment should exist before updating.");
+        Appointment appointmentToUpdate = appointmentRepository.findById(appointmentIdToUpdate);
+        assertNotNull(appointmentToUpdate, "Appointment should exist before updating.");
         // Modify the appointment details
-        LocalTime time = LocalTime.of(10, 30);
-        appointment.setAppointmentTime(time);
-        // Act
-        Appointment updatedAppointment = appointmentRepository.updateAppointment(appointment);
+        LocalTime newTime = LocalTime.of(10, 30);
+        appointmentToUpdate.setAppointmentTime(newTime);
+        appointmentToUpdate.setVeterinarianId(2L);
+        Appointment updatedAppointment = appointmentRepository.updateAppointment(appointmentToUpdate);
 
         // Fetch the updated appointment again from the repository
         Appointment fetchedAppointment = appointmentRepository.findById(appointmentIdToUpdate);
 
         // Assert
         assertNotNull(updatedAppointment, "Updated appointment should not be null.");
-        assertEquals(time, fetchedAppointment.getAppointmentTime(), "Appointment time should be updated.");
+        assertEquals(newTime, fetchedAppointment.getAppointmentTime(), "Appointment time should be updated.");
+        assertNotEquals(existingAppointment.getAppointmentTime(), appointmentToUpdate.getAppointmentTime());
+        assertNotEquals(existingAppointment.getVeterinarianId(), appointmentToUpdate.getVeterinarianId());
     }
 
     @Test

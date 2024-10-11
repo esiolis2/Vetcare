@@ -2,12 +2,16 @@ package au.edu.rmit.sept.webapp.controllers;
 
 import au.edu.rmit.sept.webapp.models.*;
 import au.edu.rmit.sept.webapp.services.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
@@ -18,6 +22,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+
 
 @WebMvcTest(AppointmentController.class)
 public class AppointmentControllerTest {
@@ -52,9 +58,17 @@ public class AppointmentControllerTest {
     private List<ClinicServicePricing> servicePricings;
     private List<PetInformation> pets;
     private List<Appointment> appointments;
+    private User user;
 
     @BeforeEach
     public void setUp() {
+
+        user = new User();
+        user.setId(1L);
+        user.setEmail("testUser@test.com");
+
+        Mockito.when(userService.findByEmail("testUser@test.com")).thenReturn(user);
+
         clinics = Arrays.asList(new Clinic(), new Clinic());
         veterinarians = Arrays.asList(new Veterinarian(), new Veterinarian());
         clinicReasons = Arrays.asList(new ClinicReasons(), new ClinicReasons());
@@ -62,17 +76,22 @@ public class AppointmentControllerTest {
         pets = Arrays.asList(new PetInformation(), new PetInformation());
         appointments = Arrays.asList(new Appointment(), new Appointment());
 
+        Mockito.when(userService.findByEmail("testUser@test.com")).thenReturn(user);
         Mockito.when(clinicService.getAllClinics()).thenReturn(clinics);
         Mockito.when(veterinarianService.getAllVeterinarians()).thenReturn(veterinarians);
         Mockito.when(clinicReasonsService.getAllClinicReasons()).thenReturn(clinicReasons);
         Mockito.when(clinicServicePricingService.getAll()).thenReturn(servicePricings);
-        Mockito.when(petInformationService.getAllPets()).thenReturn(pets);
+        Mockito.when(petInformationService.getPetByUserId(user.getId())).thenReturn(pets);
+
     }
 
     // Test for the appointment booking page
     @Test
+
     public void testBookApp() throws Exception {
-        mockMvc.perform(get("/appointments"))
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.getSession().setAttribute("userEmail", user.getEmail());
+        mockMvc.perform(get("/appointments").session((MockHttpSession) request.getSession()))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("clinics"))
                 .andExpect(model().attribute("clinics", clinics))

@@ -9,22 +9,29 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(UserController.class)
+
+@SpringBootTest
 public class UserControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private UserService userService;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
 
     @MockBean
     private PetInformationService petInfoService;
@@ -33,6 +40,8 @@ public class UserControllerTest {
 
     @BeforeEach
     public void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
         user = new User(1L, "Mark", "test@example.com", "password", 1234567890L, "123 Example St", "User");
     }
 

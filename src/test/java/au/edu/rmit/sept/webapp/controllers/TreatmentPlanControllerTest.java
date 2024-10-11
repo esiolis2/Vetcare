@@ -8,9 +8,11 @@ import au.edu.rmit.sept.webapp.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
@@ -18,11 +20,13 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(TreatmentPlanController.class)
+@SpringBootTest
 public class TreatmentPlanControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
     @MockBean
     private TreatmentPlanService treatmentPlanService;
@@ -38,6 +42,8 @@ public class TreatmentPlanControllerTest {
 
     @BeforeEach
     public void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
         pet = new PetInformation(1L, "Max", 3, "Male", 5.0, "Labrador", null, 1L);
         treatmentPlan = new TreatmentPlan(1L, "Diagnosis", "Surgery", "Details", "Healthy", true, null, null, "Meds", "Duration", "Next steps", "Vet Name", null, 200.0, "Success", "Notes", "Clinic", true, "Insurance", "Paid", null, null);
     }

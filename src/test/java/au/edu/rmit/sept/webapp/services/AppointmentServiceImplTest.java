@@ -63,7 +63,7 @@ public class AppointmentServiceImplTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals("Routine checkup", result.getReason());
+        assertEquals(1, result.getReason());
         verify(appointmentRepository, times(1)).addAppointment(newAppointment);
     }
 
@@ -81,7 +81,7 @@ public class AppointmentServiceImplTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals("Initial reason", result.getReason());
+        assertEquals(1, result.getReason());
         verify(appointmentRepository, times(1)).updateAppointment(existingAppointment);
     }
 
