@@ -102,18 +102,18 @@ public class PrescriptionController {
             return "refillPrescription";
         }
 
-        if (petId == null) {
-            model.addAttribute("errorMessage", "Pet ID is missing. Please select a pet to order prescriptions.");
-            return "refillPrescription";
-        }
+        List<PetInformation> pets = petInformationService.getPetByUserId(userId);
+        model.addAttribute("pets", pets);
 
-        PetInformation pet = petInformationService.getPetById(petId);
-        if (pet != null && pet.getOwnerId().equals(userId)) {
-            List<Prescription> prescriptions = prescriptionService.getPrescriptionsByPetId(petId);
-            model.addAttribute("pet", pet); // Ensure pet object is added to the model
-            model.addAttribute("prescriptions", prescriptions);
-        } else {
-            model.addAttribute("errorMessage", "Pet not found or you do not have permission to order prescriptions for this pet.");
+        if (petId != null) {
+            PetInformation selectedPet = petInformationService.getPetById(petId);
+            if (selectedPet != null && selectedPet.getOwnerId().equals(userId)) {
+                List<Prescription> prescriptions = prescriptionService.getPrescriptionsByPetId(petId);
+                model.addAttribute("selectedPet", selectedPet);
+                model.addAttribute("prescriptions", prescriptions);
+            } else {
+                model.addAttribute("errorMessage", "Pet not found or you do not have permission to order prescriptions for this pet.");
+            }
         }
 
         return "refillPrescription";
