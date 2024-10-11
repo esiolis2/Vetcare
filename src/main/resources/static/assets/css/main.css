@@ -27,11 +27,11 @@ p {
 
 /* NAVBAR */
 .navbar-custom {
-    background-color: #388087; /* User's preferred background color */
+    background-color: #388087;
     margin-bottom: 0;
 }
 .navbar-brand {
-    font-family: 'Sergio Trendy', serif; /* Use the same font family as body for consistency */
+    font-family: 'Sergio Trendy', serif;
     font-size: 2rem;
     font-weight: 700;
     color: #fff;
@@ -47,10 +47,10 @@ p {
     color: #badfe7;
     text-decoration: underline;
 }
+
 /* HERO SECTION */
 .hero-section {
     position: relative;
-    /*height: 100vh;*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,90 +132,6 @@ p {
 .card-button:hover{
     background-color: #bccce1;
 }
-.navbar-nav .nav-link:hover {
-    color: #badfe7;
-    text-decoration: underline;
-}
-/* HERO SECTION */
-.hero-section {
-    position: relative;
-    /*height: 100vh;*/
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #222222;
-    background-color: #ebf2eb;
-    margin-top: 0;
-}
-.hero-text {
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-}
-.hero-text h1 {
-    font-family: 'Poppins', serif;
-    font-size: 3rem;
-    font-weight: bold;
-    color: #222222;
-    margin: 0;
-}
-.hero-text p {
-    font-size: 1.25rem;
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-}
-.btn-custom {
-    background-color: #388087;
-    color: white;
-    border: none;
-}
-.btn-custom:hover {
-    background-color: #bccce1;
-}
-.hero-image {
-    background-size: cover;
-    height: 100%;
-}
-.hero-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-/* Services Section */
-.card {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: flex;
-    justify-content: space-between;
-    height: 100%;
-}
-
-.card-body {
-    flex-grow: 1;
-    background-color:#ebf2eb ;
-}
-.card img {
-    height: auto;
-    max-height: 250px;
-}
-
-.card:hover {
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-}
-
-.card-button{
-    background-color: #388087;
-    color: white;
-    border: none;
-}
-
-.card-button:hover{
-    background-color: #bccce1;
-}
-
-
 
 /* FOOTER */
 .footer-style {
@@ -234,29 +150,27 @@ p {
     flex: 1;
 }
 
-/* FOOTER */
-.footer-style {
-    background-color: #388087;
-    color: #f9f7f3;
-}
-
 .footer-style p {
     margin: 0;
     font-size: 1.25rem;
     color: #f9f7f3;
 }
+
 .footer-style a {
     color: #f9f7f3;
     text-decoration: none;
     padding: 0 5px;
 }
+
 .footer-style a:hover {
     color: #b8c5cd;
 }
+
 .footer-style .social-icon {
     font-weight: bold;
 }
-/*MOBILE RESPONSIVE*/
+
+/* MOBILE RESPONSIVE */
 @media(max-width:768px){
     .hero-text{
         font-size: 1rem;
@@ -267,4 +181,98 @@ p {
     .footer-style .row {
         text-align: center;
     }
+}
+
+/* Global Variables */
+:root {
+  --color-first: #65587f;
+  --color-second: #f18867;
+  --color-third: #e85f99;
+  --color-forth: #50bda1;
+  --block-width: 300px;
+  --block-height: 270px;
+  --border-width: .625rem;
+  --border-radius-outer: 8px;
+  --border-radius-inner: calc(var(--border-radius-outer) / 2);
+  --font-plain: 'IBM Plex Sans', sans-serif;
+  --font-special: 'Fredoka One', sans-serif;
+  box-sizing: border-box;
+  line-height: 1.4;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+#login-page {
+  background: hsl(0, 0%, 95%);
+  color: #5e5e5e;
+  font-family: var(--font-plain);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#login-page .container {
+  width: var(--block-width);
+  height: var(--block-height);
+  background-color: #388087;
+  box-shadow: 0 10px 40px -10px rgba(0, 64, 128, 0.2);
+  border-radius: var(--border-radius-outer);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#login-page .form-container {
+  width: calc(100% - var(--border-width));
+  padding: 1.2rem 1rem 1.8rem;
+  background: white;
+  border-radius: var(--border-radius-inner);
+}
+
+/* Form Elements */
+#login-page input {
+  font-family: inherit;
+  color: inherit;
+  outline: none;
+  font-size: 93%;
+  transition: all 300ms ease;
+}
+
+#login-page input[type="submit"] {
+  background: var(--color-third);
+  border-color: var(--color-third);
+  color: #fff;
+  font-family: var(--font-special);
+}
+
+#login-page input[type="submit"]:active {
+  transform: scale(0.97);
+}
+
+#login-page h3 {
+  margin: 0;
+  font-family: var(--font-special);
+  line-height: 1.4;
+}
+
+/* Accent Animation */
+#login-page .rainbow {
+  width: 100%;
+  height: 100%;
+  animation: o-rotate-360 linear 8s infinite;
+}
+
+@keyframes o-rotate-360 {
+  0% { transform: rotate(0); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Form Focus */
+#login-page .c-form--accent input:hover,
+#login-page .c-form--accent input:focus {
+  border-color: var(--color-third);
+  box-shadow: 0 0 0 3px hsla(335, 75%, 64%, 0.25);
 }

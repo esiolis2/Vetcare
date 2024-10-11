@@ -2,11 +2,9 @@ package au.edu.rmit.sept.webapp.controllers;
 
 
 import au.edu.rmit.sept.webapp.models.User;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
@@ -43,8 +41,10 @@ public class  HomeController {
         return "Login.html";
     }
 
-
-
+    @GetMapping("/dashboard/prescription-management")
+    public String prescription(){
+        return "/dashboard/PrescriptionManagement";
+    }
 
     @ModelAttribute("loggedInUser")
     public User getLoggedInUser(HttpServletRequest request) {

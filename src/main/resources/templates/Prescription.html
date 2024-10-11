@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/assets/css/prescription.css}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById('refillForm');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                fetch('http://localhost:8080/prescription/refill', {
+                    method: 'POST',
+                    body: new FormData(form),
+                    redirect: 'follow'
+                }).then(response => {
+                    if (response.ok) {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = 'alert alert-success mt-3';
+                        messageDiv.innerHTML = '<strong>Success!</strong> Your prescription has been ordered.';
+                        document.querySelector('.prescription-refill').appendChild(messageDiv);
+                        form.reset();
+                    } else {
+                        alert('Failed to submit the form. Please try again.');
+                    }
+                }).catch(error => {
+                    alert('An error occurred while ordering the prescription.');
+                    console.error('Error:', error);
+                });
+            });
+        });  </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container prescriptionContainer">
+        <div class="text-center mb-4">
+            <h2>Prescription Management</h2>
+        </div>
+        <div class="alert alert-danger" th:if="${errorMessage != null}">
+            <div class="alert-content"><span class="icon">⚠️</span>
+                <p th:text="${errorMessage}"></p></div>
+        </div>    <!-- Pet Selection Dropdown -->
+        <div class="pet-selection mb-4" th:if="${errorMessage == null}">
+            <form th:action="@{/prescription}" method="get">
+                <div class="form-group">
+                    <label for="petSelect">Choose the Pet</label>
+                    <select class="form-select"
+                            id="petSelect"
+                            name="petId"
+                            onchange="this.form.submit()">
+                        <option value="" selected>Select a Pet</option>
+                        <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"></option>
+                    </select></div>
+            </form>
+        </div>
+        <!-- Prescription Details and Refill Form -->
+        <div th:if="${pet != null}">      <!-- Prescription Records -->
+            <div class="prescription-records-row">
+                <div class="prescription-record card" th:each="prescription : ${prescriptions}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${prescription.medicationName}">Medication
+                            Name</h5>
+                        <p class="card-text"><strong>Dosage: </strong> <span
+                                th:text="${prescription.dosage != null ? prescription.dosage : 'N/A'}"></span></p>
+                        <p class="card-text"><strong>Instructions: </strong> <span
+                                th:text="${prescription.instructions != null ? prescription.instructions : 'N/A'}"></span>
+                        </p>
+                        <p class="card-text"><strong>Next Refill Date: </strong> <span
+                                th:text="${prescription.nextRefillDate != null ? #temporals.format(prescription.nextRefillDate, 'yyyy-MM-dd') : 'N/A'}"></span>
+                        </p>
+                        <p class="card-text"><strong>Quantity Prescribed: </strong> <span
+                                th:text="${prescription.quantityPrescribed}"></span></p>
+                        <p class="card-text"><strong>Refill Count: </strong> <span
+                                th:text="${prescription.refillCount}"></span></p>
+                        <p class="card-text"><strong>Expiry Date: </strong> <span
+                                th:text="${prescription.expiryDate != null ? #temporals.format(prescription.expiryDate, 'yyyy-MM-dd') : 'N/A'}"></span>
+                        </p>
+                        <p class="card-text"><strong>Last Updated At: </strong> <span
+                                th:text="${#temporals.format(prescription.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                        </p></div>
+                </div>
+            </div>
+            <!-- Prescription Refill Form -->
+            <div class="prescription-refill">
+                <h3>Request Prescription Refill</h3>
+                <form id="refillForm" th:action="@{/prescription/refill}" method="post">
+                    <input type="hidden"
+                           name="petId"
+                           th:value="${pet.petID}"/>
+                    <div class="form-group">
+                        <label>Medication Name</label>
+                        <div th:each="prescription : ${prescriptions}" class="form-check">
+                            <input
+                                    class="form-check-input" type="checkbox"
+                                    id="medication_${prescription.prescriptionID}"
+                                    name="medications[]" th:value="${prescription.medicationName}">
+                            <label
+                                    class="form-check-label" th:for="'medication_' + ${prescription.prescriptionID}"
+                                    th:text="${prescription.medicationName}"></label></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address"
+                               name="address"
+                               class="form-control"
+                               placeholder="Enter your address"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city"
+                               class="form-control"
+                               placeholder="Enter city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" id="state" name="state"
+                               class="form-control"
+                               placeholder="Enter state" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postcode">Postcode</label>
+                        <input type="text" id="postcode"
+                               name="postcode"
+                               class="form-control"
+                               placeholder="Enter postcode"
+                               required></div>
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes"
+                                  name="notes"
+                                  class="form-control"
+                                  placeholder="Enter any additional notes"></textarea>
+                    </div>
+                    <!--        <form th:action="@{/prescription/orders}" method="get">-->
+                    <div class="row align-items-center gap-2">
+                        <div class="col">
+                            <button type="submit" class="btn-prescription-submit mt-3"> Request Refills</button>
+                        </div>
+                        <div class="col">
+                            <form th:action="@{/prescription/orders}" method="get">
+                                <!-- The modal trigger button remains separate -->
+                                <button type="button" class="btn-prescription-submit mt-3" data-bs-toggle="modal"
+                                        data-bs-target="#orderDetailsModal"> View Order Details
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn-prescription-submit mt-3" data-bs-toggle="modal"
+                                    data-bs-target="#trackOrderModal"> Track Orders
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Order Details Modal -->
+                    <div class="modal fade" id="orderDetailsModal" tabindex="-1"
+                         aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header"><h5 class="modal-title" id="orderDetailsModalLabel">Order
+                                    Details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Orders Table -->
+                                    <table class="table table-striped"
+                                           th:if="${orders != null && !#lists.isEmpty(orders)}">
+                                        <thead>
+                                        <tr>
+                                            <th>Pet ID</th>
+                                            <th>Medications</th>
+                                            <th>Address</th>
+                                            <th>City</th>
+                                            <th>State</th>
+                                            <th>Postcode</th>
+                                            <th>Notes</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="order : ${orders}">
+                                            <td th:text="${order.petID}"></td>
+                                            <td th:text="${order.medications}"></td>
+                                            <td th:text="${order.address}"></td>
+                                            <td th:text="${order.city}"></td>
+                                            <td th:text="${order.state}"></td>
+                                            <td th:text="${order.postcode}"></td>
+                                            <td th:text="${order.notes != null ? order.notes : 'N/A'}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <p th:if="${orders == null || #lists.isEmpty(orders)}">No orders found.</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--        </form>-->
+            </div>
+        </div>
+        <a href="/" class="btn-common btn-back">Back to Home Page</a></div>
+</div>
+</body>
+</html>
+ 

@@ -4,41 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/assets/css/account.css}">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/assets/css/login.css}">
 </head>
-<body >
-
-<div layout:fragment="content">
-    <div class="container mt-5">
-        <h2 class="text-center">Login</h2>
-        <form th:action="@{/login}" method="post"  id="loginForm" class="mx-auto form-container">
-            <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required >
+<body>
+<div class="login-page">
+    <div layout:fragment="content">
+        <div class="rainbow">
+            <div class="rainbow-border"></div>
+            <div class="rainbow-content">
+                <h2 class="text-center">Login</h2>
+                <form th:action="@{/login}" method="post" id="loginForm" class="mx-auto form-container">
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                    <a href="/signup" class="btn btn-link">Don't have an account? Sign up</a>
+                    <div id="loginError" class="alert alert-danger mt-3" style="display: none;"></div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required minlength="6">
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Log In</button>
-            <a href="/signup" class="btn btn-link">Don't have an account? Sign up</a>
-            <div id="loginError" class="alert alert-danger mt-3" style="display: none;"></div>
-        </form>
+        </div>
+        <div class="text-center">
+            <a href="/" class="btn-common btn-back">Back to Home Page</a>
+        </div>
     </div>
-    <div>
-    <a href="/" class="btn-common btn-back" >Back to Home Page</a>
-    </div>
-
 </div>
-
-
+<!-- Scripts placed at the end of the body -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 <footer class="container-fluid text-center py-3">
-<!--    <p>Footer Text</p>-->
+    <!-- Footer content -->
 </footer>
 </html>

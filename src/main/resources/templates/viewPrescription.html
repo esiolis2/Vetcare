@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Prescriptions</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/assets/css/prescription.css}">
+</head>
+<body>
+<div class="container prescriptionContainer">
+    <div class="text-center mb-4">
+        <h2>View Prescriptions</h2>
+    </div>
+    <div class="alert alert-danger" th:if="${errorMessage != null}">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    <div class="pet-selection mb-4" th:if="${errorMessage == null}">
+        <form th:action="@{/prescription}" method="get">
+            <div class="form-group">
+                <label for="petSelect">Choose the Pet</label>
+                <select class="form-select" id="petSelect" name="petId" onchange="this.form.submit()">
+                    <option value="" selected>Select a Pet</option>
+                    <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"></option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div th:if="${pet != null}">
+        <div class="prescription-record card" th:each="prescription : ${prescriptions}">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${prescription.medicationName}">Medication Name</h5>
+                <p><strong>Dosage: </strong><span th:text="${prescription.dosage != null ? prescription.dosage : 'N/A'}"></span></p>
+                <p><strong>Instructions: </strong><span th:text="${prescription.instructions != null ? prescription.instructions : 'N/A'}"></span></p>
+                <p><strong>Next Refill Date: </strong><span th:text="${prescription.nextRefillDate != null ? #temporals.format(prescription.nextRefillDate, 'yyyy-MM-dd') : 'N/A'}"></span></p>
+                <p><strong>Quantity Prescribed: </strong><span th:text="${prescription.quantityPrescribed}"></span></p>
+                <p><strong>Refill Count: </strong><span th:text="${prescription.refillCount}"></span></p>
+                <p><strong>Expiry Date: </strong><span th:text="${prescription.expiryDate != null ? #temporals.format(prescription.expiryDate, 'yyyy-MM-dd') : 'N/A'}"></span></p>
+                <p><strong>Last Updated At: </strong><span th:text="${#temporals.format(prescription.updatedAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <a href="/" class="btn-common btn-back" >Back to Home Page</a>
+    <div class="text-center" th:if="${pet != null}">
+
+        <a href="#" class="btn-prescription-submit mt-3" onclick="downloadPDF()">Download PDF</a>
+        <a href="#" class="btn-prescription-submit mt-3" onclick="shareRecords()">Share</a>
+        <a th:href="@{/prescription/order(petId=${pet.petID})}" class="btn-prescription-submit mt-3">Request Refills</a>
+
+    </div>
+</div>
+</body>
+</html>
