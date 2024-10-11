@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Appointment Management</title>
+    <link rel="stylesheet" th:href="@{/assets/css/dashboard.css}">
 </head>
 <body>
 <div layout:fragment="content">
     <div class="d-flex min-vh-100">
         <!-- Sidebar -->
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 350px;">
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 380px;">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <h1 class="navbar-brand">Vet Care</h1>
             </a>
@@ -42,18 +43,23 @@
             </ul>
             <hr>
             <div class="dropdown mt-auto">
+                <!-- Dropdown toggle button with user name -->
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                   id="dropdownUser"
                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>mdo</strong>
+                    <strong th:text="${loggedInUser.name}">User Name</strong>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
+
+                <!-- Dropdown menu -->
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    <li th:if="${loggedInUser != null}">
+                        <form th:action="@{/logout}" method="post" style="display: inline;">
+                            <button type="submit" class="dropdown-item">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -61,9 +67,25 @@
         <!-- Main Content on the right -->
         <div class="flex-grow-1 dashboard-content">
             <div class="container mt-5">
+                <!--Breadcrum for Dashboard-->
+                <div class="row">
+                    <div class="col">
+                        <nav aria-label="breadcrumb" class="bg-body-tertiary rounded-3 p-3 mb-4 fs-5">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                <li class="breadcrumb-item" th:if="${loggedInUser != null}"><a
+                                        href="/dashboard/appointment-management">Appointment Management</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Appointment Management</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-lg-8 text-black account-details fs-5">
-                        <h2 class="bg-body-tertiary p-2 border-top border-bottom">Appointment List</h2>
+                        <h2 class="p-4 mb-4 border-top border-bottom"
+                            style="background-color: #061945;color: #ffffff">Appointment List</h2>
 
 
                         <div th:each="appointment : ${appointments}" class="row border-bottom p-3">
@@ -90,22 +112,21 @@
                                           th:text="${reason.serviceName}"></span>
                                 </div>
                             </div>
-                            <div class="col-lg-3 text-end">
-                                <span class="badge bg-success">Attended</span>
-                            </div>
                         </div>
 
 
                         <!--                        Buttons for manage appointment-->
-                        <div class="text-center mt-4">
-                            <a th:href="@{/appointments}" class="btn btn-primary mx-3 p-4">Book Appointment</a>
-                            <a th:href="@{/appointments/reschedule}" class="btn btn-secondary mx-3 p-4">Change Appointment</a>
-                            <a th:href="@{/appointments/cancel}" class="btn btn-danger mx-3 p-4">Cancel Appointment</a>
+                        <div class="text-center mt-4 mb-2 gap-3">
+                            <a th:href="@{/appointments}" type="button" class="btn btn-primary">Book
+                                Appointment</a>
+                            <a th:href="@{/appointments/reschedule}" type="button" class="btn btn-secondary">Change
+                                Appointment</a>
+                            <a th:href="@{/appointments/cancel}" type="button" class="btn btn-outline-danger ">Cancel
+                                Appointment</a>
                         </div>
                     </div>
-
-
                 </div>
+
             </div>
         </div>
     </div>
