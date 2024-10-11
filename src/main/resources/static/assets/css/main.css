@@ -214,7 +214,23 @@ p {
     background-color: #bccce1;
 }
 
+/* NOTIFICATION*/
+.unread-notification {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    position: absolute;
+    top: -5px;
+    right: 10px;
+    z-index: 10;
+}
 
+.notification-ui_icon {
+    position: relative;
+    font-size: 1.5rem;
+}
 
 /* FOOTER */
 .footer-style {
