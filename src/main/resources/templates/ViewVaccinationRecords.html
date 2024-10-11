@@ -27,7 +27,7 @@
 
         <!-- Pet Selection Dropdown -->
         <div class="pet-selection mb-4" th:if="${errorMessage == null}">
-            <form th:action="@{/vaccination}" method="get">
+            <form th:action="@{//vaccination-record-details}" method="get">
                 <div class="form-group">
                     <label for="petSelect">Choose the Pet</label>
                     <select class="form-select" id="petSelect" name="petId" onchange="this.form.submit()">

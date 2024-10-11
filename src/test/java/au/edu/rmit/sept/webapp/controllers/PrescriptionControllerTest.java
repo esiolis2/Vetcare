@@ -3,10 +3,7 @@ package au.edu.rmit.sept.webapp.controllers;
 import au.edu.rmit.sept.webapp.models.PetInformation;
 import au.edu.rmit.sept.webapp.models.Prescription;
 import au.edu.rmit.sept.webapp.models.PrescriptionRefillRequest;
-import au.edu.rmit.sept.webapp.services.PetInformationService;
-import au.edu.rmit.sept.webapp.services.PrescriptionRefillService;
-import au.edu.rmit.sept.webapp.services.PrescriptionService;
-import au.edu.rmit.sept.webapp.services.UserService;
+import au.edu.rmit.sept.webapp.services.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +37,9 @@ public class PrescriptionControllerTest {
 
     @MockBean
     private PrescriptionRefillService prescriptionRefillService;
+
+    @MockBean
+    private AppointmentService appointmentService;
 
     private PetInformation pet;
     private Prescription prescription;

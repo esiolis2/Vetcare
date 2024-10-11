@@ -29,6 +29,9 @@ public class MedicalHistory {
         this.nextScheduledVisit = nextScheduledVisit;
     }
 
+    public MedicalHistory(long l, long l1, LocalDate parse, String noIssues, String none, String noMedications, String none1, LocalDate parse1, PetInformation pet) {
+    }
+
     // Getters and Setters
     public Long getHistoryID() { return historyID; }
     public void setHistoryID(Long historyID) { this.historyID = historyID; }
