@@ -32,7 +32,7 @@
                 <li>
                     <a href="/dashboard/prescription-management" class="nav-link text-white">
                         <i class="bi bi-file-earmark-medical me-2"></i>
-                        Medical Management
+                        Prescription Management
                     </a>
                 </li>
                 <li>
@@ -75,9 +75,9 @@
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                                 <li class="breadcrumb-item" th:if="${loggedInUser != null}"><a
-                                        href="/dashboard/prescription-management">Medical Management</a>
+                                        href="/dashboard/prescription-management">Prescription Management</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">Medical Management</li>
+                                <li class="breadcrumb-item active" aria-current="page">Prescription Management</li>
                             </ol>
                         </nav>
                     </div>
@@ -85,28 +85,28 @@
                 <!-- Main Content -->
                 <div class="container">
                     <h2 class="prescription-header p-4 mb-4 align-items-center border-top border-bottom">
-                        Medical Management</h2>
+                        Prescription Management</h2>
 
                     <!-- Display Modules -->
                     <div class="row justify-content-center">
                         <!-- Card 1: Access Medical Record -->
-                        <div class="col-md-5 m-4">
+                        <div class="col-md-4 m-4">
                             <div class="card h-100">
-                                <div class="card-header">Access Medical Record</div>
+                                <div class="card-header">Order Refill</div>
                                 <div class="card-body">
-                                    <p class="card-text">View and manage your pet's medical records.</p>
-                                    <a href="/access-medical-records" class="btn btn-primary">Go to Medical Records</a>
+                                    <p class="card-text">Conveniently request refills for your pet's prescriptions and ensure you never run out of necessary medications.</p>
+                                    <a href="/prescription/order" class="btn btn-primary">Request Refill</a>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Card 2: View Vaccination Records -->
-                        <div class="col-md-5 m-4">
+                        <div class="col-md-4 m-4">
                             <div class="card h-100">
-                                <div class="card-header">View Vaccination Records</div>
+                                <div class="card-header">View Prescriptions</div>
                                 <div class="card-body">
-                                    <p class="card-text">Check your pet's vaccination history.</p>
-                                    <a href="/view-vaccination-records" class="btn btn-primary">Go to Vaccination Records</a>
+                                    <p class="card-text">Access and review your pet's prescriptions, ensuring you have the correct medications and dosages for ongoing treatments.</p>
+                                    <a href="/view-prescription" class="btn btn-primary">View Prescriptions</a>
                                 </div>
                             </div>
                         </div>
@@ -114,26 +114,26 @@
 
                     <div class="row justify-content-center">
                         <!-- Card 3: View Treatment Plan -->
-                        <div class="col-md-5 m-4">
+                        <div class="col-md-4 m-4">
                             <div class="card h-100">
-                                <div class="card-header">View Treatment Plan</div>
+                                <div class="card-header">Track Orders</div>
                                 <div class="card-body">
-                                    <p class="card-text">Review the treatment plan for your pet.</p>
-                                    <a href="view-treatment-plan" class="btn btn-primary">Go to Treatment Plan</a>
+                                    <p class="card-text">Easily track the status of your pet's orders, from processing to delivery, and stay updated on when to expect your items.</p>
+                                    <a href="/prescription/orderdetails" class="btn btn-primary">Track Orders</a>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Card 4: Prescription Management -->
-                        <div class="col-md-5 m-4">
-                            <div class="card h-100">
-                                <div class="card-header">Prescription Management</div>
-                                <div class="card-body">
-                                    <p class="card-text">Manage prescriptions and request refills for your pet.</p>
-                                    <a href="/prescription-management" class="btn btn-primary">Go to Prescription Management</a>
-                                </div>
-                            </div>
-                        </div>
+                        <!--                        <div class="col-md-4 m-4">-->
+                        <!--                            <div class="card h-100">-->
+                        <!--                                <div class="card-header">Prescription Management</div>-->
+                        <!--                                <div class="card-body">-->
+                        <!--                                    <p class="card-text">Manage prescriptions and request refills for your pet.</p>-->
+                        <!--                                    <a href="/prescription-management" class="btn btn-primary">Go to Prescription Management</a>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                     </div>
 
 
