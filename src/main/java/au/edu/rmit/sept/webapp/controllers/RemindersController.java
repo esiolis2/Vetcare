@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.time.LocalDate;
 import java.util.List;
 
-@Controller
+@ControllerAdvice
 public class RemindersController {
 
     private final AppointmentService appointmentService;
