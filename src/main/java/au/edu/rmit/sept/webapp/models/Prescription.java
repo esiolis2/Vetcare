@@ -34,6 +34,9 @@ public class Prescription {
 
     }
 
+    public Prescription(long l, PetInformation pet, String s, String s1, LocalDate parse, int i, int i1, LocalDate parse1, String takeWithFood) {
+    }
+
 
     public Long getPrescriptionID() {
         return prescriptionID;
