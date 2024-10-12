@@ -39,21 +39,6 @@
         </div>
     </form>
 
-<!--    &lt;!&ndash; Pet Information Summary &ndash;&gt;-->
-<!--    <div class="summary-section" th:if="${selectedPet != null}">-->
-<!--        <h3 class="mt-4">Pet Information Summary</h3>-->
-<!--        <table class="table table-striped">-->
-<!--            <tbody>-->
-<!--            <tr><th>Name</th><td th:text="${selectedPet.name}">-</td></tr>-->
-<!--            <tr><th>Age</th><td th:text="${selectedPet.age}">-</td></tr>-->
-<!--            <tr><th>Breed</th><td th:text="${selectedPet.breed}">-</td></tr>-->
-<!--            <tr><th>Gender</th><td th:text="${selectedPet.gender}">-</td></tr>-->
-<!--            <tr><th>Birth Date</th><td th:text="${selectedPet.birthDate}">-</td></tr>-->
-<!--            <tr><th>Owner Name</th><td th:text="${selectedUser != null ? selectedUser.name : 'Unknown User'}">-</td></tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--    </div>-->
-
     <!-- Prescription Form -->
     <form th:if="${selectedPet != null}" th:action="@{/save-prescription}" method="post" th:object="${prescription}">
         <input type="hidden" name="petId" th:value="${selectedPet.petID}" />
@@ -64,43 +49,58 @@
                 <!-- Medication Name -->
                 <div class="mb-3">
                     <label for="medicationName" class="form-label">Medication Name:</label>
-                    <input type="text" class="form-control" id="medicationName" th:field="*{medicationName}" placeholder="Enter medication name" required>
+                    <input type="text" class="form-control" id="medicationName" th:field="*{medicationName}"
+                           placeholder="Enter medication name" minlength="2" required>
+                    <div class="invalid-feedback">Medication name must be at least 2 characters long.</div>
                 </div>
 
                 <!-- Dosage -->
                 <div class="mb-3">
                     <label for="dosage" class="form-label">Dosage:</label>
-                    <input type="text" class="form-control" id="dosage" th:field="*{dosage}" placeholder="Enter dosage" required>
+                    <input type="text" class="form-control" id="dosage" th:field="*{dosage}"
+                           placeholder="Enter dosage" pattern="^\d+(\.\d{1,2})?$"
+                           title="Please enter a valid dosage amount in numbers (e.g., 5 or 5.25)" required>
+                    <div class="invalid-feedback">Please enter a valid dosage amount (e.g., 5 or 5.25).</div>
                 </div>
 
                 <!-- Instructions -->
                 <div class="mb-3">
                     <label for="instructions" class="form-label">Instructions:</label>
-                    <textarea class="form-control" id="instructions" th:field="*{instructions}" placeholder="Enter instructions"></textarea>
+                    <textarea class="form-control" id="instructions" th:field="*{instructions}"
+                              placeholder="Enter instructions" minlength="10" required></textarea>
+                    <div class="invalid-feedback">Instructions must be at least 10 characters long.</div>
                 </div>
 
                 <!-- Refill Count -->
                 <div class="mb-3">
                     <label for="refillCount" class="form-label">Refill Count:</label>
-                    <input type="number" class="form-control" id="refillCount" th:field="*{refillCount}" placeholder="Enter refill count">
+                    <input type="number" class="form-control" id="refillCount" th:field="*{refillCount}"
+                           placeholder="Enter refill count" min="0" required>
+                    <div class="invalid-feedback">Refill count must be a non-negative number.</div>
                 </div>
 
                 <!-- Next Refill Date -->
                 <div class="mb-3">
                     <label for="nextRefillDate" class="form-label">Next Refill Date:</label>
-                    <input type="date" class="form-control" id="nextRefillDate" th:field="*{nextRefillDate}">
+                    <input type="date" class="form-control" id="nextRefillDate" th:field="*{nextRefillDate}"
+                           min="${#dates.format(#dates.addDays(#dates.createNow(), 1), 'yyyy-MM-dd')}" required>
+                    <div class="invalid-feedback">Next refill date must be strictly after today.</div>
                 </div>
 
                 <!-- Expiry Date -->
                 <div class="mb-3">
                     <label for="expiryDate" class="form-label">Expiry Date:</label>
-                    <input type="date" class="form-control" id="expiryDate" th:field="*{expiryDate}">
+                    <input type="date" class="form-control" id="expiryDate" th:field="*{expiryDate}"
+                           min="${#dates.format(#dates.addDays(#dates.createNow(), 1), 'yyyy-MM-dd')}" required>
+                    <div class="invalid-feedback">Expiry date must be in the future and after the next refill date.</div>
                 </div>
 
                 <!-- Quantity Prescribed -->
                 <div class="mb-3">
                     <label for="quantityPrescribed" class="form-label">Quantity Prescribed:</label>
-                    <input type="number" class="form-control" id="quantityPrescribed" th:field="*{quantityPrescribed}" placeholder="Enter quantity prescribed">
+                    <input type="number" class="form-control" id="quantityPrescribed" th:field="*{quantityPrescribed}"
+                           placeholder="Enter quantity prescribed" min="1" required>
+                    <div class="invalid-feedback">Quantity prescribed must be greater than 0.</div>
                 </div>
 
                 <!-- Submit Button -->
@@ -110,6 +110,31 @@
             </div>
         </div>
     </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    const nextRefillDateInput = document.getElementById('nextRefillDate');
+    const expiryDateInput = document.getElementById('expiryDate');
+
+    expiryDateInput.addEventListener('change', function () {
+        if (expiryDateInput.value <= nextRefillDateInput.value) {
+            expiryDateInput.setCustomValidity('Expiry date must be after the next refill date.');
+            expiryDateInput.reportValidity();
+        } else {
+            expiryDateInput.setCustomValidity('');
+        }
+    });
+
+    nextRefillDateInput.addEventListener('change', function () {
+        if (expiryDateInput.value <= nextRefillDateInput.value) {
+            expiryDateInput.setCustomValidity('Expiry date must be after the next refill date.');
+            expiryDateInput.reportValidity();
+        } else {
+            expiryDateInput.setCustomValidity('');
+        }
+    });
+});
+
+    </script>
 
     <!-- Go Back Button -->
     <div class="d-grid mt-4">

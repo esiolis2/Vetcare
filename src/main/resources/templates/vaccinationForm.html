@@ -26,8 +26,8 @@
         </div>
     </form>
 
-    <!-- Step 2: Select a Pet (Visible after User selection) -->
-    <form th:if="${pets != null}" th:action="@{/vaccination/selectPet}" method="get">
+    <!-- Step 2: Select a Pet (Visible only if a User is selected) -->
+    <form th:if="${selectedUser != null}" th:action="@{/vaccination/selectPet}" method="get">
         <div class="mb-3">
             <label for="petSelect" class="form-label">Select a Pet:</label>
             <select class="form-select" id="petSelect" name="petId" onchange="this.form.submit()" required>
@@ -37,6 +37,7 @@
             </select>
         </div>
     </form>
+
 
     <!-- Step 3: Fill Vaccination Details (Visible after Pet selection) -->
     <form th:if="${selectedPet != null}" th:action="@{/save-vaccination}" method="post" th:object="${vaccinationRecord}">
@@ -48,7 +49,8 @@
                 <!-- Vaccine Name -->
                 <div class="mb-3">
                     <label for="vaccineName" class="form-label">Vaccine Name:</label>
-                    <input type="text" class="form-control" id="vaccineName" th:field="*{vaccineName}" placeholder="Enter vaccine name" required>
+                    <input type="text" class="form-control" id="vaccineName" th:field="*{vaccineName}" placeholder="Enter vaccine name" minlength="2" required>
+                    <div class="invalid-feedback">Vaccine name must be at least 2 characters long.</div>
                 </div>
 
                 <!-- Administered Date -->
@@ -60,7 +62,9 @@
                 <!-- Next Due Date -->
                 <div class="mb-3">
                     <label for="nextDueDate" class="form-label">Next Due Date:</label>
-                    <input type="date" class="form-control" id="nextDueDate" th:field="*{nextDueDate}">
+                    <input type="date" class="form-control" id="nextDueDate" th:field="*{nextDueDate}" placeholder="Select a due date" required>
+                    <div class="invalid-feedback">Next Due Date must be after the Administered Date.</div>
+                    <small class="text-muted">The next due date must be after the administered date.</small>
                 </div>
 
                 <!-- Booster Required -->
@@ -72,25 +76,29 @@
                 <!-- Dosage -->
                 <div class="mb-3">
                     <label for="dosage" class="form-label">Dosage:</label>
-                    <input type="text" class="form-control" id="dosage" th:field="*{dosage}" placeholder="Enter dosage amount">
+                    <input type="text" class="form-control" id="dosage" th:field="*{dosage}" placeholder="Enter dosage amount" pattern="^\d+(\.\d{1,2})?$" title="Please enter a valid dosage amount (e.g., 5 or 5.25)" required>
+                    <div class="invalid-feedback">Please enter a valid dosage amount.</div>
                 </div>
 
                 <!-- Veterinarian Name -->
                 <div class="mb-3">
                     <label for="veterinarianName" class="form-label">Veterinarian Name:</label>
-                    <input type="text" class="form-control" id="veterinarianName" th:field="*{veterinarianName}" placeholder="Enter veterinarian name">
+                    <input type="text" class="form-control" id="veterinarianName" th:field="*{veterinarianName}" placeholder="Enter veterinarian name" minlength="2" required>
+                    <div class="invalid-feedback">Veterinarian name must be at least 2 characters long.</div>
                 </div>
 
                 <!-- Clinic Name -->
                 <div class="mb-3">
                     <label for="clinicName" class="form-label">Clinic Name:</label>
-                    <input type="text" class="form-control" id="clinicName" th:field="*{clinicName}" placeholder="Enter clinic name">
+                    <input type="text" class="form-control" id="clinicName" th:field="*{clinicName}" placeholder="Enter clinic name" minlength="2" required>
+                    <div class="invalid-feedback">Clinic name must be at least 2 characters long.</div>
                 </div>
 
                 <!-- Status -->
                 <div class="mb-3">
                     <label for="status" class="form-label">Status:</label>
-                    <input type="text" class="form-control" id="status" th:field="*{status}" placeholder="Enter vaccination status">
+                    <input type="text" class="form-control" id="status" th:field="*{status}" placeholder="Enter vaccination status" minlength="2" required>
+                    <div class="invalid-feedback">Status must be at least 2 characters long.</div>
                 </div>
 
                 <!-- Additional Notes -->
@@ -106,6 +114,23 @@
             </div>
         </div>
     </form>
+
+    <!-- JavaScript for Date Validation -->
+    <script>
+    const administeredDateInput = document.getElementById('administeredDate');
+    const nextDueDateInput = document.getElementById('nextDueDate');
+
+    administeredDateInput.addEventListener('change', function() {
+        nextDueDateInput.min = this.value;
+    });
+
+    nextDueDateInput.addEventListener('change', function() {
+        if (this.value <= administeredDateInput.value) {
+            alert('The Next Due Date must be after the Administered Date.');
+            this.value = '';
+        }
+    });
+    </script>
 
     <!-- Go Back Button -->
     <div class="d-grid mt-4">

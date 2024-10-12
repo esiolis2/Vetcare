@@ -54,10 +54,11 @@
             <div class="TP-card-body">
                 <h3 class="TP-form-title">Treatment Plan Details for <span th:text="${selectedPet.name}"></span></h3>
 
-                <!-- Diagnosis -->
+                <!-- Diagnosis (Required) -->
                 <div class="TP-mb-3">
                     <label for="TP-diagnosis" class="TP-form-label">Diagnosis:</label>
-                    <input type="text" class="TP-form-control" id="TP-diagnosis" th:field="*{diagnosis}" placeholder="Enter diagnosis" required>
+                    <input type="text" class="TP-form-control" id="TP-diagnosis" th:field="*{diagnosis}" placeholder="Enter diagnosis" minlength="3" required>
+                    <div class="invalid-feedback">Diagnosis must be at least 3 characters long.</div>
                 </div>
 
                 <!-- Treatment Type -->
@@ -84,16 +85,18 @@
                     <label for="TP-isEmergency" class="TP-form-check-label">Is Emergency?</label>
                 </div>
 
-                <!-- Start Date -->
+                <!-- Start Date (Required) -->
                 <div class="TP-mb-3">
                     <label for="TP-startDate" class="TP-form-label">Start Date:</label>
                     <input type="date" class="TP-form-control" id="TP-startDate" th:field="*{startDate}" required>
+                    <div class="invalid-feedback">Start Date is required.</div>
                 </div>
 
-                <!-- End Date -->
+                <!-- End Date (Must be after Start Date) -->
                 <div class="TP-mb-3">
                     <label for="TP-endDate" class="TP-form-label">End Date:</label>
                     <input type="date" class="TP-form-control" id="TP-endDate" th:field="*{endDate}">
+                    <div class="invalid-feedback">End Date must be after the Start Date.</div>
                 </div>
 
                 <!-- Prescribed Medications -->
@@ -126,10 +129,11 @@
                     <input type="date" class="TP-form-control" id="TP-followUpDate" th:field="*{followUpDate}">
                 </div>
 
-                <!-- Cost Estimate -->
+                <!-- Cost Estimate (Must be positive number) -->
                 <div class="TP-mb-3">
                     <label for="TP-costEstimate" class="TP-form-label">Cost Estimate:</label>
-                    <input type="number" class="TP-form-control" id="TP-costEstimate" th:field="*{costEstimate}" placeholder="Enter cost estimate">
+                    <input type="number" class="TP-form-control" id="TP-costEstimate" th:field="*{costEstimate}" placeholder="Enter cost estimate" min="0" step="1">
+                    <div class="invalid-feedback">Cost Estimate must be a positive number.</div>
                 </div>
 
                 <!-- Treatment Outcome -->
@@ -184,5 +188,33 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    document.getElementById('TP-startDate').addEventListener('change', function () {
+        const startDate = this.value;
+        const endDateInput = document.getElementById('TP-endDate');
+        endDateInput.min = startDate;
+    });
+
+    document.getElementById('TP-endDate').addEventListener('change', function () {
+        const startDate = document.getElementById('TP-startDate').value;
+        const endDate = this.value;
+        if (endDate <= startDate) {
+            alert('End Date must be after the Start Date.');
+            this.value = '';
+        }
+    });
+
+    const costEstimateInput = document.getElementById('TP-costEstimate');
+    costEstimateInput.addEventListener('input', function () {
+        if (this.value < 0) {
+            this.setCustomValidity('Cost estimate must be a positive number.');
+            this.reportValidity();
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+</script>
 </body>
 </html>
