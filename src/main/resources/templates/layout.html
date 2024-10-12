@@ -144,7 +144,8 @@
                     <a class="nav-link dropdown-toggle notification-ui_icon" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-bell"></i>
                         <!--<span class="unread-notification"></span>-->
-                        <span class="badge unread-notification" th:if="${#lists.size(upcomingAppointments) > 0}" th:text="${#lists.size(upcomingAppointments)}"></span>
+                        <span class="badge unread-notification" th:if="${numberOfNotifications > 0}" th:text="${numberOfNotifications}"></span>
+
                     </a>
                     <div class="dropdown-menu dropdown-menu-md-end" aria-labelledby="navbarDropdown" style="width: 400px;">
                         <div class="notification-ui_dd-header">
@@ -155,19 +156,30 @@
                                 <p class="text-center">No upcoming appointments</p>
                             </div>
                             <div th:each="appointment : ${upcomingAppointments}">
-                                    <div class="px-4 notification" style="font-size: 1rem">
-                                        <b>Upcoming Appointment for </b>
-                                            <span th:each="pet : ${pets}"
-                                                  th:if="${pet.petID == appointment.petId}"
-                                                  th:text="${pet.name}">
-                                            </span>
-                                        <br>
-                                        <small th:text="${appointment.appointmentDate}"></small> at <small th:text="${appointment.appointmentTime}"></small>
-                                    </div>
+                                <div class="px-4 notification" style="font-size: 1rem">
+                                    <b>Upcoming Appointment for </b>
+                                    <span th:each="pet : ${pets}" th:if="${pet.petID == appointment.petId}" th:text="${pet.name}"></span>
+                                    <br>
+                                    <small th:text="${appointment.appointmentDate}"></small> at
+                                    <small th:text="${appointment.appointmentTime}"></small>
+                                </div>
+                            </div>
+
+                            <div th:each="prescription : ${upcomingPrescriptions}">
+                                <div class="px-4 notification" style="font-size: 1rem">
+                                    <b>Medication Refill Reminder for </b>
+                                    <span th:if="${prescription.pet != null}" th:text="${prescription.pet.name}"></span>
+                                    <span th:if="${prescription.pet == null}">Pet information not available</span>
+                                    <br>
+                                    <small th:text="${prescription.nextRefillDate}"></small>
+                                    at <small th:text="${prescription.dosage}"></small>
+                                    of  <small th:text="${prescription.medicationName}"></small>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </li>
+
                 <li class="nav-item" th:if="${loggedInUser == null}">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
