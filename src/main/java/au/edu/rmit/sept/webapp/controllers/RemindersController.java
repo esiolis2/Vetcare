@@ -1,13 +1,7 @@
 package au.edu.rmit.sept.webapp.controllers;
 
-import au.edu.rmit.sept.webapp.models.Appointment;
-import au.edu.rmit.sept.webapp.models.PetInformation;
-import au.edu.rmit.sept.webapp.models.Prescription;
-import au.edu.rmit.sept.webapp.models.User;
-import au.edu.rmit.sept.webapp.services.AppointmentService;
-import au.edu.rmit.sept.webapp.services.PetInformationService;
-import au.edu.rmit.sept.webapp.services.PrescriptionService;
-import au.edu.rmit.sept.webapp.services.UserService;
+import au.edu.rmit.sept.webapp.models.*;
+import au.edu.rmit.sept.webapp.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +21,14 @@ public class RemindersController {
     private final UserService userService;
     private final PetInformationService petInformationService;
     private final PrescriptionService prescriptionService;
+    private final PrescriptionRefillService prescriptionRefillService;
 
-    public RemindersController(AppointmentService appointmentService, UserService userService, PetInformationService petInformationService, PrescriptionService prescriptionService) {
+    public RemindersController(AppointmentService appointmentService, UserService userService, PetInformationService petInformationService, PrescriptionService prescriptionService, PrescriptionRefillService prescriptionRefillService) {
         this.appointmentService = appointmentService;
         this.userService = userService;
         this.petInformationService = petInformationService;
         this.prescriptionService = prescriptionService;
+        this.prescriptionRefillService = prescriptionRefillService;
     }
 
     @ModelAttribute
@@ -43,6 +40,8 @@ public class RemindersController {
             List<Appointment> upcomingAppointments = appointmentService.getUpcomingAppointments(userId);
             List<PetInformation> pets = petInformationService.getPetByUserId(userId);
             List<Prescription> upcomingPrescriptions = new ArrayList<>();
+            List<PrescriptionRefillRequest> refills = prescriptionRefillService.getAllRefillRequests();
+            List<PrescriptionRefillRequest> refillRequests = new ArrayList<>();
 
             for (PetInformation pet : pets) {
                 List<Prescription> petPrescriptions = prescriptionService.getPrescriptionsByPetId(pet.getPetID());
@@ -55,11 +54,22 @@ public class RemindersController {
                         upcomingPrescriptions.add(prescription);
                     }
                 }
+                for (PrescriptionRefillRequest refill : refills) {
+                    LocalDateTime twoDays = LocalDateTime.now().plusDays(2);
+                    if (refill.getPetID().equals(pet.getPetID()) && refill.getRequestDate().isAfter(LocalDateTime.now()) &&  refill.getRequestDate().isBefore(twoDays)) {
+                        refillRequests.add(refill);
+                    }
+                }
             }
-            int numberOfNotifications = upcomingPrescriptions.size() + upcomingAppointments.size();
+
+
+
+
+            int numberOfNotifications = upcomingPrescriptions.size() + upcomingAppointments.size() + refills.size();
             model.addAttribute("upcomingAppointments", upcomingAppointments);
             model.addAttribute("upcomingPrescriptions", upcomingPrescriptions);
             model.addAttribute("numberOfNotifications", numberOfNotifications);
+            model.addAttribute("refills", refills);
             model.addAttribute("pets", pets);
         }
         return "layout";

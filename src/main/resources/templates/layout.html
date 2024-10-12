@@ -152,8 +152,8 @@
                             <h3 class="text-center">Notifications</h3>
                         </div>
                         <div class="notification-ui_dd-content">
-                            <div th:if="${#lists.isEmpty(upcomingAppointments) && #lists.isEmpty(upcomingPrescriptions)}">
-                                <p class="text-center">No upcoming appointments or medication reminders.</p>
+                            <div th:if="${#lists.isEmpty(upcomingAppointments) && #lists.isEmpty(upcomingPrescriptions) && #lists.isEmpty(refillRequests)}">
+                                <p class="text-center">Nothing upcoming.</p>
                             </div>
                             <div th:each="appointment : ${upcomingAppointments}">
                                 <div class="px-4 notification" style="font-size: 1rem">
@@ -176,6 +176,20 @@
                                     of  <small th:text="${prescription.medicationName}"></small>
                                 </div>
                             </div>
+
+                            <div th:if="${!#lists.isEmpty(refills)}">
+                                <div th:each="refill : ${refills}">
+                                    <div class="px-4 notification" style="font-size: 1rem">
+                                        <b>Refill Request for </b>
+                                        <span th:each="pet : ${pets}" th:if="${pet.petID == refill.petID}" th:text="${pet.name}"></span>
+                                        for <small th:text="${refill.medications}"></small> will be delivered soon!
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                         </div>
                     </div>
                 </li>
