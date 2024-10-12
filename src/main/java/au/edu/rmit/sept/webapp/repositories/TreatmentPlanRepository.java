@@ -15,5 +15,4 @@ public interface TreatmentPlanRepository {
 
     void updateTreatmentPlan(TreatmentPlan treatmentPlan);
 
-    public List<TreatmentPlan> findByUserId(Long userId);
 }

@@ -23,6 +23,10 @@
         </div>
     </div>
 
+    <script th:if="${medicalHistoryExists}" type="text/javascript">
+        alert('Medical history already exists for this pet.');
+    </script>
+
     <!-- Step 1: User Selection -->
     <form th:action="@{/medical/selectUser}" method="get">
         <div class="UMR-mb-3">

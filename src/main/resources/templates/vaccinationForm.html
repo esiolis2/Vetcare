@@ -117,6 +117,19 @@
 
     <!-- JavaScript for Date Validation -->
     <script>
+        window.addEventListener('load', function() {
+        const successMessage = /*[[${successMessage != null ? successMessage : 'null'}]]*/ 'null';
+        if (successMessage !== 'null') {
+            alert(successMessage);
+        }
+
+        const errorMessage = /*[[${errorMessage != null ? errorMessage : 'null'}]]*/ 'null';
+        if (errorMessage !== 'null') {
+            alert(errorMessage);
+        }
+    });
+
+
     const administeredDateInput = document.getElementById('administeredDate');
     const nextDueDateInput = document.getElementById('nextDueDate');
 

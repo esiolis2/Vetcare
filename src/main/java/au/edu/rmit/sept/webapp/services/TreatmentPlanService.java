@@ -9,8 +9,6 @@ public interface TreatmentPlanService {
     List<TreatmentPlan> getAllTreatmentPlans();
 
     List<TreatmentPlan> getTreatmentPlanByPetId(Long petId);
-    List<TreatmentPlan> getTreatmentPlansByUserId(Long userId);
-
     void createTreatmentPlan(TreatmentPlan treatmentPlan);
 
 

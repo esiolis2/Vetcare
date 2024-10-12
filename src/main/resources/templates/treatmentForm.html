@@ -191,6 +191,18 @@
 
 <script>
 
+    window.addEventListener('load', function() {
+        const successMessage = /*[[${successMessage != null ? successMessage : 'null'}]]*/ 'null';
+        if (successMessage !== 'null') {
+            alert(successMessage);
+        }
+
+        const errorMessage = /*[[${errorMessage != null ? errorMessage : 'null'}]]*/ 'null';
+        if (errorMessage !== 'null') {
+            alert(errorMessage);
+        }
+    });
+
     document.getElementById('TP-startDate').addEventListener('change', function () {
         const startDate = this.value;
         const endDateInput = document.getElementById('TP-endDate');

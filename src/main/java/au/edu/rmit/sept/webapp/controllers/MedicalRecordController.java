@@ -186,6 +186,11 @@ public class MedicalRecordController {
         if (medicalHistory.getLastVisitDate() != null && !medicalHistory.getLastVisitDate().isBefore(today)) {
             bindingResult.rejectValue("lastVisitDate", "error.medicalHistory", "The Last Visit Date must be before today.");
         }
+
+        if (bindingResult.hasErrors()) {
+            return "medicalRecordForm";
+        }
+
         User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 
         PetInformation pet = petInformationService.getPetById(petId);
@@ -200,24 +205,14 @@ public class MedicalRecordController {
 
         List<MedicalHistory> existingRecords = medicalHistoryService.getMedicalHistoryByPetId(petId);
 
-        if (existingRecords == null || existingRecords.isEmpty()) {
+        if (existingRecords != null && !existingRecords.isEmpty()) {
+            model.addAttribute("errorMessage", "Medical history already exists for this pet.");
+            System.out.println("Medical history already exists for petId: " + petId);
+            return "HomePage";
+        } else {
             medicalHistoryService.createMedicalHistory(medicalHistory);
             model.addAttribute("successMessage", "New medical record created successfully.");
             System.out.println("New medical record created for petId: " + petId);
-        } else {
-
-            MedicalHistory existingRecord = existingRecords.get(0);
-
-            if (existingRecord != null && existingRecord.getHistoryID() != null) {
-                medicalHistory.setHistoryID(existingRecord.getHistoryID());
-                System.out.println("Updating medical record with HistoryID: " + existingRecord.getHistoryID());
-                medicalHistoryService.updateMedicalHistory(medicalHistory, loggedInUser);
-                model.addAttribute("successMessage", "Medical record updated successfully.");
-            } else {
-                model.addAttribute("errorMessage", "Error updating medical record: Record not found or History ID is null.");
-                System.out.println("Error: History ID is null or record not valid for update.");
-                return "medicalRecordForm";
-            }
         }
 
         return "HomePage";

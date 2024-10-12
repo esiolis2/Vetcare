@@ -111,6 +111,19 @@
         </div>
     </form>
     <script>
+
+        window.addEventListener('load', function() {
+        const successMessage = /*[[${successMessage != null ? successMessage : 'null'}]]*/ 'null';
+        if (successMessage !== 'null') {
+            alert(successMessage);
+        }
+
+        const errorMessage = /*[[${errorMessage != null ? errorMessage : 'null'}]]*/ 'null';
+        if (errorMessage !== 'null') {
+            alert(errorMessage);
+        }
+    });
+
         document.addEventListener('DOMContentLoaded', function () {
     const nextRefillDateInput = document.getElementById('nextRefillDate');
     const expiryDateInput = document.getElementById('expiryDate');
