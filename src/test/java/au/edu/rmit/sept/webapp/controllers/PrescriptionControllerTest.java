@@ -8,8 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,11 +23,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(PrescriptionController.class)
+@SpringBootTest
 public class PrescriptionControllerTest {
 
-    @Autowired
+
     private MockMvc mockMvc;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
     @MockBean
     private PrescriptionService prescriptionService;
@@ -46,6 +52,8 @@ public class PrescriptionControllerTest {
 
     @BeforeEach
     public void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
         pet = new PetInformation(1L, "Buddy", 3, "Male", 25.5, "Golden Retriever", null, 1L);
         prescription = new Prescription(
                 1L,

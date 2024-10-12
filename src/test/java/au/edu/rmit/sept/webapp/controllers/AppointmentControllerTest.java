@@ -9,10 +9,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,11 +27,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
-
-@WebMvcTest(AppointmentController.class)
+@SpringBootTest
 public class AppointmentControllerTest {
 
     @Autowired
+    private WebApplicationContext webApplicationContext;
+
     private MockMvc mockMvc;
 
     @MockBean
@@ -62,6 +66,8 @@ public class AppointmentControllerTest {
 
     @BeforeEach
     public void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
 
         user = new User();
         user.setId(1L);
@@ -73,7 +79,9 @@ public class AppointmentControllerTest {
         veterinarians = Arrays.asList(new Veterinarian(), new Veterinarian());
         clinicReasons = Arrays.asList(new ClinicReasons(), new ClinicReasons());
         servicePricings = Arrays.asList(new ClinicServicePricing(), new ClinicServicePricing());
-        pets = Arrays.asList(new PetInformation(), new PetInformation());
+        PetInformation pet = new PetInformation();
+        pet.setPetID(1L);
+        pets = Arrays.asList(pet);
         appointments = Arrays.asList(new Appointment(), new Appointment());
 
         Mockito.when(userService.findByEmail("testUser@test.com")).thenReturn(user);
@@ -87,7 +95,6 @@ public class AppointmentControllerTest {
 
     // Test for the appointment booking page
     @Test
-
     public void testBookApp() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.getSession().setAttribute("userEmail", user.getEmail());

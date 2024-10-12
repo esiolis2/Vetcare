@@ -8,8 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -20,10 +23,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(MedicalRecordController.class)
+@SpringBootTest
 public class MedicalRecordControllerTest {
 
     @Autowired
+    private WebApplicationContext webApplicationContext;
+
     private MockMvc mockMvc;
 
     @MockBean
@@ -53,6 +58,8 @@ public class MedicalRecordControllerTest {
 
     @BeforeEach
     public void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
         user = new User(1L, "John Doe", "johndoe@example.com", "password123", 123456789L, "123 Street, City", "User");
         pet = new PetInformation(1L, "Buddy", 3, "Male", 25.5, "Golden Retriever", null, 1L);
         medicalHistory = new MedicalHistory(1L, LocalDate.parse("2024-10-10"), "No issues", "None", "No medications", "None", LocalDate.parse("2025-10-10"));
