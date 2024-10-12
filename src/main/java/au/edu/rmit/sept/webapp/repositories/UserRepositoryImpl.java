@@ -54,7 +54,7 @@ public class UserRepositoryImpl implements UserRepository {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                System.out.println("Logged in successfully!");
+
                 return  new User(
                         rs.getLong("id"),
                         rs.getString("name"),

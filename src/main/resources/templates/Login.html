@@ -13,10 +13,18 @@
 <body>
 <div class="login-page">
     <div layout:fragment="content">
-        <div class="rainbow">
-            <div class="rainbow-border"></div>
+
+
             <div class="rainbow-content">
                 <h2 class="text-center">Login</h2>
+
+                <!-- Error Message Display -->
+                <div class="TP-alert-danger" th:if="${errorMessage != null}">
+                    <div class="TP-alert-content">
+                        <span class="TP-icon">⚠️</span>
+                        <p th:text="${errorMessage}"></p>
+                    </div>
+                </div>
                 <form th:action="@{/login}" method="post" id="loginForm" class="mx-auto form-container">
                     <div class="form-group">
                         <label for="email">Email address</label>
@@ -28,10 +36,10 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Log In</button>
                     <a href="/signup" class="btn btn-link">Don't have an account? Sign up</a>
-                    <div id="loginError" class="alert alert-danger mt-3" style="display: none;"></div>
+                    <!--                    <div id="loginError" class="alert alert-danger mt-3" style="display: none;"></div>-->
                 </form>
             </div>
-        </div>
+
         <div class="text-center">
             <a href="/" class="btn-common btn-back">Back to Home Page</a>
         </div>

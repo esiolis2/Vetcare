@@ -43,10 +43,11 @@ public class UserController {
             // added logged-in user to the model to pass data to the view
             model.addAttribute("loggedInUser", user);
             model.addAttribute("userType", user.getUserType());
+            model.addAttribute("successMessage", "Logged in sucessfully");
             System.out.println("Logged in successfully!!!!");
             return "redirect:/";
         } else {
-            model.addAttribute("error", "Invalid email or password");
+            model.addAttribute("errorMessage", "Invalid email or password");
             return "login";
         }
     }
