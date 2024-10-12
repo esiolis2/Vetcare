@@ -1,13 +1,15 @@
 package au.edu.rmit.sept.webapp.repositories;
 
-import au.edu.rmit.sept.webapp.models.Prescription;
 import au.edu.rmit.sept.webapp.models.PetInformation;
+import au.edu.rmit.sept.webapp.models.Prescription;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.time.LocalDate;
@@ -16,18 +18,20 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
+@SpringBootTest()
+@Transactional
 public class PrescriptionRepositoryImplTest {
 
     @Autowired
     private DataSource dataSource;
-
     @Autowired
     private Flyway flyway;
-
+    @MockBean
     private PrescriptionRepositoryImpl prescriptionRepository;
+    @MockBean
     private Prescription prescription1;
-    private Prescription prescription2;
+
+    @MockBean
     private PetInformation pet;
 
     @BeforeEach
@@ -50,18 +54,6 @@ public class PrescriptionRepositoryImplTest {
                 LocalDate.now()
         );
 
-        prescription2 = new Prescription(
-                2L,
-                "AllerPet 10mg",
-                "1 tablet daily",
-                "Administer with food",
-                LocalDate.of(2024, 6, 15),
-                60,
-                3,
-                LocalDate.of(2025, 6, 15),
-                pet,
-                LocalDate.now()
-        );
     }
 
     @AfterEach

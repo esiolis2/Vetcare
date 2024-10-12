@@ -7,16 +7,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
-
+@SpringBootTest()
+@Transactional
 public class VaccinationRecordRepositoryImplTest {
 
     @Autowired
@@ -24,7 +27,7 @@ public class VaccinationRecordRepositoryImplTest {
 
     @Autowired
     private DataSource dataSource;
-
+    @MockBean
     private VaccinationRecordRepository repository;
 
     @BeforeEach

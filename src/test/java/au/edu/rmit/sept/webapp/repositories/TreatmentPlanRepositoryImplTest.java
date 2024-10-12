@@ -1,13 +1,15 @@
 package au.edu.rmit.sept.webapp.repositories;
 
-import au.edu.rmit.sept.webapp.models.TreatmentPlan;
 import au.edu.rmit.sept.webapp.models.PetInformation;
+import au.edu.rmit.sept.webapp.models.TreatmentPlan;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.time.LocalDate;
@@ -16,7 +18,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
+@SpringBootTest()
+@Transactional
 public class TreatmentPlanRepositoryImplTest {
 
     @Autowired
@@ -24,7 +27,7 @@ public class TreatmentPlanRepositoryImplTest {
 
     @Autowired
     private DataSource dataSource;
-
+    @MockBean
     private TreatmentPlanRepository repository;
 
     @BeforeEach

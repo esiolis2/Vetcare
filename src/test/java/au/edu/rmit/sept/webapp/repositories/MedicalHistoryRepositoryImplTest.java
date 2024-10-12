@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.time.LocalDate;
@@ -16,7 +18,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
+@SpringBootTest()
+@Transactional
 public class MedicalHistoryRepositoryImplTest {
 
     @Autowired
@@ -24,7 +27,7 @@ public class MedicalHistoryRepositoryImplTest {
 
     @Autowired
     private Flyway flyway;
-
+    @MockBean
     private MedicalHistoryRepositoryImpl medicalHistoryRepository;
     private PetInformation pet;
     private MedicalHistory medicalHistory1;
