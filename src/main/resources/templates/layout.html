@@ -152,8 +152,8 @@
                             <h3 class="text-center">Notifications</h3>
                         </div>
                         <div class="notification-ui_dd-content">
-                            <div th:if="${#lists.isEmpty(upcomingAppointments)}">
-                                <p class="text-center">No upcoming appointments</p>
+                            <div th:if="${#lists.isEmpty(upcomingAppointments) && #lists.isEmpty(upcomingPrescriptions)}">
+                                <p class="text-center">No upcoming appointments or medication reminders.</p>
                             </div>
                             <div th:each="appointment : ${upcomingAppointments}">
                                 <div class="px-4 notification" style="font-size: 1rem">
