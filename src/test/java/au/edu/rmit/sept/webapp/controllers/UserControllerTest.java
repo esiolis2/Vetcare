@@ -73,7 +73,7 @@ public class UserControllerTest {
                         .param("password", "wrongPassword"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("login"))
-                .andExpect(model().attribute("error", "Invalid email or password"));
+                .andExpect(model().attribute("errorMessage", "Invalid email or password"));
     }
 
     @Test
