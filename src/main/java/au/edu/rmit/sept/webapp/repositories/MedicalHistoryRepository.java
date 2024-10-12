@@ -10,6 +10,4 @@ public interface MedicalHistoryRepository {
 
     List<MedicalHistory> findMedicalHistoryByPetId(Long petId);
     void addMedicalHistory(MedicalHistory medicalHistory);
-    List<MedicalHistory> findAllMedicalHistories();
-    public void updateMedicalHistory(MedicalHistory medicalHistory);
 }

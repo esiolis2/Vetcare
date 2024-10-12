@@ -28,10 +28,6 @@ public class TreatmentPlanServiceImpl implements TreatmentPlanService {
         return treatmentPlanRepository.findByPetId(petId);
     }
 
-    @Override
-    public List<TreatmentPlan> getTreatmentPlansByUserId(Long userId) {
-        return treatmentPlanRepository.findByUserId(userId);
-    }
 
     @Override
     public void createTreatmentPlan(TreatmentPlan treatmentPlan) {

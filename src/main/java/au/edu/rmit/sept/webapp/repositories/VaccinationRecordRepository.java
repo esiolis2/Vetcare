@@ -14,8 +14,6 @@ public interface VaccinationRecordRepository {
 
 }
 
-//    void updateVaccinationRecord(VaccinationRecord vaccinationRecord);
-
 
 
 

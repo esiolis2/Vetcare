@@ -166,26 +166,5 @@ public class TreatmentPlanRepositoryImpl implements TreatmentPlanRepository {
         }
     }
 
-    @Override
-    public List<TreatmentPlan> findByUserId(Long userId) {
-        String query = "SELECT tp.* FROM TreatmentPlans tp "
-                + "JOIN pet_info p ON tp.PetID = p.PetID "
-                + "WHERE p.OwnerId = ?";
-
-        List<TreatmentPlan> treatmentPlans = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setLong(1, userId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                TreatmentPlan treatmentPlan = mapSetToTreatmentPlan(rs);
-                treatmentPlans.add(treatmentPlan);
-            }
-        } catch (SQLException e) {
-            throw new UncategorizedScriptException("Error fetching treatment plans by User ID", e);
-        }
-        return treatmentPlans;
-    }
 }
-
 
