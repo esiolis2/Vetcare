@@ -23,6 +23,10 @@
         </div>
     </div>
 
+    <script th:if="${medicalHistoryExists}" type="text/javascript">
+        alert('Medical history already exists for this pet.');
+    </script>
+
     <!-- Step 1: User Selection -->
     <form th:action="@{/medical/selectUser}" method="get">
         <div class="UMR-mb-3">
@@ -36,7 +40,7 @@
     </form>
 
     <!-- Step 2: Pet Selection -->
-    <form th:if="${pets != null}" th:action="@{/medical/selectPet}" method="get">
+    <form th:if="${selectedUser != null && pets != null}" th:action="@{/medical/selectPet}" method="get">
         <div class="UMR-mb-3">
             <label for="UMR-petSelect" class="UMR-form-label">Select a Pet:</label>
             <select class="UMR-form-select" id="UMR-petSelect" name="petId" onchange="this.form.submit()" required>
@@ -65,7 +69,7 @@
     </div>
 
     <!-- Medical History Form -->
-    <form th:if="${selectedPet != null}" th:action="@{/save-medical-record}" method="post" th:object="${medicalRecord}">
+    <form th:if="${selectedPet != null}" th:action="@{/save-medical-record}" method="post" th:object="${medicalRecord}" onsubmit="return validateDates()">
         <input type="hidden" name="petId" th:value="${selectedPet.petID}" />
         <div class="UMR-card UMR-mt-4">
             <div class="UMR-card-body">
@@ -78,22 +82,22 @@
 
                 <div class="UMR-mb-3">
                     <label for="UMR-lastDiagnosis" class="UMR-form-label">Diagnosis:</label>
-                    <input type="text" class="UMR-form-control" id="UMR-lastDiagnosis" th:field="*{lastDiagnosis}" placeholder="Enter diagnosis" required>
+                    <input type="text" class="UMR-form-control" id="UMR-lastDiagnosis" th:field="*{lastDiagnosis}" placeholder="Enter diagnosis" minlength="2" required>
                 </div>
 
                 <div class="UMR-mb-3">
                     <label for="UMR-treatmentProvided" class="UMR-form-label">Treatment Provided:</label>
-                    <input type="text" class="UMR-form-control" id="UMR-treatmentProvided" th:field="*{treatmentProvided}" placeholder="Enter treatment details" required>
+                    <input type="text" class="UMR-form-control" id="UMR-treatmentProvided" th:field="*{treatmentProvided}" placeholder="Enter treatment details" minlength="2" required>
                 </div>
 
                 <div class="UMR-mb-3">
                     <label for="UMR-medicationsPrescribed" class="UMR-form-label">Medications Prescribed:</label>
-                    <input type="text" class="UMR-form-control" id="UMR-medicationsPrescribed" th:field="*{medicationsPrescribed}" placeholder="Enter medications prescribed" required>
+                    <input type="text" class="UMR-form-control" id="UMR-medicationsPrescribed" th:field="*{medicationsPrescribed}" placeholder="Enter medications prescribed" minlength="2" required>
                 </div>
 
                 <div class="UMR-mb-3">
                     <label for="UMR-ongoingConditions" class="UMR-form-label">Ongoing Conditions:</label>
-                    <input type="text" class="UMR-form-control" id="UMR-ongoingConditions" th:field="*{ongoingConditions}" placeholder="Enter ongoing conditions" required>
+                    <input type="text" class="UMR-form-control" id="UMR-ongoingConditions" th:field="*{ongoingConditions}" placeholder="Enter ongoing conditions" minlength="2" required>
                 </div>
 
                 <div class="UMR-mb-3">
@@ -108,10 +112,38 @@
         </div>
     </form>
 
+    <!-- JavaScript for Client-Side Validation -->
+    <script>
+    function validateDates() {
+        const lastVisitDate = new Date(document.getElementById('UMR-lastVisitDate').value);
+        const nextScheduledVisit = new Date(document.getElementById('UMR-nextScheduledVisit').value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+
+        if (lastVisitDate >= today) {
+            alert('The Last Visit Date must be before today.');
+            return false;
+        }
+
+
+        if (nextScheduledVisit <= lastVisitDate) {
+            alert('The Next Scheduled Visit date must be after the Last Visit Date.');
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+
+
+
     <!-- Vaccination and Treatment Plan Management -->
     <div class="UMR-text-center UMR-mt-4" th:if="${selectedPet != null}">
         <a th:href="@{/edit-treatment-plan(petId=${selectedPet.petID})}" class="UMR-btn-common">Edit Treatment Plan</a>
         <a th:href="@{/edit-vaccination-record(petId=${selectedPet.petID})}" class="UMR-btn-common UMR-btn-secondary">Edit Vaccination Record</a>
+        <a th:href="@{/edit-prescription(petId=${selectedPet.petID})}" class="UMR-btn-common">Edit Prescription</a>
     </div>
 
     <!-- Go Back Button -->

@@ -10,5 +10,3 @@ public interface VaccinationRecordService {
     List<VaccinationRecord> getAllVaccinationRecords();
 
 }
-
-//    void updateVaccinationRecord(VaccinationRecord vaccinationRecord, User loggedInUser);

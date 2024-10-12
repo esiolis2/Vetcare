@@ -42,8 +42,22 @@
     <!-- Prescription Refill Form -->
     <div class="prescription-refill">
         <h3>Request Prescription Refill</h3>
-        <form id="refillForm" th:action="@{/prescription/refill}" method="post">
-            <input type="hidden" name="petID" th:value="${pet != null ? pet.petID : ''}" />
+
+        <!-- Pet Selection Form -->
+        <form th:action="@{/prescription/order}" method="get">
+            <div class="pet-selection mb-4" th:if="${errorMessage == null}">
+                <div class="form-group">
+                    <label for="petSelect">Choose the Pet</label>
+                    <select class="form-select" id="petSelect" name="petId" onchange="this.form.submit()">
+                        <option value="" selected>Select a Pet</option>
+                        <option th:each="pet : ${pets}" th:value="${pet.petID}" th:text="${pet.name}"></option>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <form id="refillForm" th:action="@{/prescription/refill}" method="post" th:if="${selectedPet != null}">
+            <input type="hidden" name="petID" th:value="${selectedPet != null ? selectedPet.petID : ''}" />
 
             <div class="form-group">
                 <label>Medication Name</label>
@@ -89,9 +103,7 @@
             </div>
 
             <button type="submit" class="btn-prescription-submit mt-3">Request Refills</button>
-
         </form>
-
     </div>
 
     <a href="/" class="btn-prescription-submit mt-3">Back to Home Page</a>

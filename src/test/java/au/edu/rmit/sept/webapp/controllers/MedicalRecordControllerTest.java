@@ -7,7 +7,6 @@ import au.edu.rmit.sept.webapp.services.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -152,6 +151,6 @@ public class MedicalRecordControllerTest {
                         .sessionAttr("loggedInUser", user)
                         .param("petId", "1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("medicalRecordForm"));
+                .andExpect(view().name("HomePage"));
     }
 }

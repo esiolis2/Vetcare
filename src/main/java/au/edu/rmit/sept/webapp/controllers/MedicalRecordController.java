@@ -6,11 +6,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -177,13 +179,24 @@ public class MedicalRecordController {
 
 
     @PostMapping("/save-medical-record")
-    public String saveMedicalRecord(@ModelAttribute("medicalRecord") MedicalHistory medicalHistory,
+    public String saveMedicalRecord(@ModelAttribute("medicalRecord") MedicalHistory medicalHistory, BindingResult bindingResult,
                                     @RequestParam("petId") Long petId, HttpServletRequest request, Model model) {
+
+        LocalDate today = LocalDate.now();
+        if (medicalHistory.getLastVisitDate() != null && !medicalHistory.getLastVisitDate().isBefore(today)) {
+            bindingResult.rejectValue("lastVisitDate", "error.medicalHistory", "The Last Visit Date must be before today.");
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "medicalRecordForm";
+        }
+
         User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
 
         PetInformation pet = petInformationService.getPetById(petId);
         if (pet == null) {
             model.addAttribute("errorMessage", "Pet not found.");
+            System.out.println("Error: Pet not found for petId: " + petId);
             return "medicalRecordForm";
         }
 
@@ -192,29 +205,19 @@ public class MedicalRecordController {
 
         List<MedicalHistory> existingRecords = medicalHistoryService.getMedicalHistoryByPetId(petId);
 
-        if (existingRecords == null || existingRecords.isEmpty()) {
+        if (existingRecords != null && !existingRecords.isEmpty()) {
+            model.addAttribute("errorMessage", "Medical history already exists for this pet.");
+            System.out.println("Medical history already exists for petId: " + petId);
+            return "HomePage";
+        } else {
             medicalHistoryService.createMedicalHistory(medicalHistory);
             model.addAttribute("successMessage", "New medical record created successfully.");
-        }else {
-            MedicalHistory existingRecord = existingRecords.get(0);
-
-            if (existingRecord != null && existingRecord.getHistoryID() != null) {
-                System.out.println("Debug: Existing record's History ID is " + existingRecord.getHistoryID());
-
-                medicalHistory.setHistoryID(existingRecord.getHistoryID());
-
-                medicalHistoryService.updateMedicalHistory(medicalHistory, loggedInUser);
-                model.addAttribute("successMessage", "Medical record updated successfully.");
-            } else {
-
-                model.addAttribute("errorMessage", "Error updating medical record: Record not found or History ID is null.");
-                System.out.println("Debug: Error - History ID is null or existing record is not valid for update.");
-                return "medicalRecordForm";
-            }
+            System.out.println("New medical record created for petId: " + petId);
         }
 
         return "HomePage";
     }
+
 
 
     @ModelAttribute("loggedInUser")

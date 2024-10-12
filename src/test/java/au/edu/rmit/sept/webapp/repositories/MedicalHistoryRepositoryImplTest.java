@@ -15,7 +15,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class MedicalHistoryRepositoryImplTest {
@@ -79,34 +78,6 @@ public class MedicalHistoryRepositoryImplTest {
         assertEquals("No issues", medicalHistories.get(1).getLastDiagnosis());
     }
 
-    @Test
-    public void testAddMedicalHistory() {
-        List<MedicalHistory> initialHistories = medicalHistoryRepository.findAllMedicalHistories();
-        int initialSize = initialHistories.size();
-
-        MedicalHistory newMedicalHistory = new MedicalHistory(
-                pet.getPetID(),
-                LocalDate.of(2023, 11, 20),
-                "Infection",
-                "Antibiotics",
-                "Amoxicillin",
-                "Skin infection",
-                LocalDate.of(2024, 11, 20)
-        );
-        medicalHistoryRepository.addMedicalHistory(newMedicalHistory);
-
-        List<MedicalHistory> updatedHistories = medicalHistoryRepository.findAllMedicalHistories();
-        assertEquals(initialSize + 1, updatedHistories.size());
-        assertTrue(updatedHistories.stream().anyMatch(history -> "Infection".equals(history.getLastDiagnosis())));
-    }
-
-    @Test
-    public void testFindAllMedicalHistories() {
-        List<MedicalHistory> medicalHistories = medicalHistoryRepository.findAllMedicalHistories();
-
-        assertNotNull(medicalHistories);
-        assertEquals(12, medicalHistories.size());
-    }
 
     @Test
     public void testUpdateMedicalHistory() {

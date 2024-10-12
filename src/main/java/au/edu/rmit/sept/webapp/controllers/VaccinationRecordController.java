@@ -164,9 +164,6 @@ public class VaccinationRecordController {
             if (vaccinationRecord.getVaccinationID() == null) {
                 vaccinationRecordService.createVaccinationRecord(vaccinationRecord);
             }
-//            else {
-//                vaccinationRecordService.updateVaccinationRecord(vaccinationRecord, loggedInUser);
-//            }
 
             model.addAttribute("successMessage", "Vaccination record saved successfully.");
         } else {
