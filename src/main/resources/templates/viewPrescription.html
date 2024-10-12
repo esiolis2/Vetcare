@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/assets/css/prescription.css}">
 </head>
 <body>
+<div layout:fragment="content">
 <div class="container prescriptionContainer">
     <div class="text-center mb-4">
         <h2>View Prescriptions</h2>
@@ -42,11 +43,12 @@
     </div>
 
     <a href="/" class="btn-common btn-back" >Back to Home Page</a>
-    <div class="text-center" th:if="${pet != null}">
+<!--    <div class="text-center" th:if="${pet != null}">-->
 
-        <a href="#" class="btn-prescription-submit mt-3" onclick="downloadPDF()">Download PDF</a>
-        <a href="#" class="btn-prescription-submit mt-3" onclick="shareRecords()">Share</a>
-    </div>
+<!--        <a href="#" class="btn-prescription-submit mt-3" onclick="downloadPDF()">Download PDF</a>-->
+<!--        <a href="#" class="btn-prescription-submit mt-3" onclick="shareRecords()">Share</a>-->
+<!--    </div>-->
+</div>
 </div>
 </body>
 </html>

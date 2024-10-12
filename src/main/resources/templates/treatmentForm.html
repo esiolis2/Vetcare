@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,7 @@
 </head>
 <body>
 <!-- Main Container -->
+<div layout:fragment="content">
 <div class="TP-container">
     <!-- Page Title -->
     <h2 class="TP-title">Update Treatment Plan</h2>
@@ -228,5 +229,6 @@
         }
     });
 </script>
+</div>
 </body>
 </html>

@@ -246,6 +246,19 @@ public class PrescriptionController {
         return "HomePage";
     }
 
+
+
+    @ModelAttribute("loggedInUser")
+    public User getLoggedInUser(HttpServletRequest request) {
+        return (User) request.getSession().getAttribute("loggedInUser");
+    }
+
+    //  To ensure that these attributes are available in the model for the thyemleaf template to use these attributes for conditional rendering
+    @ModelAttribute("userType")
+    public String getUserType(HttpServletRequest request) {
+        return (String) request.getSession().getAttribute("userType");
+    }
+
 }
 
 

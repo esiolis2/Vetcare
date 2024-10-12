@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,6 +34,7 @@
     </script>
 </head>
 <body>
+<div layout:fragment="content">
 <div class="container prescriptionContainer">
     <div class="text-center mb-4">
         <h2>Order Prescription</h2>
@@ -108,6 +109,7 @@
 
     <a href="/" class="btn-prescription-submit mt-3">Back to Home Page</a>
     <a href="/prescription/orderdetails" class="btn-prescription-submit mt-3">View Order Details</a>
+</div>
 </div>
 </body>
 </html>
