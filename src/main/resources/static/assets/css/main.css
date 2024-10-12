@@ -151,6 +151,41 @@ p {
     font-size: 1.5rem;
 }
 
+/*BOOK APPOINTMENT FLOATING BUTTONS*/
+.book-appointment-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    color: #388087;
+    border: 2px solid #388087;
+    border-radius: 8px;
+    padding: 10px 20px;
+    box-shadow: 02px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 26px;
+    font-weight: 500;
+}
+
+.book-appointment-btn i {
+    margin-right: 8px;
+    font-size: 26px;
+}
+
+.book-appointment-btn:hover {
+    background-color: #388087;
+    color: white;
+    border-color: #aaa;
+    text-decoration: none;
+}
+
+.book-appointment-btn:active {
+    box-shadow: none;
+    transform: scale(0.98);
+}
+
 /* FOOTER */
 .footer-style {
     background-color: #388087;
