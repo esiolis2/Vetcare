@@ -1,6 +1,5 @@
 package au.edu.rmit.sept.webapp.controllers;
 
-import au.edu.rmit.sept.webapp.models.PetInformation;
 import au.edu.rmit.sept.webapp.models.User;
 import au.edu.rmit.sept.webapp.services.PetInformationService;
 import au.edu.rmit.sept.webapp.services.UserService;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -51,7 +49,7 @@ public class UserControllerTest {
         mockMvc.perform(post("/signup")
                         .flashAttr("user", user))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/login"));
+                .andExpect(redirectedUrl("/Login"));
     }
 
     @Test
@@ -72,7 +70,7 @@ public class UserControllerTest {
                         .param("email", "test@example.com")
                         .param("password", "wrongPassword"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("login"))
+                .andExpect(view().name("Login"))
                 .andExpect(model().attribute("errorMessage", "Invalid email or password"));
     }
 
@@ -84,7 +82,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("user"))
                 .andExpect(model().attribute("user", user))
-                .andExpect(view().name("account"));
+                .andExpect(view().name("Account"));
     }
 
     @Test

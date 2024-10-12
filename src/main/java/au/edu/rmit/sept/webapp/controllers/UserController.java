@@ -26,7 +26,7 @@ public class UserController {
     @PostMapping("/signup")
     public String createUser(@ModelAttribute User user) {
         userService.createUser(user);
-        return "redirect:/login";
+        return "redirect:/Login";
     }
 
     @PostMapping("/login")
@@ -48,14 +48,14 @@ public class UserController {
             return "redirect:/";
         } else {
             model.addAttribute("errorMessage", "Invalid email or password");
-            return "login";
+            return "Login";
         }
     }
 
     @GetMapping("/account")
     public String getUserProfile(Model model, @ModelAttribute("loggedInUser") User loggedInUser) {
         model.addAttribute("user", loggedInUser);
-        return "account";
+        return "Account";
     }
 
     @PostMapping("/logout")
@@ -92,7 +92,7 @@ public class UserController {
             System.out.println("Account updated successfully!!!!");
             return "redirect:/";
         }
-        return "redirect:/account";
+        return "redirect:/Account";
     }
 
 
@@ -109,7 +109,7 @@ public class UserController {
 
             return "redirect:/";
         }
-        return "redirect:/account";
+        return "redirect:/Account";
     }
 
 

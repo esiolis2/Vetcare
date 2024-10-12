@@ -1,0 +1,5 @@
+--container-architecture linux/amd64
+
+-P mysql-db=mysql:latest
+
+--bind --container-options '--network="host"'

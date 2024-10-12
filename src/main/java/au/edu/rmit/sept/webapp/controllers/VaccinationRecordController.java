@@ -116,7 +116,7 @@ public class VaccinationRecordController {
 
         model.addAttribute("canEditPet", "Vet".equals(userType));
 
-        return "VaccinationForm";
+        return "vaccinationForm";
     }
 
 
@@ -132,7 +132,7 @@ public class VaccinationRecordController {
         model.addAttribute("users", List.of(selectedUser));
         model.addAttribute("vaccinationRecord", new VaccinationRecord());
 
-        return "VaccinationForm";
+        return "vaccinationForm";
     }
 
 
@@ -149,7 +149,7 @@ public class VaccinationRecordController {
         model.addAttribute("users", List.of(selectedUser));
         model.addAttribute("vaccinationRecord", new VaccinationRecord());
 
-        return "VaccinationForm";
+        return "vaccinationForm";
     }
 
     @PostMapping("/save-vaccination")
@@ -168,7 +168,7 @@ public class VaccinationRecordController {
             model.addAttribute("successMessage", "Vaccination record saved successfully.");
         } else {
             model.addAttribute("errorMessage", "Pet not found.");
-            return "VaccinationForm";
+            return "vaccinationForm";
         }
         return "HomePage";
     }

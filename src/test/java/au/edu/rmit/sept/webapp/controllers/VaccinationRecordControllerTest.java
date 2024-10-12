@@ -45,9 +45,11 @@ public class VaccinationRecordControllerTest {
 
     @MockBean
     private UserService userService;
-
+    @MockBean
     private PetInformation pet;
+    @MockBean
     private User user;
+    @MockBean
     private VaccinationRecord vaccinationRecord;
 
     @BeforeEach
@@ -133,7 +135,7 @@ public class VaccinationRecordControllerTest {
 
         mockMvc.perform(get("/edit-vaccination-record").sessionAttr("userId", 1L).sessionAttr("userType", "Vet"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("VaccinationForm"))
+                .andExpect(view().name("vaccinationForm"))
                 .andExpect(model().attributeExists("canEditPet"))
                 .andExpect(model().attribute("canEditPet", true));
     }
@@ -170,7 +172,7 @@ public class VaccinationRecordControllerTest {
 
         mockMvc.perform(get("/edit-vaccination-record").sessionAttr("userId", 1L).sessionAttr("userType", "User"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("VaccinationForm"))
+                .andExpect(view().name("vaccinationForm"))
                 .andExpect(model().attributeExists("canEditPet"))
                 .andExpect(model().attribute("canEditPet", false));
     }
@@ -183,7 +185,7 @@ public class VaccinationRecordControllerTest {
                         .sessionAttr("loggedInUser", user)
                         .param("petId", "999"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("VaccinationForm"))
+                .andExpect(view().name("vaccinationForm"))
                 .andExpect(model().attributeExists("errorMessage"))
                 .andExpect(model().attribute("errorMessage", "Pet not found."));
     }
