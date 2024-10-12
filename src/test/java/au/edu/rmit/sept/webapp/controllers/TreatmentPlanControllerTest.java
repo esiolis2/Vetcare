@@ -10,7 +10,6 @@ import au.edu.rmit.sept.webapp.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -89,6 +88,19 @@ public class TreatmentPlanControllerTest {
     }
 
     @Test
+    public void testSelectUser_NoPetsFound() throws Exception {
+        when(petInformationService.getPetByUserId(1L)).thenReturn(Collections.emptyList());
+        when(userService.findByUser(1L)).thenReturn(user);
+
+        mockMvc.perform(get("/treatment/selectUser?userId=1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("treatmentForm"))
+                .andExpect(model().attributeExists("errorMessage"))
+                .andExpect(model().attribute("errorMessage", "No pets found for this user."));
+    }
+
+
+    @Test
     public void testViewTreatmentPlan_PetFound() throws Exception {
         when(petInformationService.getPetById(1L)).thenReturn(pet);
         when(treatmentPlanService.getTreatmentPlanByPetId(1L)).thenReturn(List.of(treatmentPlan));
@@ -125,6 +137,18 @@ public class TreatmentPlanControllerTest {
     }
 
     @Test
+    public void testEditTreatmentPlanForm_UserIsNotVet() throws Exception {
+        when(userService.getAllUsers()).thenReturn(List.of(user));
+
+        mockMvc.perform(get("/edit-treatment-plan").sessionAttr("userId", 1L).sessionAttr("userType", "User"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("treatmentForm"))
+                .andExpect(model().attributeExists("canEditPet"))
+                .andExpect(model().attribute("canEditPet", false));
+    }
+
+
+    @Test
     public void testSaveTreatmentPlan_CreateNewRecord() throws Exception {
         when(petInformationService.getPetById(1L)).thenReturn(pet);
         when(treatmentPlanService.getTreatmentPlanByPetId(1L)).thenReturn(Collections.emptyList());
@@ -151,6 +175,19 @@ public class TreatmentPlanControllerTest {
                 .andExpect(model().attributeExists("successMessage"))
                 .andExpect(model().attribute("successMessage", "Treatment plan updated successfully."));
     }
+
+    @Test
+    public void testViewTreatmentPlan_NoTreatmentPlansFound() throws Exception {
+        when(petInformationService.getPetById(1L)).thenReturn(pet);
+        when(treatmentPlanService.getTreatmentPlanByPetId(1L)).thenReturn(Collections.emptyList());
+
+        mockMvc.perform(get("/treatmentPlan?petId=1").sessionAttr("userId", 1L))
+                .andExpect(status().isOk())
+                .andExpect(view().name("ViewTreatmentPlan"))
+                .andExpect(model().attributeExists("errorMessage"))
+                .andExpect(model().attribute("errorMessage", "No pets found for the logged-in user."));
+    }
+
 }
 
 

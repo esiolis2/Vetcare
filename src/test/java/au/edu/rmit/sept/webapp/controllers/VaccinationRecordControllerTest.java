@@ -10,7 +10,6 @@ import au.edu.rmit.sept.webapp.services.VaccinationRecordService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -151,4 +150,44 @@ public class VaccinationRecordControllerTest {
                 .andExpect(model().attributeExists("successMessage"))
                 .andExpect(model().attribute("successMessage", "Vaccination record saved successfully."));
     }
+
+    @Test
+    public void testShowVaccinationDetails_NotAuthorized() throws Exception {
+        PetInformation anotherPet = new PetInformation(2L, "Max", 5, "Male", 20.0, "Beagle", null, 2L);
+        when(petInformationService.getPetById(2L)).thenReturn(anotherPet);
+
+        mockMvc.perform(get("/vaccination-record-details?petId=2").sessionAttr("userId", 1L))
+                .andExpect(status().isOk())
+                .andExpect(view().name("ViewVaccinationRecords"))
+                .andExpect(model().attributeExists("errorMessage"))
+                .andExpect(model().attribute("errorMessage", "No pets found for the logged-in user."));
+    }
+
+    @Test
+    public void testEditVaccinationRecordForm_UserIsNotVet() throws Exception {
+        when(userService.getAllUsers()).thenReturn(List.of(user));
+        when(petInformationService.getPetByUserId(1L)).thenReturn(List.of(pet));
+
+        mockMvc.perform(get("/edit-vaccination-record").sessionAttr("userId", 1L).sessionAttr("userType", "User"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("VaccinationForm"))
+                .andExpect(model().attributeExists("canEditPet"))
+                .andExpect(model().attribute("canEditPet", false));
+    }
+
+    @Test
+    public void testSaveVaccination_PetNotFound() throws Exception {
+        when(petInformationService.getPetById(999L)).thenReturn(null);
+
+        mockMvc.perform(post("/save-vaccination")
+                        .sessionAttr("loggedInUser", user)
+                        .param("petId", "999"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("VaccinationForm"))
+                .andExpect(model().attributeExists("errorMessage"))
+                .andExpect(model().attribute("errorMessage", "Pet not found."));
+    }
+
+
+
 }

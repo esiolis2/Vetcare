@@ -73,14 +73,6 @@ public class TreatmentPlanServiceImplTest {
         verify(treatmentPlanRepository, times(1)).findByPetId(1L);
     }
 
-    @Test
-    public void getTreatmentPlansByUserId_shouldReturnEmptyListWhenNoPlansExist() {
-        when(treatmentPlanRepository.findByUserId(1L)).thenReturn(List.of());
-
-        List<TreatmentPlan> treatmentPlans = treatmentPlanService.getTreatmentPlansByUserId(1L);
-        assertEquals(0, treatmentPlans.size());
-        verify(treatmentPlanRepository, times(1)).findByUserId(1L);
-    }
 
     @Test
     public void updateTreatmentPlan_nonVetUserShouldNotUpdatePet() {

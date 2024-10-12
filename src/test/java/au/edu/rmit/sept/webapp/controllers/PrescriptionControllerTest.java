@@ -7,7 +7,6 @@ import au.edu.rmit.sept.webapp.services.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -162,4 +161,48 @@ public class PrescriptionControllerTest {
                 .andExpect(model().attributeExists("errorMessage"))
                 .andExpect(model().attribute("errorMessage", "No orders found for your pets."));
     }
+
+    @Test
+    public void testViewPrescriptionPage_NoPetsFound() throws Exception {
+        when(petInformationService.getPetByUserId(1L)).thenReturn(List.of());
+
+        mockMvc.perform(get("/view-prescription").sessionAttr("userId", 1L))
+                .andExpect(status().isOk())
+                .andExpect(view().name("viewPrescription"))
+                .andExpect(model().attributeExists("errorMessage"))
+                .andExpect(model().attribute("errorMessage", "No pets found for the logged-in user."));
+    }
+
+    @Test
+    public void testSavePrescription_Success() throws Exception {
+        when(petInformationService.getPetById(1L)).thenReturn(pet);
+
+        mockMvc.perform(post("/save-prescription")
+                        .param("petId", "1")
+                        .flashAttr("prescription", prescription)
+                        .sessionAttr("userId", 1L))
+                .andExpect(status().isOk())
+                .andExpect(view().name("HomePage"))
+                .andExpect(model().attributeExists("successMessage"))
+                .andExpect(model().attribute("successMessage", "Prescription saved successfully."));
+    }
+
+    @Test
+    public void testSavePrescription_PetNotFound() throws Exception {
+        when(petInformationService.getPetById(999L)).thenReturn(null);
+
+        mockMvc.perform(post("/save-prescription")
+                        .param("petId", "999")
+                        .flashAttr("prescription", prescription)
+                        .sessionAttr("userId", 1L))
+                .andExpect(status().isOk())
+                .andExpect(view().name("prescriptionForm"))
+                .andExpect(model().attributeExists("errorMessage"))
+                .andExpect(model().attribute("errorMessage", "Pet not found."));
+    }
+
+
+
+
+
 }
