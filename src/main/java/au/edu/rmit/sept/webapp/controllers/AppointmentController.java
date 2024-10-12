@@ -86,14 +86,37 @@ public class AppointmentController {
         String email = (String) request.getSession().getAttribute("userEmail");
         if (email != null) {
             User user = userService.findByEmail(email);
-            List<Clinic> clinics = clinicService.getAllClinics();
-            model.addAttribute("clinics", clinics);
-           List<Appointment> appointments =  appointmentService.getAppointments(user.getId());
-            model.addAttribute("appointments", appointments);
-            List<ClinicReasons> clinicReasons = clinicReasonsService.getAllClinicReasons();
-            model.addAttribute("clinicReasons", clinicReasons);
-            List<PetInformation> petInformation = petInformationService.getAllPets();
-            model.addAttribute("petInformation", petInformation);
+            if (user.getUserType().equals("User")) {
+                List<Clinic> clinics = clinicService.getAllClinics();
+                model.addAttribute("clinics", clinics);
+                List<Appointment> appointments = appointmentService.getAppointments(user.getId());
+                model.addAttribute("appointments", appointments);
+                List<ClinicReasons> clinicReasons = clinicReasonsService.getAllClinicReasons();
+                model.addAttribute("clinicReasons", clinicReasons);
+                List<PetInformation> petInformation = petInformationService.getAllPets();
+                model.addAttribute("petInformation", petInformation);
+
+            }
+            else if (user.getUserType().equals("Vet")) {
+                List<Clinic> clinics = clinicService.getAllClinics();
+                model.addAttribute("clinics", clinics);
+
+                Long vetId = 0L;
+                for (Veterinarian veterinarian: veterinarianService.getAllVeterinarians()){
+                    if (veterinarian.getEmail().equals(user.getEmail())) {
+                        vetId = veterinarian.getId();
+                    }
+                }
+                List<Appointment> appointments = appointmentService.getAppointmentsByVeterinarian(vetId);
+                for (Appointment appointment: appointments){
+                    System.out.println(appointment);
+                }
+                model.addAttribute("appointments", appointments);
+                List<ClinicReasons> clinicReasons = clinicReasonsService.getAllClinicReasons();
+                model.addAttribute("clinicReasons", clinicReasons);
+                List<PetInformation> petInformation = petInformationService.getAllPets();
+                model.addAttribute("petInformation", petInformation);
+            }
 
         }
 

@@ -134,6 +134,39 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     }
 
     @Override
+    public List<Appointment> findAllByVetId(Long vetId) {
+        List<Appointment> appointments = new ArrayList<>();
+        try(  Connection connection = this.dataSource.getConnection();
+              PreparedStatement stm = connection.prepareStatement("SELECT * FROM APPOINTMENT where veterinarianid = ?;")) {
+
+            stm.setLong(1, vetId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Timestamp dateStamp = rs.getTimestamp("appointmentDate");
+                Timestamp timeStamp = rs.getTimestamp("appointmentTime");
+                Long clinicId = rs.getLong("clinicId");
+                // Split it into LocalDate and LocalTime
+                LocalDate appointmentDate = dateStamp.toLocalDateTime().toLocalDate();
+                LocalTime appointmentTime = timeStamp.toLocalDateTime().toLocalTime();
+                Appointment appointment = new Appointment(
+                        rs.getLong("id"), // id
+                        rs.getLong("veterinarianId"), // vetId
+                        rs.getLong("clinicId"), // clinic
+                        rs.getLong("ownerId"),
+                        appointmentTime,
+                        appointmentDate,
+                        rs.getLong("reason"),
+                        rs.getLong("petId")); // petAge)
+                appointments.add(appointment);
+            }
+            connection.close();
+            return appointments;
+        } catch (SQLException e) {
+            throw new UncategorizedScriptException("Error in findAllByVetId", e);
+        }
+    }
+
+    @Override
     public boolean removeAppointment(Long appointmentId) {
         String deleteQuery = "DELETE FROM appointment WHERE id = ?";
 

@@ -60,4 +60,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
         return upcomingAppointments;
     }
+
+    @Override
+    public List<Appointment> getAppointmentsByVeterinarian(Long vetId) {
+        return appointmentRepository.findAllByVetId(vetId);
+    }
 }

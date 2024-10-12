@@ -11,6 +11,6 @@ public interface AppointmentService {
     public Appointment findAppointmentById(Long appointmentId);
     public boolean deleteAppointment (Long appointmentId);
     public List<Appointment> getUpcomingAppointments(Long userId);
-
+    public List<Appointment> getAppointmentsByVeterinarian(Long vetId);
 
 }
