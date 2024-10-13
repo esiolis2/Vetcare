@@ -6,87 +6,111 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class VaccinationRecordTest {
 
     private VaccinationRecord vaccinationRecord;
-    private PetInformation pet;
 
     @BeforeEach
     public void setUp() {
-        pet = new PetInformation(1L, "Buddy", 3, "Male", 25.5, "Golden Retriever", null, 1L);
-        vaccinationRecord = new VaccinationRecord(
-                1L,
-                pet.getPetID(),
-                "Rabies",
-                LocalDate.parse("2023-10-15"),
-                LocalDate.parse("2024-10-15"),
-                "Yes",
-                new BigDecimal("0.5"),
-                "Dr. Smith",
-                "Happy Paws Clinic",
-                "Completed",
-                "No side effects observed"
-        );
+        vaccinationRecord = new VaccinationRecord();
     }
 
     @Test
-    public void testParameterizedConstructor() {
+    public void testNoArgsConstructor() {
         assertNotNull(vaccinationRecord);
-        assertEquals(1L, vaccinationRecord.getVaccinationID());
-        assertEquals(1L, vaccinationRecord.getPetID());
-        assertEquals("Rabies", vaccinationRecord.getVaccineName());
-        assertEquals(LocalDate.parse("2023-10-15"), vaccinationRecord.getAdministeredDate());
-        assertEquals(LocalDate.parse("2024-10-15"), vaccinationRecord.getNextDueDate());
-        assertEquals("Yes", vaccinationRecord.getBoosterRequired());
-        assertEquals(new BigDecimal("0.5"), vaccinationRecord.getDosage());
-        assertEquals("Dr. Smith", vaccinationRecord.getVeterinarianName());
-        assertEquals("Happy Paws Clinic", vaccinationRecord.getClinicName());
-        assertEquals("Completed", vaccinationRecord.getStatus());
-        assertEquals("No side effects observed", vaccinationRecord.getAdditionalNotes());
+    }
+
+    @Test
+    public void testAllArgsConstructor() {
+        Long vaccinationID = 1L;
+        Long petID = 100L;
+        String vaccineName = "Rabies";
+        LocalDate administeredDate = LocalDate.of(2023, 9, 1);
+        LocalDate nextDueDate = LocalDate.of(2024, 9, 1);
+        String boosterRequired = "Yes";
+        BigDecimal dosage = new BigDecimal("0.5");
+        String veterinarianName = "Dr. Mark Smith";
+        String clinicName = "City Vet Clinic";
+        String status = "Completed";
+        String additionalNotes = "Next appointment required.";
+
+        VaccinationRecord vaccinationRecord = new VaccinationRecord(vaccinationID, petID, vaccineName, administeredDate, nextDueDate, boosterRequired, dosage, veterinarianName, clinicName, status, additionalNotes);
+
+        assertEquals(vaccinationID, vaccinationRecord.getVaccinationID());
+        assertEquals(petID, vaccinationRecord.getPetID());
+        assertEquals(vaccineName, vaccinationRecord.getVaccineName());
+        assertEquals(administeredDate, vaccinationRecord.getAdministeredDate());
+        assertEquals(nextDueDate, vaccinationRecord.getNextDueDate());
+        assertEquals(boosterRequired, vaccinationRecord.getBoosterRequired());
+        assertEquals(dosage, vaccinationRecord.getDosage());
+        assertEquals(veterinarianName, vaccinationRecord.getVeterinarianName());
+        assertEquals(clinicName, vaccinationRecord.getClinicName());
+        assertEquals(status, vaccinationRecord.getStatus());
+        assertEquals(additionalNotes, vaccinationRecord.getAdditionalNotes());
     }
 
     @Test
     public void testSettersAndGetters() {
-        VaccinationRecord newVaccinationRecord = new VaccinationRecord();
-        newVaccinationRecord.setVaccinationID(2L);
-        newVaccinationRecord.setPetID(2L);
-        newVaccinationRecord.setVaccineName("Distemper");
-        newVaccinationRecord.setAdministeredDate(LocalDate.parse("2022-08-15"));
-        newVaccinationRecord.setNextDueDate(LocalDate.parse("2023-08-15"));
-        newVaccinationRecord.setBoosterRequired("No");
-        newVaccinationRecord.setDosage(new BigDecimal("1.0"));
-        newVaccinationRecord.setVeterinarianName("Dr. Jane");
-        newVaccinationRecord.setClinicName("PetCare Clinic");
-        newVaccinationRecord.setStatus("Pending");
-        newVaccinationRecord.setAdditionalNotes("Monitor for side effects");
+        Long vaccinationID = 2L;
+        Long petID = 101L;
+        String vaccineName = "Distemper";
+        LocalDate administeredDate = LocalDate.of(2022, 8, 15);
+        LocalDate nextDueDate = LocalDate.of(2023, 8, 15);
+        String boosterRequired = "No";
+        BigDecimal dosage = new BigDecimal("1.0");
+        String veterinarianName = "Dr. Alice Johnson";
+        String clinicName = "Suburb Vet Clinic";
+        String status = "Pending";
+        String additionalNotes = "Monitor side effects.";
 
-        assertEquals(2L, newVaccinationRecord.getVaccinationID());
-        assertEquals(2L, newVaccinationRecord.getPetID());
-        assertEquals("Distemper", newVaccinationRecord.getVaccineName());
-        assertEquals(LocalDate.parse("2022-08-15"), newVaccinationRecord.getAdministeredDate());
-        assertEquals(LocalDate.parse("2023-08-15"), newVaccinationRecord.getNextDueDate());
-        assertEquals("No", newVaccinationRecord.getBoosterRequired());
-        assertEquals(new BigDecimal("1.0"), newVaccinationRecord.getDosage());
-        assertEquals("Dr. Jane", newVaccinationRecord.getVeterinarianName());
-        assertEquals("PetCare Clinic", newVaccinationRecord.getClinicName());
-        assertEquals("Pending", newVaccinationRecord.getStatus());
-        assertEquals("Monitor for side effects", newVaccinationRecord.getAdditionalNotes());
-    }
+        vaccinationRecord.setVaccinationID(vaccinationID);
+        vaccinationRecord.setPetID(petID);
+        vaccinationRecord.setVaccineName(vaccineName);
+        vaccinationRecord.setAdministeredDate(administeredDate);
+        vaccinationRecord.setNextDueDate(nextDueDate);
+        vaccinationRecord.setBoosterRequired(boosterRequired);
+        vaccinationRecord.setDosage(dosage);
+        vaccinationRecord.setVeterinarianName(veterinarianName);
+        vaccinationRecord.setClinicName(clinicName);
+        vaccinationRecord.setStatus(status);
+        vaccinationRecord.setAdditionalNotes(additionalNotes);
 
-    @Test
-    public void testDefaultConstructor() {
-        VaccinationRecord defaultVaccinationRecord = new VaccinationRecord();
-        assertNotNull(defaultVaccinationRecord);
+        assertEquals(vaccinationID, vaccinationRecord.getVaccinationID());
+        assertEquals(petID, vaccinationRecord.getPetID());
+        assertEquals(vaccineName, vaccinationRecord.getVaccineName());
+        assertEquals(administeredDate, vaccinationRecord.getAdministeredDate());
+        assertEquals(nextDueDate, vaccinationRecord.getNextDueDate());
+        assertEquals(boosterRequired, vaccinationRecord.getBoosterRequired());
+        assertEquals(dosage, vaccinationRecord.getDosage());
+        assertEquals(veterinarianName, vaccinationRecord.getVeterinarianName());
+        assertEquals(clinicName, vaccinationRecord.getClinicName());
+        assertEquals(status, vaccinationRecord.getStatus());
+        assertEquals(additionalNotes, vaccinationRecord.getAdditionalNotes());
     }
 
     @Test
     public void testSetPet() {
-        VaccinationRecord vaccinationRecordWithPet = new VaccinationRecord();
-        vaccinationRecordWithPet.setPet(pet);
+        PetInformation pet = new PetInformation(100L, "Buddy", 5, "Male", 12.5, "Golden Retriever", LocalDate.of(2018, 5, 12), 1L);
 
-        assertEquals(1L, vaccinationRecordWithPet.getPetID());
+        vaccinationRecord.setPet(pet);
+
+        assertEquals(pet.getPetID(), vaccinationRecord.getPetID());
+    }
+
+    @Test
+    public void testEmptyFields() {
+        assertNull(vaccinationRecord.getVaccinationID());
+        assertNull(vaccinationRecord.getPetID());
+        assertNull(vaccinationRecord.getVaccineName());
+        assertNull(vaccinationRecord.getAdministeredDate());
+        assertNull(vaccinationRecord.getNextDueDate());
+        assertNull(vaccinationRecord.getBoosterRequired());
+        assertNull(vaccinationRecord.getDosage());
+        assertNull(vaccinationRecord.getVeterinarianName());
+        assertNull(vaccinationRecord.getClinicName());
+        assertNull(vaccinationRecord.getStatus());
+        assertNull(vaccinationRecord.getAdditionalNotes());
     }
 }
