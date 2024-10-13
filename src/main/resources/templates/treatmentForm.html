@@ -49,7 +49,7 @@
     </form>
 
     <!-- Treatment Plan Form -->
-    <form th:if="${selectedPet != null}" th:action="@{/save-treatment-plan}" method="post" th:object="${treatmentPlan}">
+    <form th:if="${selectedPet != null}" th:action="@{/save-treatment-plan}" method="post" th:object="${treatmentPlan}" onsubmit="saveOnSubmit()">
         <input type="hidden" name="petId" th:value="${selectedPet.petID}" />
         <div class="TP-card TP-mt-4">
             <div class="TP-card-body">
@@ -133,7 +133,7 @@
                 <!-- Cost Estimate (Must be positive number) -->
                 <div class="TP-mb-3">
                     <label for="TP-costEstimate" class="TP-form-label">Cost Estimate:</label>
-                    <input type="number" class="TP-form-control" id="TP-costEstimate" th:field="*{costEstimate}" placeholder="Enter cost estimate" min="0" step="1">
+                    <input type="number" class="TP-form-control" id="TP-costEstimate" th:field="*{costEstimate}" placeholder="Enter cost estimate" min="0" step="1" required>
                     <div class="invalid-feedback">Cost Estimate must be a positive number.</div>
                 </div>
 
@@ -185,50 +185,63 @@
     <div class="TP-d-grid TP-mt-4">
         <a th:href="@{/}" class="TP-btn-back">Go Back</a>
     </div>
+
 </div>
 
 <!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
 
-    window.addEventListener('load', function() {
-        const successMessage = /*[[${successMessage != null ? successMessage : 'null'}]]*/ 'null';
-        if (successMessage !== 'null') {
-            alert(successMessage);
+<!--<script>-->
+
+<!--    window.addEventListener('load', function () {-->
+<!--        const successMessage = /*[[${successMessage != null ? successMessage : 'null'}]]*/ 'null';-->
+<!--        if (successMessage !== 'null') {-->
+<!--            alert(successMessage);-->
+<!--        }-->
+
+<!--        const errorMessage = /*[[${errorMessage != null ? errorMessage : 'null'}]]*/ 'null';-->
+<!--        if (errorMessage !== 'null') {-->
+<!--            alert(errorMessage);-->
+<!--        }-->
+<!--    });-->
+
+<!--    document.getElementById('TP-startDate').addEventListener('change', function () {-->
+<!--        const startDate = this.value;-->
+<!--        const endDateInput = document.getElementById('TP-endDate');-->
+<!--        endDateInput.min = startDate;-->
+<!--    });-->
+
+<!--    document.getElementById('TP-endDate').addEventListener('change', function () {-->
+<!--        const startDate = document.getElementById('TP-startDate').value;-->
+<!--        const endDate = this.value;-->
+<!--        if (endDate <= startDate) {-->
+<!--            alert('End Date must be after the Start Date.');-->
+<!--            this.value = '';-->
+<!--        }-->
+<!--    });-->
+
+<!--    const costEstimateInput = document.getElementById('TP-costEstimate');-->
+<!--    costEstimateInput.addEventListener('input', function () {-->
+<!--        if (this.value < 0) {-->
+<!--            this.setCustomValidity('Cost estimate must be a positive number.');-->
+<!--            this.reportValidity();-->
+<!--        } else {-->
+<!--            this.setCustomValidity('');-->
+<!--        }-->
+<!--    });-->
+
+
+
+
+
+<!--    </script>-->
+    <script>
+        function saveOnSubmit() {
+            alert("Saved Treatment Plan successfully!");
+            location.reload();
         }
-
-        const errorMessage = /*[[${errorMessage != null ? errorMessage : 'null'}]]*/ 'null';
-        if (errorMessage !== 'null') {
-            alert(errorMessage);
-        }
-    });
-
-    document.getElementById('TP-startDate').addEventListener('change', function () {
-        const startDate = this.value;
-        const endDateInput = document.getElementById('TP-endDate');
-        endDateInput.min = startDate;
-    });
-
-    document.getElementById('TP-endDate').addEventListener('change', function () {
-        const startDate = document.getElementById('TP-startDate').value;
-        const endDate = this.value;
-        if (endDate <= startDate) {
-            alert('End Date must be after the Start Date.');
-            this.value = '';
-        }
-    });
-
-    const costEstimateInput = document.getElementById('TP-costEstimate');
-    costEstimateInput.addEventListener('input', function () {
-        if (this.value < 0) {
-            this.setCustomValidity('Cost estimate must be a positive number.');
-            this.reportValidity();
-        } else {
-            this.setCustomValidity('');
-        }
-    });
-</script>
+    </script>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
