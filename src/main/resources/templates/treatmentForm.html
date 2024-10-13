@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,6 @@
 </head>
 <body>
 <!-- Main Container -->
-<div layout:fragment="content">
 <div class="TP-container">
     <!-- Page Title -->
     <h2 class="TP-title">Update Treatment Plan</h2>
@@ -185,63 +184,56 @@
     <div class="TP-d-grid TP-mt-4">
         <a th:href="@{/}" class="TP-btn-back">Go Back</a>
     </div>
-
 </div>
 
 <!-- Bootstrap JS -->
-
-
-<!--<script>-->
-
-<!--    window.addEventListener('load', function () {-->
-<!--        const successMessage = /*[[${successMessage != null ? successMessage : 'null'}]]*/ 'null';-->
-<!--        if (successMessage !== 'null') {-->
-<!--            alert(successMessage);-->
-<!--        }-->
-
-<!--        const errorMessage = /*[[${errorMessage != null ? errorMessage : 'null'}]]*/ 'null';-->
-<!--        if (errorMessage !== 'null') {-->
-<!--            alert(errorMessage);-->
-<!--        }-->
-<!--    });-->
-
-<!--    document.getElementById('TP-startDate').addEventListener('change', function () {-->
-<!--        const startDate = this.value;-->
-<!--        const endDateInput = document.getElementById('TP-endDate');-->
-<!--        endDateInput.min = startDate;-->
-<!--    });-->
-
-<!--    document.getElementById('TP-endDate').addEventListener('change', function () {-->
-<!--        const startDate = document.getElementById('TP-startDate').value;-->
-<!--        const endDate = this.value;-->
-<!--        if (endDate <= startDate) {-->
-<!--            alert('End Date must be after the Start Date.');-->
-<!--            this.value = '';-->
-<!--        }-->
-<!--    });-->
-
-<!--    const costEstimateInput = document.getElementById('TP-costEstimate');-->
-<!--    costEstimateInput.addEventListener('input', function () {-->
-<!--        if (this.value < 0) {-->
-<!--            this.setCustomValidity('Cost estimate must be a positive number.');-->
-<!--            this.reportValidity();-->
-<!--        } else {-->
-<!--            this.setCustomValidity('');-->
-<!--        }-->
-<!--    });-->
-
-
-
-
-
-<!--    </script>-->
-    <script>
-        function saveOnSubmit() {
-            alert("Saved Treatment Plan successfully!");
-            location.reload();
-        }
-    </script>
-</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    window.addEventListener('load', function() {
+        const successMessage = /*[[${successMessage != null ? successMessage : 'null'}]]*/ 'null';
+        if (successMessage !== 'null') {
+            alert(successMessage);
+        }
+
+        const errorMessage = /*[[${errorMessage != null ? errorMessage : 'null'}]]*/ 'null';
+        if (errorMessage !== 'null') {
+            alert(errorMessage);
+        }
+    });
+
+    document.getElementById('TP-startDate').addEventListener('change', function () {
+        const startDate = this.value;
+        const endDateInput = document.getElementById('TP-endDate');
+        endDateInput.min = startDate;
+    });
+
+    document.getElementById('TP-endDate').addEventListener('change', function () {
+        const startDate = document.getElementById('TP-startDate').value;
+        const endDate = this.value;
+        if (endDate <= startDate) {
+            alert('End Date must be after the Start Date.');
+            this.value = '';
+        }
+    });
+
+    const costEstimateInput = document.getElementById('TP-costEstimate');
+    costEstimateInput.addEventListener('input', function () {
+        if (this.value < 0) {
+            this.setCustomValidity('Cost estimate must be a positive number.');
+            this.reportValidity();
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+
+    function saveOnSubmit() {
+        alert("Saved Vaccination Record successfully!");
+        location.reload();
+    }
+
+
+</script>
 </body>
 </html>

@@ -70,7 +70,7 @@
     </div>
 
     <!-- Medical History Form -->
-    <form th:if="${selectedPet != null}" th:action="@{/save-medical-record}" method="post" th:object="${medicalRecord}" onsubmit="return validateDates()">
+    <form th:if="${selectedPet != null}" th:action="@{/save-medical-record}" method="post" th:object="${medicalRecord}" onsubmit="saveOnSubmit()">
         <input type="hidden" name="petId" th:value="${selectedPet.petID}" />
         <div class="UMR-card UMR-mt-4">
             <div class="UMR-card-body">
@@ -152,6 +152,12 @@
         <a th:href="@{/}" class="UMR-btn-back">Go Back</a>
     </div>
 </div>
+    <script>
+        function saveOnSubmit() {
+            alert("Saved Medical Record successfully!");
+            location.reload();
+        }
+    </script>
 </div>
 
 <!-- Bootstrap JS -->
