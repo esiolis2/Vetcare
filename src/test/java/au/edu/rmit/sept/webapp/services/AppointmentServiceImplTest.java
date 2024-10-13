@@ -147,4 +147,66 @@ public class AppointmentServiceImplTest {
         assertFalse(result);
         verify(appointmentRepository, times(1)).removeAppointment(appointmentId);
     }
+
+    @Test
+    public void testGetUpcomingAppointments_ShouldReturnUpcomingAppointments() {
+        Long userId = 1L;
+        LocalDate today = LocalDate.now();
+        Appointment upcomingAppointment = new Appointment();
+        upcomingAppointment.setAppointmentDate(today.plusDays(3));
+
+        Appointment pastAppointment = new Appointment();
+        pastAppointment.setAppointmentDate(today.minusDays(3));
+
+        when(appointmentRepository.findAll(userId)).thenReturn(Arrays.asList(upcomingAppointment, pastAppointment));
+
+        List<Appointment> result = appointmentService.getUpcomingAppointments(userId);
+
+        assertEquals(1, result.size());
+        assertTrue(result.contains(upcomingAppointment));
+        assertFalse(result.contains(pastAppointment));
+        verify(appointmentRepository, times(1)).findAll(userId);
+    }
+
+    @Test
+    public void testGetAppointmentsByVeterinarian_ShouldReturnAppointmentsForVet() {
+        Long vetId = 1L;
+        Appointment appointment1 = new Appointment();
+        Appointment appointment2 = new Appointment();
+        List<Appointment> appointments = Arrays.asList(appointment1, appointment2);
+
+        when(appointmentRepository.findAllByVetId(vetId)).thenReturn(appointments);
+
+        List<Appointment> result = appointmentService.getAppointmentsByVeterinarian(vetId);
+
+        assertEquals(2, result.size());
+        verify(appointmentRepository, times(1)).findAllByVetId(vetId);
+    }
+
+    @Test
+    public void testGetUpcomingAppointments_ShouldReturnEmptyListForNoUpcomingAppointments() {
+        Long userId = 1L;
+        LocalDate today = LocalDate.now();
+        Appointment pastAppointment = new Appointment();
+        pastAppointment.setAppointmentDate(today.minusDays(5));
+
+        when(appointmentRepository.findAll(userId)).thenReturn(List.of(pastAppointment));
+
+        List<Appointment> result = appointmentService.getUpcomingAppointments(userId);
+
+        assertTrue(result.isEmpty());
+        verify(appointmentRepository, times(1)).findAll(userId);
+    }
+
+    @Test
+    public void testGetAppointments_ShouldReturnEmptyListIfNoAppointmentsFound() {
+        Long userId = 999L;
+
+        when(appointmentRepository.findAll(userId)).thenReturn(List.of());
+
+        List<Appointment> result = appointmentService.getAppointments(userId);
+
+        assertTrue(result.isEmpty());
+        verify(appointmentRepository, times(1)).findAll(userId);
+    }
 }

@@ -56,4 +56,19 @@ public class PetInformationServiceImplTest {
         assertEquals("Buddy", foundPet.getName());
         verify(petInformationRepository, times(1)).findPetById(1L);
     }
+
+    @Test
+    public void testGetPetByUserId_shouldReturnPetsForUser() {
+        Long userId = 1L;
+        PetInformation pet1 = new PetInformation(1L, "Buddy", 3, "Male", 10.0, "Golden Retriever", null, 1L);
+        PetInformation pet2 = new PetInformation(2L, "Max", 4, "Male", 15.0, "German Shepherd", null, 1L);
+
+        when(petInformationRepository.findPetsByOwnerId(userId)).thenReturn(List.of(pet1, pet2));
+
+        List<PetInformation> pets = petInformationService.getPetByUserId(userId);
+
+        assertEquals(2, pets.size());
+        assertEquals("Buddy", pets.get(0).getName());
+        verify(petInformationRepository, times(1)).findPetsByOwnerId(userId);
+    }
 }
