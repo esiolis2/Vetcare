@@ -4,6 +4,20 @@
 
 <head>
     <title>HomePage</title>
+    <style>
+        .carousel-control-prev, .carousel-control-next {
+            width: 2%;
+        }
+
+        .carousel-control-prev {
+            left: -60px !important;
+        }
+
+        .carousel-control-next {
+            right: 5px !important;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -26,41 +40,96 @@
         </div>
     </section>
 
-
     <!-- Services Section -->
     <div class="container text-center my-2">
         <h2 class="mt-4">Our Services</h2><br>
-        <div class="row">
-            <div class="col">
-                <div class="card" style="width: 18rem; margin: 10px 10px 10px">
-                    <img src="/assets/images/service01.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Find a clinic</h5>
-                        <p class="card-text">We could be just next door!</p>
-                        <a href="/clinics" class="btn card-button">More Details</a>
+
+        <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <!-- First Carousel Item -->
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin: 10px 10px 10px">
+                                <img src="/assets/images/service01.jpg" class="card-img-top" alt="Find a clinic">
+                                <div class="card-body">
+                                    <h5 class="card-title">Find a clinic</h5>
+                                    <p class="card-text">We could be just next door!</p>
+                                    <a href="/clinics" class="btn card-button">More Details</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin: 10px 10px 10px">
+                                <img src="/assets/images/service02.jpg" class="card-img-top" alt="Appointment Booking">
+                                <div class="card-body">
+                                    <h5 class="card-title">Appointment Booking</h5>
+                                    <p class="card-text">Secure a spot!</p>
+                                    <a href="/appointments" class="btn card-button">Book Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin: 10px 10px 10px">
+                                <img src="/assets/images/service03.jpg" class="card-img-top" alt="Medical Record">
+                                <div class="card-body">
+                                    <h5 class="card-title">Medical Record</h5>
+                                    <p class="card-text">Keep track of your pet's health with us</p>
+                                    <a href="/access-medical-records" class="btn card-button">Find out more</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Second Carousel Item -->
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin: 10px 10px 10px">
+                                <img src="/assets/images/service04.jpg" class="card-img-top" alt="Find a clinic 1">
+                                <div class="card-body">
+                                    <h5 class="card-title">Prescription Management</h5>
+                                    <p class="card-text">Request prescription refill </p>
+                                    <a href="/prescription/order" class="btn card-button">Manage Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin: 10px 10px 10px">
+                                <img src="/assets/images/service05.jpg" class="card-img-top" alt="Find a clinic 2">
+                                <div class="card-body">
+                                    <h5 class="card-title">Profile Management</h5>
+                                    <p class="card-text">Update your details anytime</p>
+                                    <a href="/account" class="btn card-button">Edit Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card" style="width: 18rem; margin: 10px 10px 10px">
+                                <img src="/assets/images/service06.jpg" class="card-img-top" alt="Find a clinic 3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Resources</h5>
+                                    <p class="card-text">Access to your pet care and wellness!</p>
+                                    <a href="/resources" class="btn card-button">Explore</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card" style="width: 18rem; margin: 10px 10px 10px">
-                    <img src="/assets/images/service02.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Appointment Booking</h5>
-                        <p class="card-text">Secure a spot!</p>
-                        <a href="/appointments" class="btn card-button">Book Now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="width: 18rem; margin: 10px 10px 10px">
-                    <img src="/assets/images/service03.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Medical Record</h5>
-                        <p class="card-text">Keep track of your pet's health with us</p>
-                        <a href="/access-medical-records" class="btn card-button">Find out more</a>
-                    </div>
-                </div>
-            </div>
+
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </div>
 </div>

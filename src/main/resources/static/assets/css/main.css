@@ -108,11 +108,24 @@ p {
     display: flex;
     justify-content: space-between;
     height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1.2rem;
 }
 
 .card-body {
-    flex-grow: 1;
+    /*flex-grow: 1;*/
     background-color:#ebf2eb ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .card img {
     height: auto;
@@ -120,11 +133,13 @@ p {
 }
 
 .card:hover {
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .card-button{
     background-color: #388087;
+    font-size: 20px;
     color: white;
     border: none;
 }
