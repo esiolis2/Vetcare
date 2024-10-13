@@ -114,6 +114,13 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>au.edu.rmit.sept.webapp.WebappApplication</mainClass>
+				</configuration>
+			</plugin>
 
 			<!-- added while debugging -->
 			<plugin>
