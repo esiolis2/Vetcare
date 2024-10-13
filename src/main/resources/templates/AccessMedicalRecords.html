@@ -223,14 +223,20 @@ function downloadPDF() {
     const petGender = document.querySelector('table tbody tr:nth-child(3) td').textContent.trim();
     const petWeight = document.querySelector('table tbody tr:nth-child(4) td').textContent.trim();
     const petBreed = document.querySelector('table tbody tr:nth-child(5) td').textContent.trim();
+    const petBirthDate = document.querySelector('table tbody tr:nth-child(6) td').textContent.trim();
+    const petOwner = document.querySelector('table tbody tr:nth-child(7) td').textContent.trim();
 
     doc.text(`Name: ${petName}`, marginLeft, yPosition);
     doc.text(`Age: ${petAge}`, marginLeft, yPosition + lineHeight);
     doc.text(`Gender: ${petGender}`, marginLeft, yPosition + lineHeight * 2);
     doc.text(`Weight: ${petWeight}`, marginLeft, yPosition + lineHeight * 3);
     doc.text(`Breed: ${petBreed}`, marginLeft, yPosition + lineHeight * 4);
-    yPosition += lineHeight * 6;
+    doc.text(`Birth Date: ${petBirthDate}`, marginLeft, yPosition + lineHeight * 5);
+    doc.text(`Owner: ${petOwner}`, marginLeft, yPosition + lineHeight * 6);
+    yPosition += lineHeight * 7;
+    yPosition += sectionSpacing;
 
+    // MEDICAL HISTORY
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(40, 100, 150);
     doc.text('Medical History:', marginLeft, yPosition);
@@ -239,12 +245,69 @@ function downloadPDF() {
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(0, 0, 0);
 
-    const medicalHistoryRows = document.querySelectorAll('.summary-section:nth-child(3) table tbody tr');
+    const medicalHistoryRows = document.querySelectorAll('.summary-section:nth-child(4) table tbody tr');
     medicalHistoryRows.forEach(row => {
         const label = row.querySelector('th').textContent.trim();
         const value = row.querySelector('td').textContent.trim();
 
         doc.text(`${label}: ${value}`, marginLeft, yPosition);
+        yPosition += lineHeight;
+
+        if (yPosition > 270) {
+            doc.addPage();
+            yPosition = 20;
+        }
+    });
+
+    yPosition += sectionSpacing;
+
+    // PRESCRIPTION SUMMARY
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(40, 100, 150);
+    doc.text('Prescription Summary:', marginLeft, yPosition);
+    yPosition += lineHeight;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(0, 0, 0);
+
+    const prescriptionRows = document.querySelectorAll('.summary-section:nth-child(5) table tbody tr');
+    prescriptionRows.forEach(row => {
+        const label = row.querySelector('th').textContent.trim();
+        const value = row.querySelector('td').textContent.trim();
+
+        // doc.text(`${label}: ${value}`, marginLeft, yPosition);
+        // yPosition += lineHeight;
+        const maxWidth = 180;
+        const text = `${label}: ${value}`;
+        const fitText = doc.splitTextToSize(text, maxWidth);
+
+        fitText.forEach(line => {
+            doc.text(line, marginLeft, yPosition);
+            yPosition += lineHeight;
+        })
+
+        if (yPosition > 270) {
+            doc.addPage();
+            yPosition = 20;
+        }
+    });
+
+    yPosition += sectionSpacing;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(40, 100, 150);
+    doc.text('Vaccination Record Summary:', marginLeft, yPosition);
+    yPosition += lineHeight;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(0, 0, 0);
+
+    const vaccinationRows = document.querySelectorAll('.summary-section:nth-child(6) table tbody tr');
+    vaccinationRows.forEach(row => {
+        const vaccine = row.querySelector('th').textContent.trim();
+        const details = row.querySelector('td').textContent.trim();
+
+        doc.text(`${vaccine}: ${details}`, marginLeft, yPosition);
         yPosition += lineHeight;
 
         if (yPosition > 270) {
@@ -263,31 +326,7 @@ function downloadPDF() {
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(0, 0, 0);
 
-    const vaccinationRows = document.querySelectorAll('.summary-section:nth-child(4) table tbody tr');
-    vaccinationRows.forEach(row => {
-        const vaccine = row.querySelector('th').textContent.trim();
-        const details = row.querySelector('td').textContent.trim();
-
-        doc.text(`${vaccine}: ${details}`, marginLeft, yPosition);
-        yPosition += lineHeight;
-
-        if (yPosition > 270) {
-            doc.addPage();
-            yPosition = 20;
-        }
-    });
-
-    yPosition += sectionSpacing;
-
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(40, 100, 150);
-    doc.text('Vaccination Record Summary:', marginLeft, yPosition);
-    yPosition += lineHeight;
-
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(0, 0, 0);
-
-    const treatmentRows = document.querySelectorAll('.summary-section:nth-child(5) table tbody tr');
+    const treatmentRows = document.querySelectorAll('.summary-section:nth-child(7) table tbody tr');
     treatmentRows.forEach(row => {
         const label = row.querySelector('th').textContent.trim();
         const value = row.querySelector('td').textContent.trim();
@@ -308,6 +347,7 @@ function downloadPDF() {
     doc.text("Generated by VetCare System", 10, 280);
     doc.save(`${petName}-medical-record-summary.pdf`);
 }
+
 function shareRecords() {
     if (navigator.share) {
         const petName = document.querySelector('table tbody tr:nth-child(1) td').textContent.trim();
