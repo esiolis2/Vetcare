@@ -21,7 +21,14 @@
             <div class="rainbow-border"></div>
             <div class="rainbow-content">
                 <h2 class="text-center">Create an Account</h2>
-                <form th:action="@{/signup}" method="post" id="signupForm" class="form-container" onsubmit="signUp()">
+                <!-- Error Message Display -->
+                <div class="TP-alert-danger" th:if="${errorMessage != null}">
+                    <div class="TP-alert-content">
+                        <span class="TP-icon">⚠️</span>
+                        <p th:text="${errorMessage}"></p>
+                    </div>
+                </div>
+                <form th:action="@{/signup}" method="post" id="signupForm" class="form-container" >
                     <div id="step-1" class="form-step">
                         <!-- Name Field -->
                         <div class="form-group">
@@ -68,13 +75,6 @@
         </div>
     </div>
 
-    <!-- JavaScript Function -->
-    <script>
-        function signUp() {
-            alert("SignUp successful!");
-            location.reload();
-        }
-    </script>
 </div>
 
 <!-- External Scripts -->

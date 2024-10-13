@@ -24,10 +24,24 @@ public class UserController {
     }
 
     @PostMapping("/signup")
+<<<<<<< Updated upstream
     public String createUser(@ModelAttribute User user) {
         userService.createUser(user);
         return "redirect:/login";
+=======
+    public String createUser(@ModelAttribute User user, Model model) {
+        if (userService.findByEmail(user.getEmail()) != null) {
+            model.addAttribute("errorMessage", "Email already exists! Please use a different email.");
+            System.out.println("Email already exists! Please use a DIFFERENT email!");
+            return "SignUp";
+        }else{
+            userService.createUser(user);
+            return "redirect:/";
+        }
+
+>>>>>>> Stashed changes
     }
+
 
     @PostMapping("/login")
     public String login(@RequestParam String email, @RequestParam String password, Model model, HttpServletRequest request) {
