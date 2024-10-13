@@ -636,3 +636,35 @@ body {
     color: var(--secondary-color);
     text-decoration: underline;
 }
+
+/*=========================*/
+/*     Final Button Styles */
+/*=========================*/
+
+.final-btn-common {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--primary-color); /* Use your primary color here */
+    color: #fff;
+    border: none;
+    border-radius: 50px; /* Rounded style */
+    cursor: pointer;
+    text-align: center;
+    margin: 10px; /* Adjust margin as needed */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.final-btn-common:hover {
+    background-color: var(--highlight-color); /* Use your hover color here */
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* If you don't have the text-center class defined, add this */
+.text-center {
+    text-align: center;
+}
+
