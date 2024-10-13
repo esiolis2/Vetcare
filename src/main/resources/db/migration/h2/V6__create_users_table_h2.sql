@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    phoneNumber BIGINT,
+    address VARCHAR(255),
+    userType VARCHAR(5) NOT NULL
+);

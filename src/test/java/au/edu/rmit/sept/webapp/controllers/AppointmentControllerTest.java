@@ -8,15 +8,19 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,6 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @SpringBootTest
+@AutoConfigureMockMvc
+@ContextConfiguration
+@ActiveProfiles("test")
 public class AppointmentControllerTest {
 
     @Autowired
@@ -56,6 +63,12 @@ public class AppointmentControllerTest {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private PrescriptionService prescriptionService;
+
+    @MockBean
+    private  PrescriptionRefillService prescriptionRefillService;
+
     private List<Clinic> clinics;
     private List<Veterinarian> veterinarians;
     private List<ClinicReasons> clinicReasons;
@@ -63,6 +76,9 @@ public class AppointmentControllerTest {
     private List<PetInformation> pets;
     private List<Appointment> appointments;
     private User user;
+    private List<Prescription> prescriptions;
+    private List<PrescriptionRefillRequest> prescriptionRefillRequests;
+
 
     @BeforeEach
     public void setUp() {
@@ -83,6 +99,16 @@ public class AppointmentControllerTest {
         pet.setPetID(1L);
         pets = Arrays.asList(pet);
         appointments = Arrays.asList(new Appointment(), new Appointment());
+        Prescription prescription = new Prescription();
+        prescription.setPet(pet);
+        prescriptions = Arrays.asList(prescription);
+        PrescriptionRefillRequest refill = new PrescriptionRefillRequest();
+        refill.setRequestDate(LocalDateTime.now());
+        refill.setPetID(pet.getPetID());
+        prescriptionRefillRequests = Arrays.asList(refill);
+
+
+
 
         Mockito.when(userService.findByEmail("testUser@test.com")).thenReturn(user);
         Mockito.when(clinicService.getAllClinics()).thenReturn(clinics);
@@ -90,6 +116,9 @@ public class AppointmentControllerTest {
         Mockito.when(clinicReasonsService.getAllClinicReasons()).thenReturn(clinicReasons);
         Mockito.when(clinicServicePricingService.getAll()).thenReturn(servicePricings);
         Mockito.when(petInformationService.getPetByUserId(user.getId())).thenReturn(pets);
+        Mockito.when(prescriptionService.getAllPrescriptions()).thenReturn(prescriptions);
+        Mockito.when(prescriptionRefillService.getAllRefillRequests()).thenReturn(prescriptionRefillRequests);
+
 
     }
 
