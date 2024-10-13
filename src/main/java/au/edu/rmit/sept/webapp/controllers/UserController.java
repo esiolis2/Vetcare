@@ -24,11 +24,6 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-<<<<<<< Updated upstream
-    public String createUser(@ModelAttribute User user) {
-        userService.createUser(user);
-        return "redirect:/login";
-=======
     public String createUser(@ModelAttribute User user, Model model) {
         if (userService.findByEmail(user.getEmail()) != null) {
             model.addAttribute("errorMessage", "Email already exists! Please use a different email.");
@@ -39,7 +34,6 @@ public class UserController {
             return "redirect:/";
         }
 
->>>>>>> Stashed changes
     }
 
 
