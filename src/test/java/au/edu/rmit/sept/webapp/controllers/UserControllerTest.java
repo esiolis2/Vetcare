@@ -55,7 +55,7 @@ public class UserControllerTest {
         mockMvc.perform(post("/signup")
                         .flashAttr("user", user))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/Login"));
+                .andExpect(redirectedUrl("/login"));
     }
 
     @Test
