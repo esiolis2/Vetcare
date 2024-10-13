@@ -25,7 +25,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User insertUserData(User u){
         try(
                 Connection connection = this.source.getConnection();
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO user (name, address, phoneNumber, email, password, userType) VALUES (?, ?, ?, ?, ?, ?)")) {
+                PreparedStatement ps = connection.prepareStatement("INSERT INTO users (name, address, phoneNumber, email, password, userType) VALUES (?, ?, ?, ?, ?, ?)")) {
             ps.setString(1, u.getName());
             ps.setString(2, u.getAddress());
             ps.setLong(3, u.getPhoneNumber());
@@ -48,7 +48,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User findByEmail(String email) {
         try (Connection connection = this.source.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE email = ?")) {
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE email = ?")) {
 
             ps.setString(1, email);
 
@@ -72,7 +72,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     public User findUserById(Long id) {
-        String query = "SELECT * FROM user WHERE id = ?";
+        String query = "SELECT * FROM users WHERE id = ?";
         try (Connection connection =this.source.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
 
@@ -101,7 +101,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User updateUser(User u) {
         try (Connection connection = this.source.getConnection();
-             PreparedStatement ps = connection.prepareStatement("UPDATE user SET name = ?, email = ?, password = ?, phoneNumber = ?, address = ? WHERE id = ?")) {
+             PreparedStatement ps = connection.prepareStatement("UPDATE users SET name = ?, email = ?, password = ?, phoneNumber = ?, address = ? WHERE id = ?")) {
 
             ps.setString(1, u.getName());
             ps.setString(2, u.getEmail());
@@ -124,7 +124,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAllUsers() {
-        String query = "SELECT * FROM user";
+        String query = "SELECT * FROM users";
         List<User> users = new ArrayList<>();
 
         try (Connection connection = this.source.getConnection();
@@ -154,7 +154,7 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean removeUser(String email) {
         try (Connection connection = this.source.getConnection();
 
-             PreparedStatement ps = connection.prepareStatement("DELETE FROM user WHERE email = ?")) {
+             PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE email = ?")) {
             ps.setString(1, email);
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
