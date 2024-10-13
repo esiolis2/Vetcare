@@ -14,7 +14,7 @@
 /* Body Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #c0e8c0;
+    background-color: #ebf2eb;
     margin: 0;
     padding: 0;
 }
@@ -218,4 +218,26 @@ footer p {
         font-size: 16px;
         padding: 10px;
     }
+}
+
+.navbar-custom {
+    background-color: #388087;
+    margin-bottom: 0;
+}
+.navbar-brand {
+    font-family: 'Sergio Trendy', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+.navbar-nav .nav-link {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-right: 20px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #badfe7;
+    text-decoration: underline;
 }

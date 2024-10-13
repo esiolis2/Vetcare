@@ -1,57 +1,79 @@
-/* Variables */
+/*=========================*/
+/*        Variables        */
+/*=========================*/
 :root {
-    --UMR-primary-color: #2c3e50;
-    --UMR-secondary-color: #3498db;
-    --UMR-background-color: #eef2f7;
-    --UMR-text-color: #2c3e50;
-    --UMR-highlight-color: #061945;
-    --UMR-alert-color: #f8d7da;
-    --UMR-alert-text-color: #721c24;
+    --primary-color: #388087;       /* Teal */
+    --secondary-color: #badfe7;     /* Light blue */
+    --background-color: #ebf2eb;    /* Light greenish */
+    --text-color: #222222;          /* Dark gray */
+    --highlight-color: #277173;     /* Slightly darker shade of primary color */
+    --alert-color: #f8d7da;         /* Default alert background color */
+    --alert-text-color: #721c24;    /* Default alert text color */
 }
 
-/* Body Styles */
+/*=========================*/
+/*       Body Styles       */
+/*=========================*/
 body {
     font-family: 'Arial', sans-serif;
-    background-color: var(--UMR-background-color);
+    background-color: var(--background-color);
     margin: 0;
     padding: 20px;
 }
 
-/* Headers */
-.UMR-title, .UMR-form-title {
+/*=========================*/
+/*        Headers          */
+/*=========================*/
+.UMR-title, .UMR-form-title,
+.TP-title, .TP-form-title,
+.AMR-title, .AMR-form-title,
+.VR-title, .VR-form-title,
+.PR-title, .PR-form-title {
     text-align: center;
-    color: var(--UMR-text-color);
+    color: var(--text-color);
     margin-bottom: 20px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     font-weight: bold;
 }
 
-.UMR-title {
+.UMR-title, .TP-title, .AMR-title, .VR-title, .PR-title {
     font-size: 36px;
 }
 
-.UMR-form-title {
+.UMR-form-title, .TP-form-title, .AMR-form-title, .VR-form-title, .PR-form-title {
     font-size: 28px;
 }
 
-/* Main Container */
-.UMR-treatment-plan {
+/*=========================*/
+/*     Main Containers     */
+/*=========================*/
+.UMR-treatment-plan,
+.TP-container,
+.AMR-container,
+.VR-container,
+.PR-container {
     max-width: 1000px;
     margin: auto;
     background-color: #fff;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-    animation: UMR-fadeIn 1s ease-in-out;
+    animation: fadeIn 1s ease-in-out;
     padding: 30px;
 }
 
-/* Error Message */
-.UMR-alert-danger {
-    background-color: var(--UMR-alert-color);
+/*=========================*/
+/*     Error Messages      */
+/*=========================*/
+.UMR-alert-danger,
+.TP-alert-danger,
+.AMR-alert-danger,
+.VR-alert-danger,
+.PR-alert-danger {
+    background-color: var(--alert-color);
     border-color: #f5c6cb;
-    color: var(--UMR-alert-text-color);
+    color: var(--alert-text-color);
     border-radius: 5px;
     padding: 15px 20px;
     font-size: 16px;
@@ -64,31 +86,49 @@ body {
     margin-bottom: 20px;
 }
 
-.UMR-alert-danger .UMR-icon {
+.UMR-alert-danger .UMR-icon,
+.TP-alert-danger .TP-icon,
+.AMR-alert-danger .AMR-icon,
+.VR-alert-danger .VR-icon,
+.PR-alert-danger .PR-icon {
     margin-right: 10px;
     font-size: 24px;
     display: inline-block;
     vertical-align: middle;
 }
 
-/* Summary Section */
-.UMR-summary-section {
+/*=========================*/
+/*     Summary Sections    */
+/*=========================*/
+.UMR-summary-section,
+.TP-summary-section,
+.AMR-summary-section,
+.VR-summary-section,
+.PR-summary-section {
     margin-bottom: 30px;
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.UMR-summary-section:hover {
+.UMR-summary-section:hover,
+.TP-summary-section:hover,
+.AMR-summary-section:hover,
+.VR-summary-section:hover,
+.PR-summary-section:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-.UMR-details-header {
-    background-color: var(--UMR-secondary-color);
-    color: white;
+.UMR-details-header,
+.TP-details-header,
+.AMR-details-header,
+.VR-details-header,
+.PR-details-header {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
     padding: 20px;
     text-align: center;
     text-transform: uppercase;
@@ -98,12 +138,22 @@ body {
     border-radius: 10px 10px 0 0;
 }
 
-.UMR-details-container {
+.UMR-details-container,
+.TP-details-container,
+.AMR-details-container,
+.VR-details-container,
+.PR-details-container {
     padding: 25px;
 }
 
-/* Table Styles */
-.UMR-table {
+/*=========================*/
+/*       Table Styles      */
+/*=========================*/
+.UMR-table,
+.TP-table,
+.AMR-table,
+.VR-table,
+.PR-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
@@ -111,69 +161,143 @@ body {
     border: 2px solid #ccc;
 }
 
-.UMR-table th, .UMR-table td {
+.UMR-table th, .UMR-table td,
+.TP-table th, .TP-table td,
+.AMR-table th, .AMR-table td,
+.VR-table th, .VR-table td,
+.PR-table th, .PR-table td {
     padding: 15px;
     border-bottom: 1px solid #eee;
     text-align: left;
 }
 
-.UMR-table th {
-    background-color: var(--UMR-secondary-color);
-    color: white;
+.UMR-table th,
+.TP-table th,
+.AMR-table th,
+.VR-table th,
+.PR-table th {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
     font-size: 16px;
     text-transform: uppercase;
     border-right: 2px solid #ccc;
 }
 
-.UMR-table td {
+.UMR-table td,
+.TP-table td,
+.AMR-table td,
+.VR-table td,
+.PR-table td {
     background-color: #fdfdfd;
-    color: #555;
+    color: var(--text-color);
     font-size: 15px;
     border-right: 2px solid #eee;
 }
 
-.UMR-table tr:hover td {
+.UMR-table tr:hover td,
+.TP-table tr:hover td,
+.AMR-table tr:hover td,
+.VR-table tr:hover td,
+.PR-table tr:hover td {
     background-color: #f1f1f1;
     transition: background-color 0.3s ease;
 }
 
-.UMR-table tr:nth-child(even) td {
+.UMR-table tr:nth-child(even) td,
+.TP-table tr:nth-child(even) td,
+.AMR-table tr:nth-child(even) td,
+.VR-table tr:nth-child(even) td,
+.PR-table tr:nth-child(even) td {
     background-color: #f9f9f9;
 }
 
-/* Form Styles */
-.UMR-form-label {
+/*=========================*/
+/*       Form Styles       */
+/*=========================*/
+.UMR-form-label,
+.TP-form-label,
+.AMR-form-label,
+.VR-form-label,
+.PR-form-label {
     font-weight: bold;
+    color: var(--text-color);
 }
 
-.UMR-form-control {
+.UMR-form-control,
+.TP-form-control,
+.AMR-form-control,
+.VR-form-control,
+.PR-form-control,
+.UMR-form-select,
+.TP-form-select,
+.AMR-form-select,
+.VR-form-select,
+.PR-form-select,
+.UMR-form-check-input,
+.TP-form-check-input,
+.AMR-form-check-input,
+.VR-form-check-input,
+.PR-form-check-input,
+.UMR-form-check-label,
+.TP-form-check-label,
+.AMR-form-check-label,
+.VR-form-check-label,
+.PR-form-check-label {
     border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
 }
 
-.UMR-mb-3 {
+.PR-form-check-input {
+    width: auto;
+    margin-right: 10px;
+}
+
+.PR-form-check-label {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.UMR-invalid-feedback,
+.TP-invalid-feedback,
+.AMR-invalid-feedback,
+.VR-invalid-feedback,
+.PR-invalid-feedback {
+    color: var(--alert-text-color);
+    font-size: 14px;
+}
+
+.UMR-mb-3, .TP-mb-3, .AMR-mb-3, .VR-mb-3, .PR-mb-3 {
     margin-bottom: 1rem;
 }
 
-.UMR-mt-4 {
+.UMR-mt-4, .TP-mt-4, .AMR-mt-4, .VR-mt-4, .PR-mt-4 {
     margin-top: 1.5rem;
 }
 
-.UMR-mt-3 {
+.UMR-mt-3, .TP-mt-3, .AMR-mt-3, .VR-mt-3, .PR-mt-3 {
     margin-top: 1rem;
 }
 
-.UMR-d-grid {
+.UMR-d-grid, .TP-d-grid, .AMR-d-grid, .VR-d-grid, .PR-d-grid {
     display: grid;
 }
 
-.UMR-text-center {
+.UMR-text-center, .TP-text-center, .AMR-text-center, .VR-text-center, .PR-text-center {
     text-align: center;
 }
 
-/* Buttons */
-.UMR-btn-primary {
-    background-color: var(--UMR-highlight-color);
-    color: white;
+/*=========================*/
+/*        Buttons          */
+/*=========================*/
+.UMR-btn-primary,
+.TP-btn-primary,
+.AMR-btn-primary,
+.VR-btn-primary,
+.PR-btn-primary {
+    background-color: var(--highlight-color);
+    color: #fff;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -182,19 +306,28 @@ body {
     letter-spacing: 1px;
     font-weight: bold;
     cursor: pointer;
+    margin-top: 15px;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.UMR-btn-primary:hover {
-    background-color: #051535;
+.UMR-btn-primary:hover,
+.TP-btn-primary:hover,
+.AMR-btn-primary:hover,
+.VR-btn-primary:hover,
+.PR-btn-primary:hover {
+    background-color: #1f5e64;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.UMR-btn-common {
+.UMR-btn-common,
+.TP-btn-common,
+.AMR-btn-common,
+.VR-btn-common,
+.PR-btn-common {
     display: inline-block;
     padding: 12px 25px;
-    background-color: var(--UMR-primary-color);
-    color: white;
+    background-color: var(--primary-color);
+    color: #fff;
     border: none;
     border-radius: 50px;
     cursor: pointer;
@@ -207,14 +340,22 @@ body {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.UMR-btn-common:hover {
-    background-color: #1c2e40;
+.UMR-btn-common:hover,
+.TP-btn-common:hover,
+.AMR-btn-common:hover,
+.VR-btn-common:hover,
+.PR-btn-common:hover {
+    background-color: #1f5e64;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.UMR-btn-back {
-    background-color: var(--UMR-primary-color);
-    color: white;
+.UMR-btn-back,
+.TP-btn-back,
+.AMR-btn-back,
+.VR-btn-back,
+.PR-btn-back {
+    background-color: var(--primary-color);
+    color: #fff;
     padding: 12px 25px;
     border-radius: 50px;
     text-align: center;
@@ -228,222 +369,198 @@ body {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.UMR-btn-back:hover {
-    background-color: #1c2e40;
+.UMR-btn-back:hover,
+.TP-btn-back:hover,
+.AMR-btn-back:hover,
+.VR-btn-back:hover,
+.PR-btn-back:hover {
+    background-color: #1f5e64;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.UMR-btn-secondary {
-    background-color: var(--UMR-secondary-color);
+.UMR-btn-secondary,
+.TP-btn-secondary,
+.AMR-btn-secondary,
+.VR-btn-secondary,
+.PR-btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
 }
 
-.UMR-btn-secondary:hover {
-    background-color: #2980b9;
+.UMR-btn-secondary:hover,
+.TP-btn-secondary:hover,
+.AMR-btn-secondary:hover,
+.VR-btn-secondary:hover,
+.PR-btn-secondary:hover {
+    background-color: #a9cedc;
 }
 
-/* Card Styles */
-.UMR-card {
+/* Additional Styles for Buttons */
+.PR-btn-prescription-submit {
+    background-color: var(--highlight-color);
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 15px;
+}
+
+.PR-btn-prescription-submit:hover {
+    background-color: #1f5e64;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/*=========================*/
+/*       Card Styles       */
+/*=========================*/
+.UMR-card, .TP-card, .AMR-card, .VR-card, .PR-card {
     border: none;
     border-radius: 10px;
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-.UMR-card-body {
+.UMR-card-body, .TP-card-body, .AMR-card-body, .VR-card-body, .PR-card-body {
     padding: 20px;
 }
 
-/* Animation */
-@keyframes UMR-fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/*=========================*/
+/*    Prescription Styles (PR)    */
+/*=========================*/
+
+/* Container */
+.PR-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
 }
 
-/* Media Queries */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-
-    .UMR-title {
-        font-size: 28px;
-    }
-
-    .UMR-form-title {
-        font-size: 24px;
-    }
-
-    .UMR-table th, .UMR-table td {
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    .UMR-btn-primary, .UMR-btn-common, .UMR-btn-back {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
-
-    .UMR-details-header {
-        font-size: 18px;
-    }
+/* Prescription Refill Form */
+.PR-prescription-refill {
+    margin-top: 30px;
 }
 
-/* Variables */
-:root {
-    --TP-primary-color: #2c3e50;
-    --TP-secondary-color: #3498db;
-    --TP-background-color: #eef2f7;
-    --TP-text-color: #2c3e50;
-    --TP-highlight-color: #061945;
-    --TP-alert-color: #f8d7da;
-    --TP-alert-text-color: #721c24;
-}
-
-/* Body Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: var(--TP-background-color);
-    margin: 0;
-    padding: 20px;
-}
-
-/* Headers */
-.TP-title, .TP-form-title {
-    text-align: center;
-    color: var(--TP-text-color);
+.PR-prescription-refill h3 {
+    font-size: 24px;
+    color: var(--text-color);
     margin-bottom: 20px;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     font-weight: bold;
 }
 
-.TP-title {
-    font-size: 36px;
+.PR-form-group {
+    margin-bottom: 20px;
 }
 
-.TP-form-title {
-    font-size: 28px;
+.PR-form-check {
+    margin-bottom: 10px;
 }
 
-/* Main Container */
-.TP-container {
-    max-width: 1000px;
-    margin: auto;
-    background-color: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-    animation: TP-fadeIn 1s ease-in-out;
-    padding: 30px;
+.PR-form-check-input {
+    margin-right: 10px;
 }
 
-/* Error Message */
-.TP-alert-danger {
-    background-color: var(--TP-alert-color);
-    border-color: #f5c6cb;
-    color: var(--TP-alert-text-color);
+.PR-form-check-label {
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+/* Input Fields */
+.PR-form-control {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.PR-invalid-feedback {
+    color: var(--alert-text-color);
+    font-size: 14px;
+}
+
+.PR-form-select {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+/* Buttons */
+.PR-btn-prescription-submit {
+    background-color: var(--highlight-color);
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 15px;
+}
+
+.PR-btn-prescription-submit:hover {
+    background-color: #1f5e64;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Links as Buttons */
+.PR-btn-link {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 25px;
+    background-color: var(--primary-color);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.PR-btn-link:hover {
+    background-color: #1f5e64;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Alerts */
+.PR-alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
     border-radius: 5px;
     padding: 15px 20px;
     font-size: 16px;
     font-weight: bold;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-.TP-alert-danger .TP-icon {
-    margin-right: 10px;
-    font-size: 24px;
-    display: inline-block;
-    vertical-align: middle;
+.PR-alert-success a {
+    color: #155724;
+    text-decoration: underline;
 }
 
-/* Form Styles */
-.TP-form-label {
-    font-weight: bold;
-}
-
-.TP-form-control, .TP-form-check-input {
-    border-radius: 5px;
-}
-
-.TP-mb-3 {
-    margin-bottom: 1rem;
-}
-
-.TP-mt-4 {
-    margin-top: 1.5rem;
-}
-
-.TP-d-grid {
-    display: grid;
-}
-
-.TP-text-center {
-    text-align: center;
-}
-
-/* Buttons */
-.TP-btn-primary {
-    background-color: var(--TP-highlight-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 12px;
-    font-size: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.TP-btn-primary:hover {
-    background-color: #051535;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.TP-btn-back {
-    background-color: var(--TP-primary-color);
-    color: white;
-    padding: 12px;
-    border-radius: 5px;
-    text-align: center;
+.PR-alert-success a:hover {
+    color: #0b2e13;
     text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.TP-btn-back:hover {
-    background-color: #1c2e40;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Card Styles */
-.TP-card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-}
-
-.TP-card-body {
-    padding: 20px;
-}
-
-/* Animation */
-@keyframes TP-fadeIn {
+/*=========================*/
+/*        Animation        */
+/*=========================*/
+@keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -454,22 +571,68 @@ body {
     }
 }
 
-/* Media Queries */
+/*=========================*/
+/*      Media Queries      */
+/*=========================*/
 @media (max-width: 768px) {
     body {
         padding: 10px;
     }
 
-    .TP-title {
+    .UMR-title, .TP-title, .AMR-title, .VR-title, .PR-title {
         font-size: 28px;
     }
 
-    .TP-form-title {
+    .UMR-form-title, .TP-form-title, .AMR-form-title, .VR-form-title, .PR-form-title {
         font-size: 24px;
     }
 
-    .TP-btn-primary, .TP-btn-back {
+    .UMR-table th, .UMR-table td,
+    .TP-table th, .TP-table td,
+    .AMR-table th, .AMR-table td,
+    .VR-table th, .VR-table td,
+    .PR-table th, .PR-table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .UMR-btn-primary, .UMR-btn-common, .UMR-btn-back,
+    .TP-btn-primary, .TP-btn-common, .TP-btn-back,
+    .AMR-btn-primary, .AMR-btn-common, .AMR-btn-back,
+    .VR-btn-primary, .VR-btn-common, .VR-btn-back,
+    .PR-btn-primary, .PR-btn-common, .PR-btn-back {
         padding: 10px 20px;
         font-size: 14px;
     }
+
+    .UMR-details-header, .TP-details-header, .AMR-details-header, .VR-details-header, .PR-details-header {
+        font-size: 18px;
+    }
+}
+
+/*=========================*/
+/*        Navbar Styles    */
+/*=========================*/
+.navbar-custom {
+    background-color: var(--primary-color);
+    margin-bottom: 0;
+}
+
+.navbar-brand {
+    font-family: 'Sergio Trendy', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-right: 20px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
 }

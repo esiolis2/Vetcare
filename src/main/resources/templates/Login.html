@@ -9,6 +9,59 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" th:href="@{/assets/css/login.css}">
 </head>
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="/">VetCare</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/resources">Resources</a>
+                </li>
+                <!-- Conditional rendering based on userType and loggedInUser -->
+                <li class="nav-item dropdown" th:if="${loggedInUser != null && userType == 'User'}">
+                    <button class="nav-link dropdown-toggle" id="dropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Medical Access
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="/access-medical-records">Access Medical Record</a></li>
+                        <li><a class="dropdown-item" href="/view-vaccination-records">View Vaccination Records</a></li>
+                        <li><a class="dropdown-item" href="/view-treatment-plan">View Treatment Plan</a></li>
+                        <!--                        <li><a class="dropdown-item" href="/prescription-management">Prescription Management</a></li>-->
+                        <li><a class="dropdown-item" href="/view-prescription">View Prescription</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown" th:if="${loggedInUser != null && userType == 'Vet'}">
+                    <button class="nav-link dropdown-toggle" id="dropdownMenuLink2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Medical Access
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="/edit-medical-record">Upload Medical Record</a></li>
+                        <li><a class="dropdown-item" href="/edit-vaccination-record">Upload Vaccination Records</a></li>
+                        <li><a class="dropdown-item" href="/edit-treatment-plan">Upload Treatment Plan</a></li>
+                        <li><a class="dropdown-item" href="/edit-prescription">Upload Prescription</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item" th:if="${loggedInUser != null}">
+                    <a class="nav-link" href="/account">Dashboard</a>
+                </li>
+                <li class="nav-item" th:if="${loggedInUser != null}">
+                    <form th:action="@{/logout}" method="post" style="display: inline;">
+                        <button type="submit" class="nav-link btn btn-link">Logout</button>
+                    </form>
+                </li>
+                <li class="nav-item" th:if="${loggedInUser == null}">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <body>
 <div class="login-page">
     <div layout:fragment="content">
