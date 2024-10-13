@@ -5,6 +5,7 @@ on:
     branches:
       - vetcare_v1
       - 'release/**'
+      - main
 
 jobs:
   build-backend:
