@@ -1,3 +1,7 @@
+To start, Run ./mvnw clean spring-boot:run in Project Directory
+
+
+
 See [Instructions](INSTRUCTIONS.md)
 
 ## RELEASE V1.0##
